@@ -8,7 +8,7 @@
 
 import { useRef, useMemo, useState, useEffect, useCallback } from 'react'
 import { Canvas, useFrame, ThreeEvent } from '@react-three/fiber'
-import { OrbitControls, Sphere } from '@react-three/drei'
+import { OrbitControls, Sphere, Html } from '@react-three/drei'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as THREE from 'three'
 import { SkillCategory } from '@/lib/types'
@@ -38,43 +38,38 @@ function generateSpherePosition(index: number, total: number): [number, number, 
   ]
 }
 
-// Simple colored dot marker - no DOM overlays, no per-marker useFrame
+// Skill marker with icon - minimal Html, no extra effects
 function MarkerDot({
   position,
   color,
+  skill,
   onClick,
 }: {
   position: [number, number, number]
   color: string
+  skill: string
   onClick: () => void
 }) {
-  const meshRef = useRef<THREE.Mesh>(null)
-
   return (
-    <mesh
-      ref={meshRef}
-      position={position}
-      onClick={(e: ThreeEvent<MouseEvent>) => {
-        e.stopPropagation()
-        onClick()
-      }}
-      onPointerOver={(e: ThreeEvent<PointerEvent>) => {
-        e.stopPropagation()
-        document.body.style.cursor = 'pointer'
-        if (meshRef.current) {
-          meshRef.current.scale.setScalar(1.5)
-        }
-      }}
-      onPointerOut={() => {
-        document.body.style.cursor = 'auto'
-        if (meshRef.current) {
-          meshRef.current.scale.setScalar(1)
-        }
-      }}
-    >
-      <sphereGeometry args={[0.08, 8, 8]} />
-      <meshBasicMaterial color={color} />
-    </mesh>
+    <group position={position}>
+      <Html
+        center
+        distanceFactor={6}
+        style={{ pointerEvents: 'auto' }}
+        zIndexRange={[1, 0]}
+      >
+        <div
+          onClick={onClick}
+          className="flex items-center justify-center w-9 h-9 rounded-lg cursor-pointer"
+          style={{
+            backgroundColor: `${color}20`,
+            border: `1.5px solid ${color}`,
+          }}
+        >
+          <TechIcon name={skill} className="h-5 w-5" />
+        </div>
+      </Html>
+    </group>
   )
 }
 
@@ -134,6 +129,7 @@ function GlobeScene({
             key={`${marker.skill}-${i}`}
             position={marker.position}
             color={marker.color}
+            skill={marker.skill}
             onClick={() => onMarkerClick(marker.skill, marker.category)}
           />
         ))}
