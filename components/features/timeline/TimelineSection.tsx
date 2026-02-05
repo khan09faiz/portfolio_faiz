@@ -21,8 +21,6 @@ const getIcon = (type: string) => {
       return Briefcase
     case 'education':
       return GraduationCap
-    case 'achievement':
-      return Award
     default:
       return Briefcase
   }
@@ -34,8 +32,6 @@ const getTypeColor = (type: string) => {
       return 'text-blue-400 bg-blue-500/20'
     case 'education':
       return 'text-purple-400 bg-purple-500/20'
-    case 'achievement':
-      return 'text-yellow-400 bg-yellow-500/20'
     default:
       return 'text-primary bg-primary/20'
   }
