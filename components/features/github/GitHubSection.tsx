@@ -6,7 +6,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Github, GitFork, Star, Code2, Flame, Award, Monitor, ExternalLink, GitBranch, Clock, ChevronDown } from 'lucide-react'
+import { Github, GitFork, Star, Code2, Flame, Award, Monitor, ExternalLink, GitBranch, Clock, ChevronDown, ChevronUp } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -59,8 +59,32 @@ const fallbackData: GitHubStats = {
     { name: 'TypeScript', percentage: 28.3, color: '#2b7489' },
     { name: 'JavaScript', percentage: 18.2, color: '#f1e05a' },
   ],
-  myRepos: [],
-  contributedRepos: [],
+  myRepos: [
+    {
+      name: 'portfolio_faiz',
+      description: 'Personal portfolio website',
+      stars: 0,
+      forks: 0,
+      language: 'TypeScript',
+      color: '#2b7489',
+      url: 'https://github.com/khan09faiz/portfolio_faiz',
+      updatedAt: new Date().toISOString(),
+      isOwner: true,
+    },
+  ],
+  contributedRepos: [
+    {
+      name: 'sample-project',
+      description: 'Sample open source contribution',
+      stars: 0,
+      forks: 0,
+      language: 'Python',
+      color: '#3572A5',
+      url: 'https://github.com',
+      updatedAt: new Date().toISOString(),
+      isOwner: false,
+    },
+  ],
 }
 
 export function GitHubSection() {
@@ -205,13 +229,13 @@ export function GitHubSection() {
           </Card>
         </motion.div>
 
-        {/* Mobile Desktop Notice */}
+        {/* Desktop Notice - Visit GitHub */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="md:hidden mb-12"
+          className="mb-12"
         >
           <Card className="p-8 text-center bg-card/50 backdrop-blur-sm border-primary/20">
             <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
@@ -367,16 +391,26 @@ export function GitHubSection() {
             ))}
           </div>
 
-          {/* View More Button */}
-          {hasMoreMyRepos && !showAllRepos && (
+          {/* View More/Less Button */}
+          {hasMoreMyRepos && (
             <div className="text-center">
-              <button
-                onClick={() => setShowAllRepos(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all"
-              >
-                <ChevronDown className="h-5 w-5" />
-                View {filteredMyRepos.length - 6} More
-              </button>
+              {!showAllRepos ? (
+                <button
+                  onClick={() => setShowAllRepos(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all"
+                >
+                  <ChevronDown className="h-5 w-5" />
+                  View {filteredMyRepos.length - 6} More
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowAllRepos(false)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all"
+                >
+                  <ChevronUp className="h-5 w-5" />
+                  View Less
+                </button>
+              )}
             </div>
           )}
         </motion.div>
@@ -483,16 +517,26 @@ export function GitHubSection() {
               ))}
             </div>
 
-            {/* View More Button for Contributions */}
-            {hasMoreContrib && !showAllContrib && (
+            {/* View More/Less Button for Contributions */}
+            {hasMoreContrib && (
               <div className="text-center">
-                <button
-                  onClick={() => setShowAllContrib(true)}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg transition-all"
-                >
-                  <ChevronDown className="h-5 w-5" />
-                  View {filteredContribRepos.length - 6} More
-                </button>
+                {!showAllContrib ? (
+                  <button
+                    onClick={() => setShowAllContrib(true)}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg transition-all"
+                  >
+                    <ChevronDown className="h-5 w-5" />
+                    View {filteredContribRepos.length - 6} More
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setShowAllContrib(false)}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg transition-all"
+                  >
+                    <ChevronUp className="h-5 w-5" />
+                    View Less
+                  </button>
+                )}
               </div>
             )}
           </motion.div>

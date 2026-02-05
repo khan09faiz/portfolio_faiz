@@ -16,8 +16,9 @@ import {
   Mail, 
   Code2, 
   Rocket, 
-  Users, 
-  Award 
+  GraduationCap, 
+  Award,
+  FileCheck
 } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
 import Link from 'next/link'
@@ -72,41 +73,22 @@ const stats = [
     description: 'Technical skills'
   },
   { 
-    icon: Users, 
+    icon: FileCheck, 
+    value: '4+', 
+    label: 'Certificates', 
+    color: 'text-cyan-500', 
+    fill: 'fill-cyan-500/20',
+    href: '#certificates',
+    description: 'Professional certifications'
+  },
+  { 
+    icon: GraduationCap, 
     value: 'B.Tech', 
     label: 'Degree', 
     color: 'text-green-500', 
     fill: 'fill-green-500/20',
-    href: '#timeline',
+    href: '#certificates',
     description: 'Education background'
-  },
-  { 
-    icon: Award, 
-    value: '2+', 
-    label: 'Work Experience', 
-    color: 'text-orange-500', 
-    fill: 'fill-orange-500/20',
-    href: '#timeline',
-    description: 'Career path'
-  },
-]
-
-// Highlights
-const highlights = [
-  {
-    title: 'AI/ML Expertise',
-    description: 'Deep learning, computer vision, and NLP with TensorFlow & PyTorch',
-    gradient: 'from-blue-500/20 to-cyan-500/20',
-  },
-  {
-    title: 'Full Stack Development',
-    description: 'Modern web apps with React, Next.js, Node.js, and PostgreSQL',
-    gradient: 'from-purple-500/20 to-pink-500/20',
-  },
-  {
-    title: 'Production Ready',
-    description: 'Scalable solutions with Docker, AWS, and CI/CD pipelines',
-    gradient: 'from-green-500/20 to-emerald-500/20',
   },
 ]
 
@@ -276,29 +258,6 @@ export function Hero() {
               </Link>
             ))}
           </div>
-        </motion.div>
-
-        {/* Highlights Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          className="mt-16 lg:mt-20 grid md:grid-cols-3 gap-6"
-        >
-          {highlights.map((highlight, index) => (
-            <Card
-              key={highlight.title}
-              hover
-              className={`bg-gradient-to-br ${highlight.gradient} backdrop-blur-md`}
-            >
-              <h3 className="text-lg font-bold mb-2 text-foreground">
-                {highlight.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {highlight.description}
-              </p>
-            </Card>
-          ))}
         </motion.div>
       </div>
     </section>

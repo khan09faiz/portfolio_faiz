@@ -1,6 +1,7 @@
 import { Hero } from '@/components/features/hero/Hero'
 import { ProjectsSection } from '@/components/features/projects'
 import { SkillsSection } from '@/components/features/skills'
+import { CertificatesSection } from '@/components/features/certificates'
 import { TimelineSection } from '@/components/features/timeline'
 import { GitHubSection } from '@/components/features/github'
 import { ContactSection } from '@/components/features/contact'
@@ -14,6 +15,7 @@ export default function Home() {
         <Hero />
         <ProjectsSection />
         <SkillsSection />
+        <CertificatesSection />
         <TimelineSection />
         <GitHubSection />
         <ContactSection />
