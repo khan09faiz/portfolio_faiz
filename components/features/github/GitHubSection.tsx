@@ -112,8 +112,9 @@ export function GitHubSection() {
     <section id="github" className="section-padding">
       <div className="container">
         <SectionHeader
+          terminalPath="~/github"
           title="GitHub Statistics"
-          subtitle="My coding journey, contributions, and open source work"
+          description="My coding journey, contributions, and open source work"
         />
 
         {/* Visit GitHub Button */}
