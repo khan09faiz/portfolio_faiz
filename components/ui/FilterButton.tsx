@@ -23,24 +23,24 @@ export function FilterButton({
 }: FilterButtonProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.05, y: -2 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
       className={cn(
-        'relative px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300',
+        'relative px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 shadow-sm',
         isActive
-          ? 'bg-primary text-background shadow-glow-sm'
-          : 'bg-card/30 text-muted-foreground hover:bg-card/50 hover:text-foreground border border-primary/10'
+          ? 'bg-primary text-background shadow-glow-md hover:shadow-glow-lg'
+          : 'bg-card/40 text-muted-foreground hover:bg-card/60 hover:text-foreground border border-primary/10 hover:border-primary/30'
       )}
     >
       <span>{label}</span>
       {count !== undefined && (
         <span
           className={cn(
-            'ml-2 text-xs px-1.5 py-0.5 rounded-full',
+            'ml-2 text-xs px-2 py-0.5 rounded-full font-bold',
             isActive
-              ? 'bg-background/20 text-background'
-              : 'bg-primary/10 text-primary'
+              ? 'bg-background/25 text-background'
+              : 'bg-primary/15 text-primary'
           )}
         >
           {count}

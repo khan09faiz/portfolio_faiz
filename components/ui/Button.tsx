@@ -37,13 +37,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // Variant styles
     const variantStyles = {
       primary:
-        'bg-primary text-background hover:bg-primary/90 shadow-glow-sm hover:shadow-glow-md active:scale-95',
+        'bg-primary text-background hover:bg-primary/90 shadow-glow-sm hover:shadow-glow-lg active:scale-[0.97] hover:-translate-y-0.5',
       secondary:
-        'bg-card/50 text-foreground hover:bg-card border border-primary/20 hover:border-primary/40 shadow-glass',
+        'bg-card/50 text-foreground hover:bg-card border border-primary/20 hover:border-primary/40 shadow-glass hover:shadow-glow-sm active:scale-[0.97]',
       ghost:
-        'bg-transparent text-foreground hover:bg-primary/10 hover:text-primary',
+        'bg-transparent text-foreground hover:bg-primary/10 hover:text-primary active:scale-[0.97]',
       outline:
-        'bg-transparent text-foreground border-2 border-primary/50 hover:bg-primary/10 hover:border-primary',
+        'bg-transparent text-foreground border-2 border-primary/50 hover:bg-primary/10 hover:border-primary active:scale-[0.97]',
     }
 
     // Size styles

@@ -139,8 +139,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
+              className="mb-2"
             >
-              <span className="text-primary text-sm sm:text-base md:text-lg font-mono">
+              <span className="text-primary text-sm sm:text-base md:text-lg font-mono bg-primary/10 px-3 py-1.5 rounded-lg inline-block">
                 {'<'} Hello World {'/>'} 👋
               </span>
             </motion.div>
@@ -150,9 +151,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4"
             >
-              <span className="text-gradient">{SITE_CONFIG.name}</span>
+              <span className="text-gradient drop-shadow-glow">{SITE_CONFIG.name}</span>
             </motion.h1>
 
             {/* Rotating Role */}
@@ -160,17 +161,18 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="h-10 sm:h-12 md:h-16"
+              className="h-10 sm:h-12 md:h-16 mb-6"
             >
               <AnimatePresence mode="wait">
                 <motion.h2
                   key={currentRole}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary"
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary flex items-center gap-2 sm:gap-3 justify-center lg:justify-start"
                 >
+                  <span className="text-lg sm:text-xl">▸</span>
                   {roles[currentRole]}
                 </motion.h2>
               </AnimatePresence>
@@ -195,16 +197,21 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <Card variant="elevated" className="overflow-hidden">
+            <Card variant="elevated" className="overflow-hidden border-primary/20 shadow-glow-md hover:shadow-glow-lg transition-all duration-300 group">
               {/* Terminal Header */}
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-primary/10">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
+              <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-primary/10">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500 cursor-pointer hover:bg-red-400 transition-colors" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer hover:bg-yellow-400 transition-colors" />
+                    <div className="w-3 h-3 rounded-full bg-green-500 cursor-pointer hover:bg-green-400 transition-colors" />
+                  </div>
+                  <span className="text-xs text-muted-foreground font-mono ml-2">
+                    ~/developer.ts
+                  </span>
                 </div>
-                <span className="text-xs text-muted-foreground font-mono">
-                  ~/developer.ts
+                <span className="text-[10px] text-primary font-mono">
+                  TypeScript
                 </span>
               </div>
 
@@ -242,16 +249,19 @@ export function Hero() {
                 >
                   <Card 
                     hover 
-                    className="p-6 text-center cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:border-primary/50"
+                    className="p-6 text-center cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:border-primary/50 group-hover:shadow-glow-md"
                   >
-                    <div className={`h-12 w-12 rounded-full ${stat.color.replace('text-', 'bg-')}/20 flex items-center justify-center mx-auto mb-3 transition-transform group-hover:scale-110`}>
-                      <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                    <div className={`h-12 w-12 rounded-full ${stat.color.replace('text-', 'bg-')}/20 flex items-center justify-center mx-auto mb-3 transition-all duration-300 group-hover:scale-110 group-hover:${stat.color.replace('text-', 'bg-')}/30`}>
+                      <stat.icon className={`h-6 w-6 ${stat.color} transition-transform group-hover:rotate-12`} />
                     </div>
-                    <div className="text-3xl font-bold mb-1 group-hover:text-primary transition-colors">
+                    <div className="text-2xl md:text-3xl font-bold mb-1 group-hover:text-primary transition-colors">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                    <div className="text-xs md:text-sm text-muted-foreground group-hover:text-foreground transition-colors font-medium">
                       {stat.label}
+                    </div>
+                    <div className="text-[10px] text-muted-foreground/50 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      Click to view
                     </div>
                   </Card>
                 </motion.div>
