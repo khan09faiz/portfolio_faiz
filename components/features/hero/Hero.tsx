@@ -51,12 +51,44 @@ const roles = [
   'Code Enthusiast',
 ]
 
-// Stats data
+// Stats data with navigation
 const stats = [
-  { icon: Code2, value: '7+', label: 'Projects', color: 'text-blue-500', fill: 'fill-blue-500/20' },
-  { icon: Rocket, value: '60+', label: 'Technologies', color: 'text-purple-500', fill: 'fill-purple-500/20' },
-  { icon: Users, value: '10K+', label: 'Impact', color: 'text-green-500', fill: 'fill-green-500/20' },
-  { icon: Award, value: '3+', label: 'Achievements', color: 'text-orange-500', fill: 'fill-orange-500/20' },
+  { 
+    icon: Code2, 
+    value: '7+', 
+    label: 'Projects', 
+    color: 'text-blue-500', 
+    fill: 'fill-blue-500/20',
+    href: '#projects',
+    description: 'View my projects'
+  },
+  { 
+    icon: Rocket, 
+    value: '60+', 
+    label: 'Technologies', 
+    color: 'text-purple-500', 
+    fill: 'fill-purple-500/20',
+    href: '#skills',
+    description: 'Technical skills'
+  },
+  { 
+    icon: Users, 
+    value: 'B.Tech', 
+    label: 'Degree', 
+    color: 'text-green-500', 
+    fill: 'fill-green-500/20',
+    href: '#timeline',
+    description: 'Education background'
+  },
+  { 
+    icon: Award, 
+    value: '2+', 
+    label: 'Work Experience', 
+    color: 'text-orange-500', 
+    fill: 'fill-orange-500/20',
+    href: '#timeline',
+    description: 'Career path'
+  },
 ]
 
 // Highlights
@@ -206,6 +238,45 @@ export function Hero() {
             </Card>
           </motion.div>
         </div>
+
+        {/* Stats Section - Clickable Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="mt-16 lg:mt-24"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+            {stats.map((stat, index) => (
+              <Link
+                key={stat.label}
+                href={stat.href}
+                className="group block"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+                >
+                  <Card 
+                    hover 
+                    className="p-6 text-center cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:border-primary/50"
+                  >
+                    <div className={`h-12 w-12 rounded-full ${stat.color.replace('text-', 'bg-')}/20 flex items-center justify-center mx-auto mb-3 transition-transform group-hover:scale-110`}>
+                      <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                    </div>
+                    <div className="text-3xl font-bold mb-1 group-hover:text-primary transition-colors">
+                      {stat.value}
+                    </div>
+                    <div className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                      {stat.label}
+                    </div>
+                  </Card>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Highlights Section */}
         <motion.div
