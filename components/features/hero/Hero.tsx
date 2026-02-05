@@ -17,9 +17,7 @@ import {
   Code2, 
   Rocket, 
   Users, 
-  Award,
-  ChevronDown,
-  ExternalLink 
+  Award 
 } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
 import Link from 'next/link'
@@ -110,13 +108,6 @@ export function Hero() {
 
     return () => clearInterval(typingInterval)
   }, [isTyping])
-
-  const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects')
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
 
   return (
     <section className="min-h-screen relative overflow-hidden flex items-center">
@@ -235,8 +226,8 @@ export function Hero() {
               </div>
 
               {/* Code Block */}
-              <pre className="text-[10px] xs:text-xs sm:text-sm font-mono overflow-x-auto max-h-[60vh] sm:max-h-none scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
-                <code className="text-foreground/90 block">
+              <pre className="text-[10px] xs:text-xs sm:text-sm font-mono max-h-[60vh] sm:max-h-none overflow-hidden">
+                <code className="text-foreground/90 block break-words whitespace-pre-wrap">
                   {displayedCode}
                   {isTyping && (
                     <span className="inline-block w-1.5 h-3 sm:w-2 sm:h-4 bg-primary ml-1 animate-blink" />
@@ -290,23 +281,6 @@ export function Hero() {
               </p>
             </Card>
           ))}
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="mt-16 flex justify-center"
-        >
-          <button
-            onClick={scrollToProjects}
-            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
-            aria-label="Scroll to projects"
-          >
-            <span className="text-sm">Explore More</span>
-            <ChevronDown className="h-6 w-6 animate-bounce" />
-          </button>
         </motion.div>
       </div>
     </section>
