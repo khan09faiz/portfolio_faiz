@@ -166,7 +166,7 @@ export function CertificatesSection() {
                   repeat: Infinity, 
                   repeatType: "reverse", 
                   duration: 0.8,
-                  ease: [0.4, 0, 0.6, 1]
+                  ease: [0.4, 0, 0.6, 1] as const
                 }}
               >
                 {!showAll ? (

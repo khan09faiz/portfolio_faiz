@@ -211,7 +211,7 @@ export function InteractiveCat() {
               y: {
                 duration: 0.6,
                 repeat: Infinity,
-                ease: [0.4, 0, 0.6, 1]
+                ease: [0.4, 0, 0.6, 1] as const
               }
             }}
             className="absolute -top-6 left-1/2 transform -translate-x-1/2 pointer-events-none"
@@ -403,7 +403,7 @@ export function InteractiveCat() {
             initial={{ opacity: 0, x: -10, scale: 0.5 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: -10, scale: 0.5 }}
-            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] as const }}
             className="absolute top-0 -left-16 text-lg whitespace-nowrap"
             style={{
               filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',

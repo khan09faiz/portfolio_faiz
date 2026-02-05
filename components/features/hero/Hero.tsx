@@ -169,7 +169,7 @@ export function Hero() {
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as const }}
                   className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary flex items-center gap-2 sm:gap-3 justify-center lg:justify-start"
                 >
                   <span className="text-lg sm:text-xl">▸</span>
