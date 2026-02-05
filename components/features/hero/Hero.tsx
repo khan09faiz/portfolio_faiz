@@ -195,7 +195,7 @@ export function Hero() {
               transition={{ duration: 0.3, delay: 0.1 }}
               className="text-sm sm:text-base lg:text-lg text-muted-foreground text-center mt-6"
             >
-              Hala Madrid! ⚽
+              Hala Madrid!!! ⚽
             </motion.p>
           </div>
 
