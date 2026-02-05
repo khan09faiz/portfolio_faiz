@@ -230,9 +230,10 @@ function SkillMarkerPoint({
 }
 
 // Animated Globe Component
-function Globe({ markers, onMarkerClick }: { 
+function Globe({ markers, onMarkerClick, isMobile }: { 
   markers: SkillMarker[]
   onMarkerClick: (skill: string, category: string) => void
+  isMobile: boolean
 }) {
   const globeRef = useRef<THREE.Mesh>(null)
   const wireframe1Ref = useRef<THREE.Mesh>(null)
@@ -249,14 +250,14 @@ function Globe({ markers, onMarkerClick }: {
 
   return (
     <>
-      {/* Particles - Reduced */}
-      <Particles />
+      {/* Particles - Desktop only */}
+      {!isMobile && <Particles />}
       
-      {/* Rotating Rings */}
-      <RotatingRings />
+      {/* Rotating Rings - Desktop only */}
+      {!isMobile && <RotatingRings />}
 
-      {/* Main Globe - Highly Optimized */}
-      <Sphere ref={globeRef} args={[2.5, 24, 24]}>
+      {/* Main Globe - Simplified on mobile */}
+      <Sphere ref={globeRef} args={isMobile ? [2.5, 16, 16] : [2.5, 24, 24]}>
         <meshStandardMaterial
           color="#18181B"
           attach="material"
@@ -267,15 +268,17 @@ function Globe({ markers, onMarkerClick }: {
         />
       </Sphere>
 
-      {/* Wireframe - Simplified */}
-      <Sphere ref={wireframe1Ref} args={[2.52, 12, 12]}>
-        <meshBasicMaterial
-          color="#52525B"
-          wireframe
-          opacity={0.15}
-          transparent
-        />
-      </Sphere>
+      {/* Wireframe - Simplified, Desktop only */}
+      {!isMobile && (
+        <Sphere ref={wireframe1Ref} args={[2.52, 12, 12]}>
+          <meshBasicMaterial
+            color="#52525B"
+            wireframe
+            opacity={0.15}
+            transparent
+          />
+        </Sphere>
+      )}
 
       {/* Skill Markers */}
       {markers.map((marker, index) => (
@@ -300,6 +303,17 @@ function Globe({ markers, onMarkerClick }: {
 // Main Skills Globe Component
 export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
   const [selectedSkill, setSelectedSkill] = useState<{ skill: string; category: string } | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Generate markers from skills data
   const markers = useMemo(() => {
@@ -319,8 +333,9 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
       })
     })
     
-    return allMarkers
-  }, [skillsData])
+    // Show fewer markers on mobile for performance
+    return isMobile ? allMarkers.filter((_, i) => i % 2 === 0) : allMarkers
+  }, [skillsData, isMobile])
 
   const handleMarkerClick = (skill: string, category: string) => {
     setSelectedSkill({ skill, category })
@@ -343,13 +358,13 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
         dpr={1}
         frameloop="demand"
       >
-        <Globe markers={markers} onMarkerClick={handleMarkerClick} />
+        <Globe markers={markers} onMarkerClick={handleMarkerClick} isMobile={isMobile} />
         <OrbitControls
           enableZoom={false}
           enablePan={false}
           autoRotate={false}
           rotateSpeed={0.4}
-          enableDamping={true}
+          enableDamping={!isMobile}
           dampingFactor={0.05}
         />
       </Canvas>
