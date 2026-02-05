@@ -128,12 +128,12 @@ export function GitHubSection() {
     ? stats.contributedRepos
     : stats.contributedRepos.filter(r => r.language === selectedContribLang)
 
-  // Show initial 6 repos or all
-  const displayedMyRepos = showAllRepos ? filteredMyRepos : filteredMyRepos.slice(0, 6)
-  const displayedContribRepos = showAllContrib ? filteredContribRepos : filteredContribRepos.slice(0, 6)
+  // Show initial 4 repos or all
+  const displayedMyRepos = showAllRepos ? filteredMyRepos : filteredMyRepos.slice(0, 4)
+  const displayedContribRepos = showAllContrib ? filteredContribRepos : filteredContribRepos.slice(0, 4)
 
-  const hasMoreMyRepos = filteredMyRepos.length > 6
-  const hasMoreContrib = filteredContribRepos.length > 6
+  const hasMoreMyRepos = filteredMyRepos.length > 4
+  const hasMoreContrib = filteredContribRepos.length > 4
 
   const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString)
