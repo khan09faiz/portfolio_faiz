@@ -1,6 +1,6 @@
 /**
  * TimelineSection Component
- * Display career, education, and achievements timeline
+ * Display career and education timeline
  */
 
 'use client'
