@@ -23,6 +23,7 @@ export const SITE_CONFIG = {
     linkedin: 'https://www.linkedin.com/in/khan09faiz/',
     twitter: '', // Optional - add if you have
   },
+  githubUsername: 'khan09faiz',
   person: {
     jobTitle: 'AI Engineer | Systems Developer | Intelligent Automation',
     location: 'Jaipur, India',

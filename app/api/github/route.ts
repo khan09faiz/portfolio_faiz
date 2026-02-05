@@ -1,5 +1,46 @@
 import { NextResponse } from 'next/server'
 
+// Calculate contribution streak from contribution calendar
+function calculateStreaks(contributionDays: Array<{ contributionCount: number; date: string }>) {
+  let currentStreak = 0
+  let longestStreak = 0
+  let tempStreak = 0
+
+  // Sort by date descending (most recent first)
+  const sortedDays = [...contributionDays].sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  )
+
+  // Calculate current streak (from today backwards)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  
+  for (const day of sortedDays) {
+    const dayDate = new Date(day.date)
+    dayDate.setHours(0, 0, 0, 0)
+    
+    if (dayDate <= today) {
+      if (day.contributionCount > 0) {
+        currentStreak++
+      } else if (currentStreak > 0) {
+        break // Stop counting current streak when we hit a day with no contributions
+      }
+    }
+  }
+
+  // Calculate longest streak
+  for (const day of contributionDays) {
+    if (day.contributionCount > 0) {
+      tempStreak++
+      longestStreak = Math.max(longestStreak, tempStreak)
+    } else {
+      tempStreak = 0
+    }
+  }
+
+  return { currentStreak, longestStreak }
+}
+
 export async function GET() {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN
   const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'khan09faiz'
@@ -28,6 +69,12 @@ export async function GET() {
             totalCommitContributions
             contributionCalendar {
               totalContributions
+              weeks {
+                contributionDays {
+                  contributionCount
+                  date
+                }
+              }
             }
           }
           repositories(
@@ -41,8 +88,10 @@ export async function GET() {
               name
               description
               url
+              homepageUrl
               stargazerCount
               forkCount
+              updatedAt
               primaryLanguage {
                 name
                 color
@@ -55,6 +104,30 @@ export async function GET() {
                     color
                   }
                 }
+              }
+            }
+          }
+          repositoriesContributedTo(
+            first: 100
+            privacy: PUBLIC
+            contributionTypes: [COMMIT, PULL_REQUEST, ISSUE, PULL_REQUEST_REVIEW]
+            orderBy: {field: UPDATED_AT, direction: DESC}
+          ) {
+            totalCount
+            nodes {
+              name
+              description
+              url
+              homepageUrl
+              stargazerCount
+              forkCount
+              updatedAt
+              owner {
+                login
+              }
+              primaryLanguage {
+                name
+                color
               }
             }
           }
@@ -86,12 +159,20 @@ export async function GET() {
       throw new Error('GitHub API returned errors')
     }
 
+    const userData = data.data.user
+
+    // Calculate streaks from contribution calendar
+    const contributionDays = userData.contributionsCollection.contributionCalendar.weeks
+      .flatMap((week: any) => week.contributionDays)
+    
+    const { currentStreak, longestStreak } = calculateStreaks(contributionDays)
+
     // Calculate language statistics
     const languageMap = new Map<string, { bytes: number; color: string }>()
     let totalStars = 0
     let totalForks = 0
 
-    data.data.user.repositories.nodes.forEach((repo: any) => {
+    userData.repositories.nodes.forEach((repo: any) => {
       totalStars += repo.stargazerCount
       totalForks += repo.forkCount
 
@@ -107,45 +188,60 @@ export async function GET() {
     })
 
     const totalBytes = Array.from(languageMap.values()).reduce((sum, { bytes }) => sum + bytes, 0)
-    console.log('Total language bytes:', totalBytes)
-    console.log('Language map:', Array.from(languageMap.entries()))
     
     const topLanguages = Array.from(languageMap.entries())
       .map(([name, { bytes, color }]) => ({
         name,
         color,
-        percentage: totalBytes > 0 ? Math.round((bytes / totalBytes) * 100 * 10) / 10 : 0, // One decimal place
+        percentage: totalBytes > 0 ? Math.round((bytes / totalBytes) * 100 * 10) / 10 : 0,
       }))
-      .filter((lang) => lang.percentage > 0) // Only show languages with > 0%
+      .filter((lang) => lang.percentage > 0)
       .sort((a, b) => b.percentage - a.percentage)
-      .slice(0, 8) // Show top 8 languages instead of 5
-    
-    console.log('Top languages:', topLanguages)
+      .slice(0, 8)
 
-    // Get featured repositories (top 4 by stars)
-    const featuredRepos = data.data.user.repositories.nodes
-      .filter((repo: any) => repo.stargazerCount > 0 || repo.description)
-      .sort((a: any, b: any) => b.stargazerCount - a.stargazerCount)
-      .slice(0, 4)
+    // Get my repositories
+    const myRepos = userData.repositories.nodes.map((repo: any) => ({
+      name: repo.name,
+      description: repo.description || '',
+      stars: repo.stargazerCount,
+      forks: repo.forkCount,
+      language: repo.primaryLanguage?.name || 'Unknown',
+      color: repo.primaryLanguage?.color || '#8257e5',
+      url: repo.url,
+      updatedAt: repo.updatedAt,
+      homepage: repo.homepageUrl,
+      isOwner: true,
+    }))
+
+    // Get contributed repositories (excluding own repos)
+    const contributedRepos = userData.repositoriesContributedTo.nodes
+      .filter((repo: any) => repo.owner.login !== GITHUB_USERNAME)
       .map((repo: any) => ({
         name: repo.name,
-        description: repo.description || 'No description available',
+        description: repo.description || '',
         stars: repo.stargazerCount,
         forks: repo.forkCount,
         language: repo.primaryLanguage?.name || 'Unknown',
         color: repo.primaryLanguage?.color || '#8257e5',
         url: repo.url,
+        updatedAt: repo.updatedAt,
+        homepage: repo.homepageUrl,
+        isOwner: false,
       }))
 
     const stats = {
-      totalRepos: data.data.user.repositories.totalCount,
+      totalRepos: userData.repositories.totalCount,
       totalStars,
       totalForks,
-      followers: data.data.user.followers.totalCount,
-      following: data.data.user.following.totalCount,
-      contributions: data.data.user.contributionsCollection.contributionCalendar.totalContributions,
+      followers: userData.followers.totalCount,
+      following: userData.following.totalCount,
+      contributions: userData.contributionsCollection.contributionCalendar.totalContributions,
+      currentStreak,
+      longestStreak,
+      languageCount: topLanguages.length,
       topLanguages,
-      featuredRepos,
+      myRepos,
+      contributedRepos,
     }
 
     return NextResponse.json(stats)

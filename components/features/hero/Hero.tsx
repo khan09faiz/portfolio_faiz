@@ -207,28 +207,6 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-16 lg:mt-24"
-        >
-          <StatCardGrid columns={4} className="max-w-4xl mx-auto">
-            {stats.map((stat, index) => (
-              <StatCard
-                key={stat.label}
-                icon={stat.icon}
-                value={stat.value}
-                label={stat.label}
-                color={stat.color}
-                fill={stat.fill}
-                index={index}
-              />
-            ))}
-          </StatCardGrid>
-        </motion.div>
-
         {/* Highlights Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
