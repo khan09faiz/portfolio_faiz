@@ -175,5 +175,89 @@
       "PostgreSQL",
       "MySQL"
     ]
+  },
+  {
+    "id": "cert-accounting-cycle-uci",
+    "type": "achievement",
+    "title": "Completing the Accounting Cycle",
+    "organization": "University of California, Irvine - The Paul Merage School of Business",
+    "location": "Online",
+    "startDate": "2024-02",
+    "endDate": "2024-03",
+    "description": [
+      "Comprehensive understanding of the accounting cycle",
+      "Financial statements, journal entries, and closing procedures",
+      "Analyzing business transactions and maintaining ledgers",
+      "Essential foundation for financial data analysis"
+    ],
+    "technologies": [
+      "Accounting",
+      "Excel",
+      "Financial Analysis",
+      "Data Analytics"
+    ]
+  },
+  {
+    "id": "cert-eda-ml-ibm",
+    "type": "achievement",
+    "title": "Exploratory Data Analysis for Machine Learning",
+    "organization": "IBM",
+    "location": "Online",
+    "startDate": "2024-03",
+    "endDate": "2024-04",
+    "description": [
+      "Advanced EDA techniques for ML model preparation",
+      "Data visualization, feature engineering, and data cleaning",
+      "Statistical analysis and outlier detection methods",
+      "Practical applications in real-world ML projects"
+    ],
+    "technologies": [
+      "Python",
+      "Pandas",
+      "Matplotlib",
+      "Seaborn"
+    ]
+  },
+  {
+    "id": "cert-cv-image-processing-ibm",
+    "type": "achievement",
+    "title": "Introduction to Computer Vision and Image Processing",
+    "organization": "IBM",
+    "location": "Online",
+    "startDate": "2025-03",
+    "endDate": "2025-04",
+    "description": [
+      "Fundamentals of computer vision and image processing",
+      "Image filtering, edge detection, and feature extraction",
+      "Deep learning for image classification and object detection",
+      "Hands-on implementation of CV algorithms"
+    ],
+    "technologies": [
+      "Python",
+      "OpenCV",
+      "PIL",
+      "NumPy"
+    ]
+  },
+  {
+    "id": "cert-power-bi-microsoft",
+    "type": "achievement",
+    "title": "Creative Designing in Power BI",
+    "organization": "Microsoft",
+    "location": "Online",
+    "startDate": "2024-10",
+    "endDate": "2024-11",
+    "description": [
+      "Advanced Power BI dashboard design and visualization",
+      "Custom visuals, themes, and interactive reports",
+      "DAX formulas and data modeling best practices",
+      "Creating compelling business intelligence solutions"
+    ],
+    "technologies": [
+      "Power BI",
+      "DAX",
+      "Data Visualization",
+      "Business Intelligence"
+    ]
   }
 ]
