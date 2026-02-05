@@ -74,11 +74,11 @@ const stats = [
   },
   { 
     icon: FileCheck, 
-    value: '4+', 
+    value: '5+', 
     label: 'Certificates', 
     color: 'text-cyan-500', 
     fill: 'fill-cyan-500/20',
-    href: '#certificates',
+    href: '#timeline',
     description: 'Professional certifications'
   },
   { 
@@ -87,7 +87,7 @@ const stats = [
     label: 'Degree', 
     color: 'text-green-500', 
     fill: 'fill-green-500/20',
-    href: '#education',
+    href: '#timeline',
     description: 'Education background'
   },
 ]
