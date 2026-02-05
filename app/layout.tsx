@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { StructuredData } from '@/components/seo'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -92,6 +93,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans">
         <Header />
         {children}
+        <Analytics />
       </body>
     </html>
   )
