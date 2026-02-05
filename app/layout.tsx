@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
 import { StructuredData } from '@/components/seo'
 
 const inter = Inter({
@@ -93,7 +92,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans">
         <Header />
         {children}
-        <Footer />
       </body>
     </html>
   )

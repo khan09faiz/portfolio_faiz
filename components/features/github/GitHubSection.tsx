@@ -42,9 +42,11 @@ const fallbackData: GitHubStats = {
   following: 52,
   contributions: 847,
   topLanguages: [
-    { name: 'Python', percentage: 45, color: '#3572A5' },
-    { name: 'TypeScript', percentage: 25, color: '#2b7489' },
-    { name: 'JavaScript', percentage: 15, color: '#f1e05a' },
+    { name: 'Python', percentage: 42.5, color: '#3572A5' },
+    { name: 'TypeScript', percentage: 28.3, color: '#2b7489' },
+    { name: 'JavaScript', percentage: 18.2, color: '#f1e05a' },
+    { name: 'CSS', percentage: 6.8, color: '#563d7c' },
+    { name: 'HTML', percentage: 4.2, color: '#e34c26' },
   ],
   featuredRepos: [
     {

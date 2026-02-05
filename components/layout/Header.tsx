@@ -31,7 +31,7 @@ export function Header() {
       let current = ''
 
       for (const section of sections) {
-        if (section === '' || section === 'github') continue
+        if (section === '') continue
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()

@@ -33,7 +33,7 @@ export async function GET() {
           repositories(
             first: 100
             privacy: PUBLIC
-            isFork: false
+            ownerAffiliations: OWNER
             orderBy: {field: UPDATED_AT, direction: DESC}
           ) {
             totalCount
@@ -107,14 +107,20 @@ export async function GET() {
     })
 
     const totalBytes = Array.from(languageMap.values()).reduce((sum, { bytes }) => sum + bytes, 0)
+    console.log('Total language bytes:', totalBytes)
+    console.log('Language map:', Array.from(languageMap.entries()))
+    
     const topLanguages = Array.from(languageMap.entries())
       .map(([name, { bytes, color }]) => ({
         name,
         color,
-        percentage: Math.round((bytes / totalBytes) * 100),
+        percentage: totalBytes > 0 ? Math.round((bytes / totalBytes) * 100 * 10) / 10 : 0, // One decimal place
       }))
+      .filter((lang) => lang.percentage > 0) // Only show languages with > 0%
       .sort((a, b) => b.percentage - a.percentage)
-      .slice(0, 5)
+      .slice(0, 8) // Show top 8 languages instead of 5
+    
+    console.log('Top languages:', topLanguages)
 
     // Get featured repositories (top 4 by stars)
     const featuredRepos = data.data.user.repositories.nodes
