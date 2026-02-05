@@ -203,7 +203,7 @@ export function ContactSection() {
             <div className="space-y-6">
               {/* Info Card */}
               <Card variant="elevated">
-                <h3 className="text-xl font-bold mb-4">Contact Information</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">Contact Information</h3>
                 <div className="space-y-4">
                   <a
                     href={`mailto:${SITE_CONFIG.contact.email}`}
@@ -247,7 +247,7 @@ export function ContactSection() {
 
               {/* Quick Message Card */}
               <Card variant="outlined">
-                <h3 className="text-lg font-bold mb-2">Quick Response</h3>
+                <h3 className="text-lg font-bold mb-2 text-foreground">Quick Response</h3>
                 <p className="text-sm text-muted-foreground">
                   I typically respond within 24-48 hours. For urgent matters, feel free to reach out directly via email or LinkedIn.
                 </p>
@@ -255,7 +255,7 @@ export function ContactSection() {
 
               {/* Availability Card */}
               <Card variant="outlined">
-                <h3 className="text-lg font-bold mb-2">Availability</h3>
+                <h3 className="text-lg font-bold mb-2 text-foreground">Availability</h3>
                 <p className="text-sm text-muted-foreground">
                   Open to freelance projects, collaborations, and full-time opportunities. Let's discuss how we can work together!
                 </p>
