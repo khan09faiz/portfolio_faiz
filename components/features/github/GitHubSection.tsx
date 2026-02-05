@@ -301,7 +301,7 @@ export function GitHubSection() {
           </p>
 
           {/* Repository Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
             {displayedMyRepos.map((repo, index) => (
               <motion.div
                 key={repo.name}
@@ -310,14 +310,14 @@ export function GitHubSection() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-6 h-full flex flex-col hover:border-primary/30 transition-all group">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Github className="h-5 w-5 text-primary" />
+                <Card className="p-5 h-full flex flex-col hover:border-primary/30 transition-all group">
+                  <div className="flex items-start gap-2 mb-2">
+                    <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Github className="h-4 w-4 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <h4 className="font-bold text-lg truncate group-hover:text-primary transition-colors">
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="font-bold text-base truncate group-hover:text-primary transition-colors">
                           {SITE_CONFIG.githubUsername}
                         </h4>
                         {repo.homepage && (
@@ -331,16 +331,16 @@ export function GitHubSection() {
                   </div>
 
                   {repo.description && (
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2 flex-1">
+                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2 flex-1">
                       {repo.description}
                     </p>
                   )}
 
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
                     {repo.language && (
                       <div className="flex items-center gap-1.5">
                         <div className="h-3 w-3 rounded-full" style={{ backgroundColor: repo.color }} />
-                        <span>{repo.language}</span>
+                        <span className="text-xs">{repo.language}</span>
                       </div>
                     )}
                     <div className="flex items-center gap-1">
@@ -353,7 +353,7 @@ export function GitHubSection() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
                     <Clock className="h-3 w-3" />
                     <span>Updated {formatTimeAgo(repo.updatedAt)}</span>
                   </div>
@@ -363,7 +363,7 @@ export function GitHubSection() {
                       href={repo.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 px-4 py-2 bg-card hover:bg-primary/10 border border-primary/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-2"
+                      className="flex-1 px-3 py-2 bg-card hover:bg-primary/10 border border-primary/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
                     >
                       <Github className="h-4 w-4" />
                       Code
@@ -373,7 +373,7 @@ export function GitHubSection() {
                         href={repo.homepage}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-2"
+                        className="flex-1 px-3 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
                       >
                         <ExternalLink className="h-4 w-4" />
                         Live
@@ -470,7 +470,7 @@ export function GitHubSection() {
             </div>
 
             {/* Contribution Repository Cards */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
               {displayedContribRepos.map((repo, index) => (
                 <motion.div
                   key={repo.url}
@@ -479,13 +479,13 @@ export function GitHubSection() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="p-6 h-full flex flex-col hover:border-green-500/30 transition-all group">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className="h-10 w-10 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                        <Github className="h-5 w-5 text-green-500" />
+                  <Card className="p-5 h-full flex flex-col hover:border-green-500/30 transition-all group">
+                    <div className="flex items-start gap-2 mb-2">
+                      <div className="h-9 w-9 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                        <Github className="h-4 w-4 text-green-500" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-lg truncate group-hover:text-green-500 transition-colors mb-1">
+                        <h4 className="font-bold text-base truncate group-hover:text-green-500 transition-colors">
                           {repo.url.split('/')[3]}
                         </h4>
                         <p className="text-green-500 font-semibold truncate">{repo.name}</p>
@@ -493,16 +493,16 @@ export function GitHubSection() {
                     </div>
 
                     {repo.description && (
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2 flex-1">
+                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2 flex-1">
                         {repo.description}
                       </p>
                     )}
 
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
                       {repo.language && (
                         <div className="flex items-center gap-1.5">
                           <div className="h-3 w-3 rounded-full" style={{ backgroundColor: repo.color }} />
-                          <span>{repo.language}</span>
+                          <span className="text-xs">{repo.language}</span>
                         </div>
                       )}
                       <div className="flex items-center gap-1">
@@ -519,7 +519,7 @@ export function GitHubSection() {
                       href={repo.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-auto px-4 py-2 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-2"
+                      className="mt-auto px-3 py-2 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
                     >
                       <ExternalLink className="h-4 w-4" />
                       View Repository
