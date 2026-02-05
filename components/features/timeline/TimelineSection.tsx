@@ -309,7 +309,7 @@ export function TimelineSection() {
                     repeat: Infinity, 
                     repeatType: "reverse", 
                     duration: 0.8,
-                    ease: "easeInOut"
+                    ease: [0.4, 0, 0.6, 1]
                   }}
                 >
                   {!showAllCertificates ? (

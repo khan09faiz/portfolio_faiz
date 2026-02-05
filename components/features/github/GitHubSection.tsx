@@ -413,7 +413,7 @@ export function GitHubSection() {
                     repeat: Infinity, 
                     repeatType: "reverse", 
                     duration: 0.8,
-                    ease: "easeInOut"
+                    ease: [0.4, 0, 0.6, 1]
                   }}
                 >
                   {!showAllRepos ? (
@@ -551,7 +551,7 @@ export function GitHubSection() {
                       repeat: Infinity, 
                       repeatType: "reverse", 
                       duration: 0.8,
-                      ease: "easeInOut"
+                      ease: [0.4, 0, 0.6, 1]
                     }}
                   >
                     {!showAllContrib ? (
