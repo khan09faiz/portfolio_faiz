@@ -50,8 +50,8 @@ export function AnimatedBackground() {
     const shapes: Shape[] = []
     const shapeTypes: Shape['type'][] = ['circle', 'triangle', 'square', 'hexagon']
     
-    // Create floating shapes - Reduced to 5 for better performance
-    for (let i = 0; i < 5; i++) {
+    // Create floating shapes - Minimal 2 for maximum performance
+    for (let i = 0; i < 2; i++) {
       shapes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -122,10 +122,10 @@ export function AnimatedBackground() {
     // Animation loop with performance optimization
     let animationId: number
     let lastFrameTime = 0
-    const frameInterval = 1000 / 24 // Target 24 FPS for background (even less demanding)
+    const frameInterval = 1000 / 15 // Target 15 FPS for background (minimal)
     
     const animate = (currentTime: number) => {
-      // Throttle to 24 FPS for background
+      // Throttle to 15 FPS for background
       if (currentTime - lastFrameTime < frameInterval) {
         animationId = requestAnimationFrame(animate)
         return

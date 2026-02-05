@@ -10,12 +10,12 @@ import { ContactSection } from '@/components/features/contact'
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator'
 
 const sectionVariants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.3,
       ease: [0.4, 0, 0.2, 1] as const
     }
   }
@@ -37,7 +37,7 @@ export default function Home() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={sectionVariants}
         >
           <ProjectsSection />
@@ -46,7 +46,7 @@ export default function Home() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={sectionVariants}
         >
           <SkillsSection />
@@ -55,7 +55,7 @@ export default function Home() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={sectionVariants}
         >
           <TimelineSection />
@@ -64,7 +64,7 @@ export default function Home() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={sectionVariants}
         >
           <GitHubSection />
@@ -73,7 +73,7 @@ export default function Home() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={sectionVariants}
         >
           <ContactSection />

@@ -32,7 +32,7 @@ export function StatCard({
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       animate={isActive ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.3 }}
       className={cn(
         'relative group',
         'bg-card/30 backdrop-blur-md',

@@ -396,7 +396,7 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
+        transition={{ duration: 0.3 }}
         className="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-md border border-gray-700 rounded-xl p-4 max-w-xs shadow-xl"
       >
         <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">

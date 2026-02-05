@@ -48,7 +48,7 @@ export function InteractiveCat() {
   // Smooth position interpolation - Optimized with throttling
   useEffect(() => {
     let lastTime = 0
-    const frameTime = 1000 / 60 // 60 FPS
+    const frameTime = 1000 / 30 // 30 FPS for performance
 
     const animate = (currentTime: number) => {
       if (currentTime - lastTime < frameTime) {
