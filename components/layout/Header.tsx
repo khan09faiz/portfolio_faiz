@@ -304,6 +304,12 @@ export function Header() {
                       </a>
                     )}
                   </div>
+                  <a
+                    href={`mailto:${SITE_CONFIG.contact.email}`}
+                    className="mt-3 block px-4 py-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
+                  >
+                    Email Me
+                  </a>
                 </motion.div>
               </div>
             </motion.div>
