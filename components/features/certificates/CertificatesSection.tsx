@@ -144,27 +144,39 @@ export function CertificatesSection() {
           ))}
         </div>
 
-        {/* Show More/Less Button */}
+        {/* Show More/Less */}
         {hasMore && (
-          <div className="text-center">
-            {!showAll ? (
-              <button
-                onClick={() => setShowAll(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-cyan-500/10 border border-cyan-500/20 rounded-lg transition-all"
+          <motion.div 
+            className="text-center mt-8"
+            whileHover={{ scale: 1.05 }}
+          >
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="group inline-flex items-center gap-2 text-cyan-500 hover:text-cyan-400 transition-colors cursor-pointer"
+            >
+              <span className="font-medium">
+                {!showAll 
+                  ? `View ${certificates.length - 3} More Certificate${certificates.length - 3 > 1 ? 's' : ''}`
+                  : 'View Less'
+                }
+              </span>
+              <motion.div
+                animate={{ y: showAll ? -2 : 2 }}
+                transition={{ 
+                  repeat: Infinity, 
+                  repeatType: "reverse", 
+                  duration: 0.8,
+                  ease: "easeInOut"
+                }}
               >
-                <ChevronDown className="h-5 w-5" />
-                View {certificates.length - 3} More Certificate{certificates.length - 3 > 1 ? 's' : ''}
-              </button>
-            ) : (
-              <button
-                onClick={() => setShowAll(false)}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-cyan-500/10 border border-cyan-500/20 rounded-lg transition-all"
-              >
-                <ChevronUp className="h-5 w-5" />
-                View Less
-              </button>
-            )}
-          </div>
+                {!showAll ? (
+                  <ChevronDown className="h-5 w-5 group-hover:translate-y-1 transition-transform" />
+                ) : (
+                  <ChevronUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
+                )}
+              </motion.div>
+            </button>
+          </motion.div>
         )}
       </div>
     </section>
