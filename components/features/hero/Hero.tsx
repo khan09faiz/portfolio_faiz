@@ -87,7 +87,7 @@ const stats = [
     label: 'Degree', 
     color: 'text-green-500', 
     fill: 'fill-green-500/20',
-    href: '#certificates',
+    href: '#education',
     description: 'Education background'
   },
 ]
