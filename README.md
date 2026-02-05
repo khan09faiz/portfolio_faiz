@@ -1,4 +1,11 @@
-# 🚀 Mohammad Faiz Khan - Portfolio
+## 👤 Author's Portfolio
+
+**Mohammad Faiz Khan**  
+AI/ML Engineer & Full-Stack Developer
+
+- Email: khan09faiz@gmail.com
+- GitHub: [@khan09faiz](https://github.com/khan09faiz)
+- LinkedIn: [khan09faiz](https://www.linkedin.com/in/khan09faiz/)
 
 A modern, performant portfolio website built with Next.js 15, React 19, and TypeScript. Features a cyberpunk-inspired glassmorphism design with smooth animations and responsive layouts.
 
@@ -49,7 +56,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 2. **Add Projects** - Edit `src/data/projects.json`
 3. **Add Skills** - Edit `src/data/skills.json`
 4. **Add Timeline** - Edit `src/data/timeline.json`
-5. **Setup EmailJS** - See [EmailJS Setup Guide](docs/emailjs-setup.md) (optional)
+5. **Setup EmailJS** - Setup emailjs
 
 ## 📦 Tech Stack
 
@@ -85,11 +92,6 @@ Me-myself-I/
     └── emailjs-setup.md
 ```
 
-## 📚 Documentation
-
-- [Reference Analysis](docs/reference-analysis.md) - Original repo analysis
-- [Implementation Plan](docs/implementation-plan.md) - Development roadmap
-- [EmailJS Setup](docs/emailjs-setup.md) - Contact form configuration
 
 ## 🚀 Deployment
 
@@ -110,11 +112,3 @@ AI/ML Engineer & Full-Stack Developer
 - GitHub: [@khan09faiz](https://github.com/khan09faiz)
 - LinkedIn: [khan09faiz](https://www.linkedin.com/in/khan09faiz/)
 
----
-
-**Built with ❤️ using Next.js 15, React 19, and TypeScript**
-- LinkedIn: [Mohammad Faiz Khan](https://www.linkedin.com/in/khan09faiz/)
-
----
-
-**Status:** 🚧 Under Active Development | **Version:** 1.0.0
