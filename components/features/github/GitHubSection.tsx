@@ -391,27 +391,39 @@ export function GitHubSection() {
             ))}
           </div>
 
-          {/* View More/Less Button */}
+          {/* View More/Less */}
           {hasMoreMyRepos && (
-            <div className="text-center">
-              {!showAllRepos ? (
-                <button
-                  onClick={() => setShowAllRepos(true)}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all"
+            <motion.div 
+              className="text-center mt-8"
+              whileHover={{ scale: 1.05 }}
+            >
+              <button
+                onClick={() => setShowAllRepos(!showAllRepos)}
+                className="group inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors cursor-pointer"
+              >
+                <span className="font-medium">
+                  {!showAllRepos 
+                    ? `View ${filteredMyRepos.length - 6} More`
+                    : 'View Less'
+                  }
+                </span>
+                <motion.div
+                  animate={{ y: showAllRepos ? -2 : 2 }}
+                  transition={{ 
+                    repeat: Infinity, 
+                    repeatType: "reverse", 
+                    duration: 0.8,
+                    ease: "easeInOut"
+                  }}
                 >
-                  <ChevronDown className="h-5 w-5" />
-                  View {filteredMyRepos.length - 6} More
-                </button>
-              ) : (
-                <button
-                  onClick={() => setShowAllRepos(false)}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all"
-                >
-                  <ChevronUp className="h-5 w-5" />
-                  View Less
-                </button>
-              )}
-            </div>
+                  {!showAllRepos ? (
+                    <ChevronDown className="h-5 w-5 group-hover:translate-y-1 transition-transform" />
+                  ) : (
+                    <ChevronUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
+                  )}
+                </motion.div>
+              </button>
+            </motion.div>
           )}
         </motion.div>
 
@@ -517,27 +529,39 @@ export function GitHubSection() {
               ))}
             </div>
 
-            {/* View More/Less Button for Contributions */}
+            {/* View More/Less */}
             {hasMoreContrib && (
-              <div className="text-center">
-                {!showAllContrib ? (
-                  <button
-                    onClick={() => setShowAllContrib(true)}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg transition-all"
+              <motion.div 
+                className="text-center mt-8"
+                whileHover={{ scale: 1.05 }}
+              >
+                <button
+                  onClick={() => setShowAllContrib(!showAllContrib)}
+                  className="group inline-flex items-center gap-2 text-green-500 hover:text-green-400 transition-colors cursor-pointer"
+                >
+                  <span className="font-medium">
+                    {!showAllContrib 
+                      ? `View ${filteredContribRepos.length - 6} More`
+                      : 'View Less'
+                    }
+                  </span>
+                  <motion.div
+                    animate={{ y: showAllContrib ? -2 : 2 }}
+                    transition={{ 
+                      repeat: Infinity, 
+                      repeatType: "reverse", 
+                      duration: 0.8,
+                      ease: "easeInOut"
+                    }}
                   >
-                    <ChevronDown className="h-5 w-5" />
-                    View {filteredContribRepos.length - 6} More
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setShowAllContrib(false)}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg transition-all"
-                  >
-                    <ChevronUp className="h-5 w-5" />
-                    View Less
-                  </button>
-                )}
-              </div>
+                    {!showAllContrib ? (
+                      <ChevronDown className="h-5 w-5 group-hover:translate-y-1 transition-transform" />
+                    ) : (
+                      <ChevronUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
+                    )}
+                  </motion.div>
+                </button>
+              </motion.div>
             )}
           </motion.div>
         )}
