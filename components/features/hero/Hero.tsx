@@ -193,9 +193,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="text-2xl sm:text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent drop-shadow-glow mt-6"
+              className="text-sm sm:text-base lg:text-lg text-muted-foreground text-center mt-6"
             >
-              Hala Madrid!!! ⚽️
+              Hala Madrid! ⚽
             </motion.p>
           </div>
 
