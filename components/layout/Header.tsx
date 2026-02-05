@@ -196,7 +196,9 @@ export function Header() {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href={`mailto:${SITE_CONFIG.contact.email}`}
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${SITE_CONFIG.contact.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2.5 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/15 hover:scale-110 transition-all duration-300 border border-transparent hover:border-primary/20"
                 aria-label="Email"
               >
@@ -305,7 +307,9 @@ export function Header() {
                     )}
                   </div>
                   <a
-                    href={`mailto:${SITE_CONFIG.contact.email}`}
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${SITE_CONFIG.contact.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="mt-3 block px-4 py-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
                   >
                     Email Me

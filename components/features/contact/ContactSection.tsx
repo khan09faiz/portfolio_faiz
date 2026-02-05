@@ -206,7 +206,9 @@ export function ContactSection() {
                 <h3 className="text-xl font-bold mb-4 text-foreground">Contact Information</h3>
                 <div className="space-y-4">
                   <a
-                    href={`mailto:${SITE_CONFIG.contact.email}`}
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${SITE_CONFIG.contact.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group"
                   >
                     <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
