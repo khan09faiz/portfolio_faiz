@@ -7,58 +7,18 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FileCheck, GraduationCap, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
+import { FileCheck, GraduationCap, ExternalLink, ChevronDown, ChevronUp, CheckCircle2, Calendar } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { TimelineItem } from '@/lib/types'
+import timelineDataRaw from '@/src/data/timeline.json'
 
-interface Certificate {
-  title: string
-  issuer: string
-  date: string
-  credentialId: string
-  credentialUrl: string
-  logo: string
-  category: 'ai-ml' | 'data' | 'design' | 'business'
+const timelineData = timelineDataRaw as TimelineItem[]
+
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
 }
-
-const certificates: Certificate[] = [
-  {
-    title: 'Exploratory Data Analysis for Machine Learning',
-    issuer: 'IBM',
-    date: 'Apr 2024',
-    credentialId: 'GLWUN5RJ28P4',
-    credentialUrl: 'https://www.coursera.org/account/accomplishments/verify/GLWUN5RJ28P4',
-    logo: '🎓',
-    category: 'ai-ml',
-  },
-  {
-    title: 'Introduction to Computer Vision and Image Processing',
-    issuer: 'IBM',
-    date: 'Apr 2025',
-    credentialId: 'BKEC9L8VMX8J',
-    credentialUrl: 'https://www.coursera.org/account/accomplishments/verify/BKEC9L8VMX8J',
-    logo: '🎓',
-    category: 'ai-ml',
-  },
-  {
-    title: 'Creative Designing in Power BI',
-    issuer: 'Microsoft',
-    date: 'Nov 2024',
-    credentialId: '4B29FNLDY6BR',
-    credentialUrl: 'https://www.coursera.org/account/accomplishments/verify/4B29FNLDY6BR',
-    logo: '📊',
-    category: 'design',
-  },
-  {
-    title: 'Completing the Accounting Cycle',
-    issuer: 'University of California, Irvine - The Paul Merage School of Business',
-    date: 'Mar 2024',
-    credentialId: 'X999GMBMZ9QJ',
-    credentialUrl: 'https://www.coursera.org/account/accomplishments/verify/X999GMBMZ9QJ',
-    logo: '🏛️',
-    category: 'business',
-  },
-]
 
 const education = {
   degree: 'Bachelor of Technology (B.Tech)',
@@ -71,6 +31,11 @@ const education = {
 
 export function CertificatesSection() {
   const [showAll, setShowAll] = useState(false)
+
+  // Get certificates from timeline data
+  const certificates = timelineData
+    .filter((item) => item.type === 'achievement')
+    .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
 
   const displayedCertificates = showAll ? certificates : certificates.slice(0, 3)
   const hasMore = certificates.length > 3
@@ -134,7 +99,7 @@ export function CertificatesSection() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           {displayedCertificates.map((cert, index) => (
             <motion.div
-              key={cert.credentialId}
+              key={cert.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -142,32 +107,38 @@ export function CertificatesSection() {
             >
               <Card className="p-6 h-full flex flex-col hover:border-cyan-500/30 transition-all group">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="h-12 w-12 rounded-lg bg-cyan-500/10 flex items-center justify-center text-2xl flex-shrink-0">
-                    {cert.logo}
+                  <div className="h-12 w-12 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="h-6 w-6 text-cyan-500" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-lg mb-2 group-hover:text-cyan-500 transition-colors line-clamp-2">
                       {cert.title}
                     </h4>
-                    <p className="text-sm font-semibold text-primary mb-1">{cert.issuer}</p>
-                    <p className="text-xs text-muted-foreground">Issued {cert.date}</p>
+                    <p className="text-sm font-semibold text-primary mb-1">{cert.organization}</p>
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Calendar className="h-3 w-3" />
+                      {formatDate(cert.startDate)}
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-auto">
-                  <div className="text-xs text-muted-foreground mb-3">
-                    <span className="font-mono">ID: {cert.credentialId}</span>
+                {cert.technologies && cert.technologies.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {cert.technologies.slice(0, 3).map((tech, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-1 text-xs rounded bg-cyan-500/10 border border-cyan-500/20 text-foreground"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {cert.technologies.length > 3 && (
+                      <span className="px-2 py-1 text-xs rounded bg-cyan-500/10 border border-cyan-500/20 text-foreground">
+                        +{cert.technologies.length - 3}
+                      </span>
+                    )}
                   </div>
-                  <a
-                    href={cert.credentialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-card hover:bg-cyan-500/10 border border-cyan-500/20 rounded-lg text-sm font-medium transition-all w-full justify-center group-hover:border-cyan-500/40"
-                  >
-                    Show credential
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </div>
+                )}
               </Card>
             </motion.div>
           ))}

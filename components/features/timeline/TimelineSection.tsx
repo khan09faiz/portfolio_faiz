@@ -6,7 +6,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Briefcase, GraduationCap, Award, Calendar, CheckCircle2 } from 'lucide-react'
+import { Briefcase, GraduationCap, Calendar } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import TechIcon from '@/components/ui/TechIcon'
 import { Card } from '@/components/ui/Card'
@@ -54,10 +54,6 @@ export function TimelineSection() {
   
   const education = timelineData
     .filter((item) => item.type === 'education')
-    .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
-  
-  const certificates = timelineData
-    .filter((item) => item.type === 'achievement')
     .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
 
   return (
@@ -210,70 +206,6 @@ export function TimelineSection() {
                           <span className="text-xs text-foreground/90">{tech}</span>
                         </div>
                       ))}
-                    </div>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Certificates Section - Small Boxes */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-16"
-        >
-          <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <Award className="h-6 w-6 text-yellow-400" />
-            Certifications & Achievements
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {certificates.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
-                <Card hover variant="elevated" className="h-full">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center">
-                      <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-foreground text-sm line-clamp-2 mb-1">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-muted-foreground line-clamp-1">
-                        {item.organization}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="text-xs text-muted-foreground mb-3 flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {formatDate(item.startDate)}
-                  </div>
-
-                  {item.technologies && item.technologies.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.technologies.slice(0, 3).map((tech, i) => (
-                        <span
-                          key={i}
-                          className="px-2 py-0.5 text-xs rounded bg-primary/10 border border-primary/20 text-foreground/80"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {item.technologies.length > 3 && (
-                        <span className="px-2 py-0.5 text-xs rounded bg-primary/10 border border-primary/20 text-foreground/80">
-                          +{item.technologies.length - 3}
-                        </span>
-                      )}
                     </div>
                   )}
                 </Card>
