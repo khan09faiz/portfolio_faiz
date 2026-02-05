@@ -61,7 +61,7 @@ export function CertificatesSection() {
             <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
               <GraduationCap className="h-6 w-6 text-green-500" />
             </div>
-            <h3 className="text-3xl font-bold">Education</h3>
+            <h3 className="text-3xl font-bold text-foreground">Education</h3>
           </div>
           
           <Card className="p-6 md:p-8 bg-gradient-to-br from-green-500/5 to-emerald-500/5 border-green-500/20">
@@ -93,7 +93,7 @@ export function CertificatesSection() {
           <div className="h-12 w-12 rounded-full bg-cyan-500/10 flex items-center justify-center">
             <FileCheck className="h-6 w-6 text-cyan-500" />
           </div>
-          <h3 className="text-3xl font-bold">Professional Certifications</h3>
+          <h3 className="text-3xl font-bold text-foreground">Professional Certifications</h3>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">

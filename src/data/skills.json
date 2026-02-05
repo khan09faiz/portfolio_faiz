@@ -6,16 +6,8 @@
     "skills": [
       "TensorFlow",
       "PyTorch",
-      "Scikit-learn",
-      "Computer Vision",
-      "YOLOv8",
       "OpenCV",
-      "FinBERT",
-      "NLP",
-      "Reinforcement Learning",
-      "Time Series Forecasting",
-      "FAISS",
-      "Federated Learning"
+      "NLP"
     ]
   },
   {
@@ -26,13 +18,7 @@
       "React",
       "Next.js",
       "TypeScript",
-      "JavaScript",
-      "Tailwind CSS",
-      "HTML5",
-      "CSS3",
-      "Framer Motion",
-      "Redux",
-      "Zustand"
+      "Tailwind CSS"
     ]
   },
   {
@@ -43,12 +29,8 @@
       "Python",
       "Django",
       "FastAPI",
-      "Flask",
       "Node.js",
-      "Express",
-      "SAP ABAP",
-      "REST API",
-      "GraphQL"
+      "SAP ABAP"
     ]
   },
   {
@@ -59,8 +41,6 @@
       "PostgreSQL",
       "MySQL",
       "MongoDB",
-      "SAP HANA",
-      "SQLite",
       "Redis"
     ]
   },
@@ -72,9 +52,7 @@
       "Azure",
       "AWS",
       "Docker",
-      "Git",
-      "GitHub Actions",
-      "Linux"
+      "Git"
     ]
   },
   {
@@ -84,12 +62,7 @@
     "skills": [
       "Pandas",
       "NumPy",
-      "Matplotlib",
-      "SARIMA",
-      "GARCH",
-      "PowerBI",
-      "Statistical Modeling",
-      "Data Visualization"
+      "PowerBI"
     ]
   }
 ]

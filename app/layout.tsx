@@ -4,6 +4,8 @@ import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { StructuredData } from '@/components/seo'
 import { Analytics } from '@vercel/analytics/react'
+import { AnimatedBackground } from '@/components/ui/AnimatedBackground'
+import { InteractiveCat } from '@/components/ui/InteractiveCat'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -91,6 +93,8 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className="min-h-screen bg-background font-sans">
+        <AnimatedBackground />
+        <InteractiveCat />
         <Header />
         {children}
         <Analytics />
