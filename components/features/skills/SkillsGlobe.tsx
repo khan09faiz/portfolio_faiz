@@ -25,14 +25,14 @@ interface SkillsGlobeProps {
   skillsData: SkillCategory[]
 }
 
-// Particle system for ambient effects - Optimized
+// Particle system for ambient effects - Highly optimized
 function Particles() {
   const particlesRef = useRef<THREE.Points>(null)
   
   const particles = useMemo(() => {
     const temp = []
-    // Reduced from 40 to 20 for better performance
-    for (let i = 0; i < 20; i++) {
+    // Reduced to 10 particles for maximum performance
+    for (let i = 0; i < 10; i++) {
       const r = 3 + Math.random() * 2
       const theta = Math.random() * Math.PI * 2
       const phi = Math.random() * Math.PI
@@ -45,10 +45,10 @@ function Particles() {
     return new Float32Array(temp)
   }, [])
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (particlesRef.current) {
-      // Slower rotation for less computation
-      particlesRef.current.rotation.y = state.clock.elapsedTime * 0.02
+      // Very slow rotation using delta for smooth frame-independent animation
+      particlesRef.current.rotation.y += delta * 0.05
     }
   })
 
@@ -74,32 +74,32 @@ function Particles() {
   )
 }
 
-// Rotating rings around globe
+// Rotating rings around globe - Simplified
 function RotatingRings() {
   const ring1Ref = useRef<THREE.Mesh>(null)
   const ring2Ref = useRef<THREE.Mesh>(null)
 
-  useFrame((state) => {
-    const time = state.clock.elapsedTime
+  useFrame((state, delta) => {
+    // Use delta for frame-independent animation, slower speeds
     if (ring1Ref.current) {
-      ring1Ref.current.rotation.x = time * 0.2
-      ring1Ref.current.rotation.y = time * 0.15
+      ring1Ref.current.rotation.x += delta * 0.15
+      ring1Ref.current.rotation.y += delta * 0.12
     }
     if (ring2Ref.current) {
-      ring2Ref.current.rotation.x = -time * 0.15
-      ring2Ref.current.rotation.z = time * 0.2
+      ring2Ref.current.rotation.x -= delta * 0.12
+      ring2Ref.current.rotation.z += delta * 0.15
     }
   })
 
   return (
     <>
       <mesh ref={ring1Ref}>
-        <torusGeometry args={[3, 0.008, 12, 80]} />
-        <meshBasicMaterial color="#52525B" transparent opacity={0.25} />
+        <torusGeometry args={[3, 0.008, 8, 48]} />
+        <meshBasicMaterial color="#52525B" transparent opacity={0.2} />
       </mesh>
       <mesh ref={ring2Ref}>
-        <torusGeometry args={[3.2, 0.008, 12, 80]} />
-        <meshBasicMaterial color="#71717A" transparent opacity={0.2} />
+        <torusGeometry args={[3.2, 0.008, 8, 48]} />
+        <meshBasicMaterial color="#71717A" transparent opacity={0.15} />
       </mesh>
     </>
   )
@@ -143,25 +143,16 @@ function SkillMarkerPoint({
     return () => clearTimeout(timer)
   }, [delay])
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (groupRef.current && visible) {
-      const scale = hovered ? 1.4 : 1
-      groupRef.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.1)
+      const scale = hovered ? 1.3 : 1
+      groupRef.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.08)
       
-      // Optimized: Only update position every other frame for better performance
-      if (state.clock.elapsedTime % 2 < 1) {
-        const time = state.clock.elapsedTime
-        const offsetX = Math.sin(time * 0.4 + delay * 0.5) * 0.04
-        const offsetY = Math.cos(time * 0.4 + delay * 0.5) * 0.04
-        groupRef.current.position.set(
-          position[0] + offsetX,
-          position[1] + offsetY,
-          position[2]
-        )
-      }
+      // Static position - remove floating animation for performance
+      groupRef.current.position.set(position[0], position[1], position[2])
       
-      // Slower rotation for less computation
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.2
+      // Very slow rotation using delta
+      groupRef.current.rotation.y += delta * 0.15
     }
   })
 
@@ -246,28 +237,26 @@ function Globe({ markers, onMarkerClick }: {
   const globeRef = useRef<THREE.Mesh>(null)
   const wireframe1Ref = useRef<THREE.Mesh>(null)
 
-  useFrame((state) => {
-    const time = state.clock.elapsedTime
-    
+  useFrame((state, delta) => {
     if (globeRef.current) {
-      globeRef.current.rotation.y = time * 0.05
+      globeRef.current.rotation.y += delta * 0.05
     }
     
     if (wireframe1Ref.current) {
-      wireframe1Ref.current.rotation.y = -time * 0.1
+      wireframe1Ref.current.rotation.y -= delta * 0.1
     }
   })
 
   return (
     <>
-      {/* Particles */}
+      {/* Particles - Reduced */}
       <Particles />
       
       {/* Rotating Rings */}
       <RotatingRings />
 
-      {/* Main Globe - Optimized */}
-      <Sphere ref={globeRef} args={[2.5, 32, 32]}>
+      {/* Main Globe - Highly Optimized */}
+      <Sphere ref={globeRef} args={[2.5, 24, 24]}>
         <meshStandardMaterial
           color="#18181B"
           attach="material"
@@ -278,33 +267,13 @@ function Globe({ markers, onMarkerClick }: {
         />
       </Sphere>
 
-      {/* Inner glow */}
-      <Sphere args={[2.45, 32, 32]}>
-        <meshBasicMaterial
-          color="#27272A"
-          transparent
-          opacity={0.3}
-          side={THREE.BackSide}
-        />
-      </Sphere>
-
-      {/* Wireframe */}
-      <Sphere ref={wireframe1Ref} args={[2.52, 16, 16]}>
+      {/* Wireframe - Simplified */}
+      <Sphere ref={wireframe1Ref} args={[2.52, 12, 12]}>
         <meshBasicMaterial
           color="#52525B"
           wireframe
-          opacity={0.2}
+          opacity={0.15}
           transparent
-        />
-      </Sphere>
-
-      {/* Outer glow */}
-      <Sphere args={[2.6, 32, 32]}>
-        <meshBasicMaterial
-          color="#71717A"
-          transparent
-          opacity={0.05}
-          side={THREE.BackSide}
         />
       </Sphere>
 
@@ -322,9 +291,8 @@ function Globe({ markers, onMarkerClick }: {
       ))}
 
       {/* Optimized Lighting */}
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1.5} color="#FAFAFA" />
-      <pointLight position={[-10, -10, -10]} intensity={0.8} color="#A1A1AA" />
+      <ambientLight intensity={0.6} />
+      <pointLight position={[10, 10, 10]} intensity={1.2} color="#FAFAFA" />
     </>
   )
 }
@@ -365,17 +333,24 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
         camera={{ position: [0, 0, 8], fov: 50 }}
         className="cursor-grab active:cursor-grabbing"
         style={{ background: 'transparent' }}
-        gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
-        dpr={[1, 1.5]}
+        gl={{ 
+          antialias: false, 
+          alpha: true, 
+          powerPreference: 'high-performance',
+          stencil: false,
+          depth: true
+        }}
+        dpr={1}
+        frameloop="demand"
       >
         <Globe markers={markers} onMarkerClick={handleMarkerClick} />
         <OrbitControls
           enableZoom={false}
           enablePan={false}
-          autoRotate
-          autoRotateSpeed={0.3}
-          rotateSpeed={0.5}
-          enableDamping={false}
+          autoRotate={false}
+          rotateSpeed={0.4}
+          enableDamping={true}
+          dampingFactor={0.05}
         />
       </Canvas>
 
