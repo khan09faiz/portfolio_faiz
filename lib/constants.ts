@@ -93,7 +93,6 @@ export const NAV_ITEMS = [
   { label: 'About', href: '/' },
   { label: 'Projects', href: '/#projects' },
   { label: 'Skills', href: '/#skills' },
-  { label: 'Certificates', href: '/#certificates' },
   { label: 'Career', href: '/#timeline' },
   { label: 'GitHub', href: '/#github' },
   { label: 'Contact', href: '/#contact' },
