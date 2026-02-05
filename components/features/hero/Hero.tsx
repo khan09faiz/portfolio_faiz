@@ -131,21 +131,7 @@ export function Hero() {
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center relative">
-          {/* "Hala Madrid" Center Text - Desktop only */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          >
-            <div className="text-center">
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent drop-shadow-glow">
-                Hala Madrid!!! ⚽️
-              </h3>
-            </div>
-          </motion.div>
-
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
             {/* Greeting */}
@@ -200,6 +186,16 @@ export function Hero() {
               className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
               Hey! I'm Faiz, a builder who thinks in algorithms and dreams in code. By day, I'm exploring ML and reinforcement learning. By night, debugging or diving into stock markets 📈. I love tech, competition, and figuring out how things work. Football is my daily reset. Travel sparks my best ideas.
+            </motion.p>
+
+            {/* Hala Madrid - Center aligned */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent drop-shadow-glow mt-6"
+            >
+              Hala Madrid!!! ⚽️
             </motion.p>
           </div>
 
