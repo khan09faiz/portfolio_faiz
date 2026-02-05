@@ -6,6 +6,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Code2 } from 'lucide-react'
 import { Project } from '@/lib/types'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { FilterButton, FilterButtonGroup } from '@/components/ui/FilterButton'
@@ -94,7 +95,7 @@ export function ProjectsSection() {
 
         {/* Projects Grid */}
         {sortedProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {sortedProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
@@ -105,9 +106,15 @@ export function ProjectsSection() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">
-              No projects found for {selectedCategory}
+          <div className="text-center py-20">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
+              <Code2 className="w-10 h-10 text-primary" />
+            </div>
+            <p className="text-lg text-muted-foreground mb-2">
+              No projects found in this category
+            </p>
+            <p className="text-sm text-muted-foreground/60">
+              Try selecting a different filter
             </p>
           </div>
         )}

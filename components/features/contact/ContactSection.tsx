@@ -126,7 +126,7 @@ export function ContactSection() {
                     {...register('name')}
                     type="text"
                     id="name"
-                    className="w-full px-4 py-2.5 rounded-lg bg-card/50 border border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
                     placeholder="Your name"
                   />
                   {errors.name && (
@@ -143,7 +143,7 @@ export function ContactSection() {
                     {...register('email')}
                     type="email"
                     id="email"
-                    className="w-full px-4 py-2.5 rounded-lg bg-card/50 border border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
                     placeholder="your.email@example.com"
                   />
                   {errors.email && (
@@ -160,7 +160,7 @@ export function ContactSection() {
                     {...register('subject')}
                     type="text"
                     id="subject"
-                    className="w-full px-4 py-2.5 rounded-lg bg-card/50 border border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
                     placeholder="What's this about?"
                   />
                   {errors.subject && (
@@ -176,8 +176,8 @@ export function ContactSection() {
                   <textarea
                     {...register('message')}
                     id="message"
-                    rows={5}
-                    className="w-full px-4 py-2.5 rounded-lg bg-card/50 border border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
+                    rows={6}
+                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 resize-none text-foreground placeholder:text-muted-foreground/50 leading-relaxed"
                     placeholder="Your message..."
                   />
                   {errors.message && (
@@ -191,7 +191,8 @@ export function ContactSection() {
                   disabled={isSubmitting}
                   isLoading={isSubmitting}
                   icon={<Send className="h-4 w-4" />}
-                  className="w-full"
+                  className="w-full shadow-glow-md hover:shadow-glow-lg transition-all duration-300"
+                  size="lg"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
