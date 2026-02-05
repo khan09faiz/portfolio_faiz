@@ -15,8 +15,8 @@ const skillsData = skillsDataRaw as SkillCategory[]
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="py-12 sm:py-16 md:py-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Header */}
         <SectionHeader
           terminalPath="~/skills"
@@ -29,7 +29,8 @@ export function SkillsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.3 }}
-          className="mt-12"
+          className="mt-8 sm:mt-10 md:mt-12"
+          style={{ touchAction: 'pan-y' }}
         >
           <SkillsGlobe skillsData={skillsData} />
         </motion.div>

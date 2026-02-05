@@ -327,12 +327,12 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
   }
 
   return (
-    <div className="relative w-full h-[650px] overflow-hidden">
+    <div className="relative w-full h-[350px] sm:h-[450px] md:h-[550px] lg:h-[650px] overflow-hidden" style={{ touchAction: 'pan-y' }}>
       {/* Canvas Container */}
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         className="cursor-grab active:cursor-grabbing"
-        style={{ background: 'transparent' }}
+        style={{ background: 'transparent', touchAction: 'pan-y' }}
         gl={{ 
           antialias: false, 
           alpha: true, 
@@ -362,11 +362,11 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.8, x: -20 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="absolute top-4 left-4 bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-xl p-5 shadow-2xl max-w-xs"
+            className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-xl p-3 sm:p-5 shadow-2xl max-w-[85vw] sm:max-w-xs"
           >
             <button
               onClick={() => setSelectedSkill(null)}
-              className="absolute top-3 right-3 text-zinc-300 hover:text-white transition-colors"
+              className="absolute top-2 right-2 sm:top-3 sm:right-3 text-zinc-300 hover:text-white transition-colors text-sm"
             >
               ✕
             </button>
@@ -374,13 +374,13 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.1, type: 'spring', stiffness: 200 }}
-              className="flex items-center gap-3 mb-2"
+              className="flex items-center gap-2 sm:gap-3 mb-2"
             >
-              <div className="p-2 rounded-lg bg-gray-800 border border-gray-700">
-                <TechIcon name={selectedSkill.skill} className="h-8 w-8" />
+              <div className="p-1.5 sm:p-2 rounded-lg bg-gray-800 border border-gray-700">
+                <TechIcon name={selectedSkill.skill} className="h-6 w-6 sm:h-8 sm:w-8" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">
+                <h3 className="text-base sm:text-lg font-bold text-white">
                   {selectedSkill.skill}
                 </h3>
                 <p className="text-sm text-zinc-200">
@@ -392,12 +392,12 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
         )}
       </AnimatePresence>
 
-      {/* Legend */}
+      {/* Legend - Hidden on mobile */}
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
-        className="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-md border border-gray-700 rounded-xl p-4 max-w-xs shadow-xl"
+        className="hidden md:block absolute top-4 right-4 bg-gray-900/90 backdrop-blur-md border border-gray-700 rounded-xl p-4 max-w-xs shadow-xl"
       >
         <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
