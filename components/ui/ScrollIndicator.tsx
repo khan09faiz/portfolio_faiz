@@ -12,19 +12,13 @@ export function ScrollIndicator() {
   const [isVisible, setIsVisible] = useState(false)
   const { scrollYProgress } = useScroll()
   
-  // Smooth animation for the progress bar
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  })
-
+  // Simplified - no spring for better performance
   useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 100)
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -32,14 +26,14 @@ export function ScrollIndicator() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 z-50 h-1 bg-primary/20 backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 z-50 h-1 bg-primary/20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="h-full bg-gradient-to-r from-primary via-primary/80 to-primary shadow-glow-md"
-        style={{ scaleX, transformOrigin: '0%' }}
+        className="h-full bg-gradient-to-r from-primary via-primary/80 to-primary"
+        style={{ scaleX: scrollYProgress, transformOrigin: '0%' }}
       />
     </motion.div>
   )

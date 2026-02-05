@@ -138,7 +138,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
               className="mb-2"
             >
               <span className="text-primary text-sm sm:text-base md:text-lg font-mono bg-primary/10 px-3 py-1.5 rounded-lg inline-block">
@@ -150,7 +150,7 @@ export function Hero() {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.3 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4"
             >
               <span className="text-gradient drop-shadow-glow">{SITE_CONFIG.name}</span>
@@ -160,7 +160,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.3 }}
               className="h-10 sm:h-12 md:h-16 mb-6"
             >
               <AnimatePresence mode="wait">
@@ -169,7 +169,7 @@ export function Hero() {
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as const }}
+                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] as const }}
                   className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary flex items-center gap-2 sm:gap-3 justify-center lg:justify-start"
                 >
                   <span className="text-lg sm:text-xl">▸</span>
@@ -182,7 +182,7 @@ export function Hero() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={{ duration: 0.3 }}
               className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
               Hey! I'm Faiz, a builder who thinks in algorithms and dreams in code. By day, I'm exploring ML and reinforcement learning. By night, debugging or diving into stock markets 📈. I love tech, competition, and figuring out how things work. Football is my daily reset. Travel sparks my best ideas.
@@ -195,7 +195,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.3 }}
           >
             <Card variant="elevated" className="overflow-hidden border-primary/20 shadow-glow-md hover:shadow-glow-lg transition-all duration-300 group">
               {/* Terminal Header */}
@@ -232,7 +232,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.3 }}
           className="mt-16 lg:mt-24"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
@@ -245,7 +245,7 @@ export function Hero() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <Card 
                     hover 

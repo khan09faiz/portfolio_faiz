@@ -308,7 +308,7 @@ export function GitHubSection() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ duration: 0.3 }}
               >
                 <Card className="p-5 h-full flex flex-col hover:border-green-500/30 transition-all group">
                   <div className="flex items-start gap-2 mb-2">
@@ -412,7 +412,7 @@ export function GitHubSection() {
                   transition={{ 
                     repeat: Infinity, 
                     repeatType: "reverse", 
-                    duration: 0.8,
+                    duration: 0.5,
                     ease: [0.4, 0, 0.6, 1] as const
                   }}
                 >
@@ -477,7 +477,7 @@ export function GitHubSection() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <Card className="p-5 h-full flex flex-col hover:border-green-500/30 transition-all group">
                     <div className="flex items-start gap-2 mb-2">
@@ -550,7 +550,7 @@ export function GitHubSection() {
                     transition={{ 
                       repeat: Infinity, 
                       repeatType: "reverse", 
-                      duration: 0.8,
+                      duration: 0.5,
                       ease: [0.4, 0, 0.6, 1] as const
                     }}
                   >

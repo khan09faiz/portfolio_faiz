@@ -21,31 +21,39 @@ export function Header() {
   const [activeSection, setActiveSection] = useState('')
   const [showProfileModal, setShowProfileModal] = useState(false)
 
-  // Handle scroll effects
+  // Handle scroll effects with throttling
   useEffect(() => {
+    let ticking = false
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50)
 
-      // Update active section based on scroll position
-      const sections = NAV_ITEMS.map((item) => item.href.replace(/^\/?#?/, ''))
-      let current = ''
+          // Update active section based on scroll position
+          const sections = NAV_ITEMS.map((item) => item.href.replace(/^\/?#?/, ''))
+          let current = ''
 
-      for (const section of sections) {
-        if (section === '') continue
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            current = section
-            break
+          for (const section of sections) {
+            if (section === '') continue
+            const element = document.getElementById(section)
+            if (element) {
+              const rect = element.getBoundingClientRect()
+              if (rect.top <= 100 && rect.bottom >= 100) {
+                current = section
+                break
+              }
+            }
           }
-        }
-      }
 
-      setActiveSection(current)
+          setActiveSection(current)
+          ticking = false
+        })
+        ticking = true
+      }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll() // Call once on mount
 
     return () => window.removeEventListener('scroll', handleScroll)

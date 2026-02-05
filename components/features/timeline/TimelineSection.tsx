@@ -81,7 +81,7 @@ export function TimelineSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="mt-12"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
@@ -95,7 +95,7 @@ export function TimelineSection() {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.3 }}
               >
                 <Card hover variant="elevated">
                   <div className="mb-3">
@@ -155,7 +155,7 @@ export function TimelineSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="mt-16"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
@@ -169,7 +169,7 @@ export function TimelineSection() {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.3 }}
               >
                 <Card hover variant="elevated">
                   <div className="mb-3">
@@ -229,7 +229,7 @@ export function TimelineSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="mt-16"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
@@ -243,7 +243,7 @@ export function TimelineSection() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={{ duration: 0.3 }}
               >
                 <Card hover variant="elevated" className="h-full">
                   <div className="flex items-start gap-3 mb-3">
@@ -308,7 +308,7 @@ export function TimelineSection() {
                   transition={{ 
                     repeat: Infinity, 
                     repeatType: "reverse", 
-                    duration: 0.8,
+                    duration: 0.5,
                     ease: [0.4, 0, 0.6, 1] as const
                   }}
                 >
