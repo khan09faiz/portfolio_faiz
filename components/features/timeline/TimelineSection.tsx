@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Briefcase, GraduationCap, Calendar, Award, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
@@ -49,6 +49,11 @@ const formatDate = (dateString: string) => {
 
 export function TimelineSection() {
   const [showAllCertificates, setShowAllCertificates] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Separate items by type
   const workExperience = timelineData
@@ -80,8 +85,9 @@ export function TimelineSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="mt-12"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
@@ -94,8 +100,9 @@ export function TimelineSection() {
                 key={item.id}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, x: 20 }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <Card hover variant="elevated">
                   <div className="mb-3">
@@ -109,7 +116,7 @@ export function TimelineSection() {
                     </div>
                     
                     <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1" suppressHydrationWarning>
                         <Calendar className="h-4 w-4" />
                         {formatDate(item.startDate)} -{' '}
                         {item.endDate ? formatDate(item.endDate) : 'Present'}
@@ -154,8 +161,9 @@ export function TimelineSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="mt-16"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
@@ -168,8 +176,9 @@ export function TimelineSection() {
                 key={item.id}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, x: 20 }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <Card hover variant="elevated">
                   <div className="mb-3">
@@ -183,7 +192,7 @@ export function TimelineSection() {
                     </div>
                     
                     <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1" suppressHydrationWarning>
                         <Calendar className="h-4 w-4" />
                         {formatDate(item.startDate)} -{' '}
                         {item.endDate ? formatDate(item.endDate) : 'Present'}
@@ -228,8 +237,9 @@ export function TimelineSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="mt-16"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
@@ -242,8 +252,9 @@ export function TimelineSection() {
                 key={item.id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <Card hover variant="elevated" className="h-full">
                   <div className="flex items-start gap-3 mb-3">
@@ -260,7 +271,7 @@ export function TimelineSection() {
                     </div>
                   </div>
 
-                  <div className="text-xs text-muted-foreground mb-3 flex items-center gap-1">
+                  <div className="text-xs text-muted-foreground mb-3 flex items-center gap-1" suppressHydrationWarning>
                     <Calendar className="h-3 w-3" />
                     {formatDate(item.startDate)}
                   </div>

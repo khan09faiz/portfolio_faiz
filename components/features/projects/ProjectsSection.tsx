@@ -6,6 +6,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Code2 } from 'lucide-react'
 import { Project } from '@/lib/types'
 import { SectionHeader } from '@/components/ui/SectionHeader'
@@ -95,7 +96,14 @@ export function ProjectsSection() {
 
         {/* Projects Grid */}
         {sortedProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.4 }}
+          >
             {sortedProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
@@ -104,7 +112,7 @@ export function ProjectsSection() {
                 index={index}
               />
             ))}
-          </div>
+          </motion.div>
         ) : (
           <div className="text-center py-20">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">

@@ -94,6 +94,11 @@ export function GitHubSection() {
   const [selectedContribLang, setSelectedContribLang] = useState<string>('All')
   const [showAllRepos, setShowAllRepos] = useState(false)
   const [showAllContrib, setShowAllContrib] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     async function fetchStats() {
@@ -155,7 +160,9 @@ export function GitHubSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-12 sm:mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4 sm:mb-6">
@@ -176,8 +183,9 @@ export function GitHubSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-80px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8 sm:mb-12"
         >
           <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
@@ -233,8 +241,9 @@ export function GitHubSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-80px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="mb-8 sm:mb-12"
         >
           <Card className="p-6 sm:p-8 text-center bg-card/50 backdrop-blur-sm border-primary/20">
@@ -262,8 +271,9 @@ export function GitHubSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-80px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="mb-12 sm:mb-16"
         >
           <div className="flex items-center gap-3 mb-6">
@@ -307,8 +317,9 @@ export function GitHubSection() {
                 key={repo.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, y: -20 }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <Card className="p-5 h-full flex flex-col hover:border-green-500/30 transition-all group">
                   <div className="flex items-start gap-2 mb-2">
@@ -355,7 +366,7 @@ export function GitHubSection() {
 
                   <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
                     <Clock className="h-3 w-3" />
-                    <span>Updated {formatTimeAgo(repo.updatedAt)}</span>
+                    <span>Updated {isMounted ? formatTimeAgo(repo.updatedAt) : 'recently'}</span>
                   </div>
 
                   <div className="flex gap-2 mt-auto">
@@ -432,8 +443,9 @@ export function GitHubSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
+            exit={{ opacity: 0, y: -20 }}
+            viewport={{ once: false, margin: "-80px" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/10 flex items-center justify-center">
@@ -476,8 +488,9 @@ export function GitHubSection() {
                   key={repo.url}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  viewport={{ once: false, margin: "-50px" }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                 >
                   <Card className="p-5 h-full flex flex-col hover:border-green-500/30 transition-all group">
                     <div className="flex items-start gap-2 mb-2">

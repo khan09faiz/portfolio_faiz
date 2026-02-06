@@ -27,8 +27,9 @@ export function SkillsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="mt-8 sm:mt-10 md:mt-12"
           style={{ touchAction: 'pan-y' }}
         >

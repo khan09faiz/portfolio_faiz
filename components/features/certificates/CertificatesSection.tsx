@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FileCheck, GraduationCap, ExternalLink, ChevronDown, ChevronUp, CheckCircle2, Calendar } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
@@ -31,6 +31,11 @@ const education = {
 
 export function CertificatesSection() {
   const [showAll, setShowAll] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Get certificates from timeline data
   const certificates = timelineData
@@ -54,7 +59,9 @@ export function CertificatesSection() {
           id="education"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="mb-12"
         >
           <div className="flex items-center gap-3 mb-6">
@@ -102,8 +109,9 @@ export function CertificatesSection() {
               key={cert.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, y: -20 }}
+              viewport={{ once: false, margin: "-50px" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <Card className="p-6 h-full flex flex-col hover:border-cyan-500/30 transition-all group">
                 <div className="flex items-start gap-4 mb-4">
@@ -115,7 +123,7 @@ export function CertificatesSection() {
                       {cert.title}
                     </h4>
                     <p className="text-sm font-semibold text-primary mb-1">{cert.organization}</p>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground" suppressHydrationWarning>
                       <Calendar className="h-3 w-3" />
                       {formatDate(cert.startDate)}
                     </div>

@@ -115,7 +115,7 @@ export function ProjectModal({
                     >
                       {project.category}
                     </span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-muted-foreground" suppressHydrationWarning>
                       {new Date(project.date).toLocaleDateString('en-US', {
                         month: 'short',
                         year: 'numeric',
