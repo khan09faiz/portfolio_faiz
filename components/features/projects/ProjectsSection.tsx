@@ -82,7 +82,14 @@ export function ProjectsSection() {
         />
 
         {/* Filter Buttons */}
-        <FilterButtonGroup className="mt-8 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-80px" }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
+        >
+          <FilterButtonGroup className="mt-8 mb-12">
           {categories.map((category) => (
             <FilterButton
               key={category}
@@ -93,16 +100,17 @@ export function ProjectsSection() {
             />
           ))}
         </FilterButtonGroup>
+        </motion.div>
 
         {/* Projects Grid */}
         {sortedProjects.length > 0 ? (
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
           >
             {sortedProjects.map((project, index) => (
               <ProjectCard

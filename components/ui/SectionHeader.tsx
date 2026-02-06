@@ -28,8 +28,10 @@ export function SectionHeader({
       {/* Terminal Path */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.3 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        viewport={{ once: false, margin: "-100px" }}
+        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         className="flex items-center justify-center gap-2 mb-3 sm:mb-4"
       >
         <div className="flex gap-1">
@@ -45,8 +47,10 @@ export function SectionHeader({
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.3 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        viewport={{ once: false, margin: "-100px" }}
+        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
         className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4"
       >
         <span className="text-gradient">{title}</span>
@@ -56,8 +60,10 @@ export function SectionHeader({
       {description && (
         <motion.p
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.3 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
           className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
         >
           {description}
