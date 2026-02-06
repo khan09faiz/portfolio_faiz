@@ -67,8 +67,8 @@ export function TimelineSection() {
   const hasMoreCertificates = certificates.length > 3
 
   return (
-    <section id="timeline" className="py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="timeline" className="section-padding">
+      <div className="container max-w-6xl">
         {/* Header */}
         <SectionHeader
           terminalPath="~/career"

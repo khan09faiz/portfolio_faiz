@@ -104,8 +104,8 @@ export function ContactSection() {
         }}
       />
 
-      <section id="contact" className="py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="contact" className="section-padding">
+        <div className="container max-w-5xl">
           {/* Header */}
           <SectionHeader
             terminalPath="~/contact"

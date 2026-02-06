@@ -156,15 +156,15 @@ export function GitHubSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4 sm:mb-6">
             <span className="text-sm font-mono">~/github</span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
             Open Source Journey
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto px-4">
             Real-time statistics from my <span className="text-primary font-semibold">GitHub profile</span> showcasing{' '}
             <span className="text-primary font-semibold">{stats.totalRepos} repositories</span>,{' '}
             <span className="text-primary font-semibold">{stats.totalStars} stars earned</span>, and contributions across{' '}
@@ -178,54 +178,54 @@ export function GitHubSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8 sm:mb-12"
         >
-          <Card className="p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-              <GitBranch className="h-6 w-6 text-zinc-200" />
+          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-zinc-200" />
             </div>
-            <div className="text-3xl font-bold mb-1">{stats.totalRepos}</div>
-            <div className="text-sm text-muted-foreground">Repositories</div>
+            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.totalRepos}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Repositories</div>
           </Card>
 
-          <Card className="p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-12 w-12 rounded-full bg-yellow-500/20 flex items-center justify-center mx-auto mb-3">
-              <Star className="h-6 w-6 text-yellow-500" />
+          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-yellow-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+              <Star className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-500" />
             </div>
-            <div className="text-3xl font-bold mb-1">{stats.totalStars}</div>
-            <div className="text-sm text-muted-foreground">Total Stars</div>
+            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.totalStars}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Total Stars</div>
           </Card>
 
-          <Card className="p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-12 w-12 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-3">
-              <Code2 className="h-6 w-6 text-blue-500" />
+          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+              <Code2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
             </div>
-            <div className="text-3xl font-bold mb-1">{stats.languageCount}+</div>
-            <div className="text-sm text-muted-foreground">Languages</div>
+            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.languageCount}+</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Languages</div>
           </Card>
 
-          <Card className="p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-12 w-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-3">
-              <GitBranch className="h-6 w-6 text-green-500" />
+          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
             </div>
-            <div className="text-3xl font-bold mb-1">{stats.contributions}</div>
-            <div className="text-sm text-muted-foreground">Contributions</div>
+            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.contributions}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Contributions</div>
           </Card>
 
-          <Card className="p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-12 w-12 rounded-full bg-orange-500/20 flex items-center justify-center mx-auto mb-3">
-              <Flame className="h-6 w-6 text-orange-500" />
+          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-orange-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+              <Flame className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500" />
             </div>
-            <div className="text-3xl font-bold mb-1">{stats.currentStreak}</div>
-            <div className="text-sm text-muted-foreground">Day Streak</div>
+            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.currentStreak}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Day Streak</div>
           </Card>
 
-          <Card className="p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-12 w-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
-              <Award className="h-6 w-6 text-purple-500" />
+          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+              <Award className="h-5 w-5 sm:h-6 sm:w-6 text-purple-500" />
             </div>
-            <div className="text-3xl font-bold mb-1">{stats.longestStreak}</div>
-            <div className="text-sm text-muted-foreground">Longest Streak</div>
+            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.longestStreak}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Longest Streak</div>
           </Card>
         </motion.div>
 
@@ -235,9 +235,9 @@ export function GitHubSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mb-12"
+          className="mb-8 sm:mb-12"
         >
-          <Card className="p-8 text-center bg-card/50 backdrop-blur-sm border-primary/20">
+          <Card className="p-6 sm:p-8 text-center bg-card/50 backdrop-blur-sm border-primary/20">
             <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
               <Monitor className="h-8 w-8 text-primary" />
             </div>
@@ -264,17 +264,17 @@ export function GitHubSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-              <GitBranch className="h-6 w-6 text-green-500" />
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/10 flex items-center justify-center">
+              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
             </div>
-            <h3 className="text-3xl font-bold text-foreground">My Repositories</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground">My Repositories</h3>
           </div>
 
           {/* Language Filter */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
             {myRepoLanguages.map((lang) => {
               const count = lang === 'All' 
                 ? stats.myRepos.length 
@@ -301,7 +301,7 @@ export function GitHubSection() {
           </p>
 
           {/* Repository Cards */}
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {displayedMyRepos.map((repo, index) => (
               <motion.div
                 key={repo.name}
@@ -436,10 +436,10 @@ export function GitHubSection() {
             transition={{ delay: 0.4 }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                <GitBranch className="h-6 w-6 text-green-500" />
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/10 flex items-center justify-center">
+                <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
               </div>
-              <h3 className="text-3xl font-bold text-foreground">Open Source Contributions</h3>
+              <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Open Source Contributions</h3>
             </div>
 
             <p className="text-muted-foreground mb-6">
@@ -470,7 +470,7 @@ export function GitHubSection() {
             </div>
 
             {/* Contribution Repository Cards */}
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {displayedContribRepos.map((repo, index) => (
                 <motion.div
                   key={repo.url}

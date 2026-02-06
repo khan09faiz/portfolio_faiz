@@ -202,4 +202,14 @@
   .hover-glow:hover {
     box-shadow: 0 0 30px rgb(212 212 216 / 0.3), 0 0 60px rgb(161 161 170 / 0.2);
   }
+
+  /* Consistent section spacing */
+  .section-padding {
+    @apply py-16 sm:py-20 md:py-24;
+  }
+
+  /* Consistent container with responsive padding */
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }

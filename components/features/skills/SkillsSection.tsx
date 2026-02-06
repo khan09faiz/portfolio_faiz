@@ -15,8 +15,8 @@ const skillsData = skillsDataRaw as SkillCategory[]
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-12 sm:py-16 md:py-20">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+    <section id="skills" className="section-padding">
+      <div className="container">
         {/* Header */}
         <SectionHeader
           terminalPath="~/skills"

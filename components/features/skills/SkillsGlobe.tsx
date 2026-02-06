@@ -148,12 +148,26 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
     category: string
   } | null>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [webglError, setWebglError] = useState(false)
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // Check WebGL support
+  useEffect(() => {
+    try {
+      const canvas = document.createElement('canvas')
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+      if (!gl) {
+        setWebglError(true)
+      }
+    } catch (e) {
+      setWebglError(true)
+    }
   }, [])
 
   const markers = useMemo(() => {
@@ -182,6 +196,46 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
     setSelectedSkill({ skill, category })
   }, [])
 
+  // Fallback UI when WebGL is not available
+  if (webglError) {
+    return (
+      <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
+        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/5 to-purple-500/5 rounded-2xl border border-primary/20">
+          <div className="text-center p-8 max-w-md">
+            <div className="mb-4 text-6xl">🌐</div>
+            <h3 className="text-xl font-bold mb-3">3D Globe Unavailable</h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              WebGL is not enabled in your browser. Please enable hardware acceleration in Chrome settings:
+            </p>
+            <div className="text-left bg-card/50 rounded-lg p-4 mb-6 text-xs sm:text-sm font-mono space-y-2">
+              <p>1. Go to <span className="text-primary">chrome://settings/system</span></p>
+              <p>2. Enable "Use hardware acceleration"</p>
+              <p>3. Restart Chrome</p>
+            </div>
+            
+            {/* Show skills list as fallback */}
+            <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto">
+              {skillsData.map((category) => (
+                <div key={category.category} className="text-left">
+                  <h4 className="text-xs font-bold mb-1" style={{ color: category.color }}>
+                    {category.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {category.skills.slice(0, 5).map((skill) => (
+                      <span key={skill} className="text-[10px] bg-card px-2 py-1 rounded">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden"
@@ -200,6 +254,12 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
         }}
         dpr={1}
         frameloop="always"
+        onCreated={(state) => {
+          // Additional check when canvas is created
+          if (!state.gl.getContext()) {
+            setWebglError(true)
+          }
+        }}
       >
         <GlobeScene
           markers={markers}

@@ -71,8 +71,8 @@ export function ProjectsSection() {
   }
 
   return (
-    <section id="projects" className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="section-padding">
+      <div className="container">
         {/* Header */}
         <SectionHeader
           terminalPath="~/projects"
