@@ -188,53 +188,107 @@ export function GitHubSection() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8 sm:mb-12"
         >
-          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2 sm:mb-3">
-              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-zinc-200" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.totalRepos}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Repositories</div>
-          </Card>
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+              <motion.div 
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                whileHover={{ rotate: 360, scale: 1.2 }}
+                transition={{ duration: 0.6 }}
+              >
+                <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-zinc-200" />
+              </motion.div>
+              <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.totalRepos}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Repositories</div>
+            </Card>
+          </motion.div>
 
-          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-yellow-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+              <motion.div 
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-yellow-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                whileHover={{ rotate: 360, scale: 1.2 }}
+                transition={{ duration: 0.6 }}
+              >
               <Star className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-500" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.totalStars}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Total Stars</div>
-          </Card>
+              </motion.div>
+              <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.totalStars}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Total Stars</div>
+            </Card>
+          </motion.div>
 
-          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+              <motion.div 
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                whileHover={{ rotate: 360, scale: 1.2 }}
+                transition={{ duration: 0.6 }}
+              >
               <Code2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.languageCount}+</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Languages</div>
-          </Card>
+              </motion.div>
+              <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.languageCount}+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Languages</div>
+            </Card>
+          </motion.div>
 
-          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+              <motion.div 
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                whileHover={{ rotate: 360, scale: 1.2 }}
+                transition={{ duration: 0.6 }}
+              >
               <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.contributions}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Contributions</div>
-          </Card>
+              </motion.div>
+              <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.contributions}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Contributions</div>
+            </Card>
+          </motion.div>
 
-          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-orange-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+              <motion.div 
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-orange-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                whileHover={{ rotate: 360, scale: 1.2 }}
+                transition={{ duration: 0.6 }}
+              >
               <Flame className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.currentStreak}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Day Streak</div>
-          </Card>
+              </motion.div>
+              <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.currentStreak}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Day Streak</div>
+            </Card>
+          </motion.div>
 
-          <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3">
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
+              <motion.div 
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                whileHover={{ rotate: 360, scale: 1.2 }}
+                transition={{ duration: 0.6 }}
+              >
               <Award className="h-5 w-5 sm:h-6 sm:w-6 text-purple-500" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.longestStreak}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Longest Streak</div>
-          </Card>
+              </motion.div>
+              <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.longestStreak}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Longest Streak</div>
+            </Card>
+          </motion.div>
         </motion.div>
 
         {/* Desktop Notice - Visit GitHub */}
@@ -317,11 +371,12 @@ export function GitHubSection() {
                 key={repo.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -5, scale: 1.02 }}
                 exit={{ opacity: 0, y: -20 }}
                 viewport={{ once: false, margin: "-50px" }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
-                <Card className="p-5 h-full flex flex-col hover:border-green-500/30 transition-all group">
+                <Card className="p-5 h-full flex flex-col hover:border-green-500/30 hover:shadow-glow-md transition-all group">
                   <div className="flex items-start gap-2 mb-2">
                     <div className="h-9 w-9 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
                       <Github className="h-4 w-4 text-green-500" />

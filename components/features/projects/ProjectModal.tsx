@@ -52,50 +52,55 @@ export function ProjectModal({
         <>
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            animate={{ opacity: 1, backdropFilter: 'blur(12px)' }}
+            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            transition={{ duration: 0.3 }}
             onClick={onClose}
             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
           />
 
-          {/* Modal */}
+          {/* Modal Container with Outside Navigation */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Previous Button - Outside Modal */}
+            {onPrevious && (
+              <motion.button
+                onClick={onPrevious}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                whileHover={{ scale: 1.2, x: -5 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-primary hover:text-primary/80 transition-colors z-50"
+                aria-label="Previous project"
+              >
+                <ChevronLeft className="h-8 w-8 drop-shadow-glow" />
+              </motion.button>
+            )}
+
+            {/* Modal */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, scale: 0.9, y: 40, rotateX: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 40, rotateX: 10 }}
+              transition={{ 
+                type: 'spring',
+                stiffness: 300,
+                damping: 30,
+                mass: 0.8
+              }}
               className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-card/40 backdrop-blur-md border border-primary/20 rounded-xl shadow-glow-lg"
             >
-              {/* Close Button */}
-              <button
+              {/* Close Button - Clean Design */}
+              <motion.button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 hover:shadow-glow-sm transition-all z-10"
+                whileHover={{ scale: 1.2, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                className="sticky top-4 float-right mr-4 mt-4 p-2 text-primary hover:text-red-400 transition-colors z-20"
                 aria-label="Close modal"
               >
-                <X className="h-5 w-5" />
-              </button>
-
-              {/* Navigation Buttons */}
-              {onPrevious && (
-                <button
-                  onClick={onPrevious}
-                  className="absolute top-1/2 left-4 -translate-y-1/2 p-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 hover:shadow-glow-sm transition-all"
-                  aria-label="Previous project"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-              )}
-              {onNext && (
-                <button
-                  onClick={onNext}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 p-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 hover:shadow-glow-sm transition-all"
-                  aria-label="Next project"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              )}
+                <X className="h-6 w-6 drop-shadow-glow" />
+              </motion.button>
 
               {/* Content */}
               <div className="p-6 sm:p-8">
@@ -240,6 +245,22 @@ export function ProjectModal({
                 </div>
               </div>
             </motion.div>
+
+            {/* Next Button - Outside Modal */}
+            {onNext && (
+              <motion.button
+                onClick={onNext}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                whileHover={{ scale: 1.2, x: 5 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-primary hover:text-primary/80 transition-colors z-50"
+                aria-label="Next project"
+              >
+                <ChevronRight className="h-8 w-8 drop-shadow-glow" />
+              </motion.button>
+            )}
           </div>
         </>
       )}

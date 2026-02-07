@@ -18,7 +18,8 @@ import {
   Rocket, 
   GraduationCap, 
   Award,
-  FileCheck
+  FileCheck,
+  Download
 } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
 import Link from 'next/link'
@@ -134,16 +135,22 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
-            {/* Greeting */}
+            {/* Download Resume Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className="mb-2"
             >
-              <span className="text-primary text-sm sm:text-base md:text-lg font-mono bg-primary/10 px-3 py-1.5 rounded-lg inline-block">
-                {'<'} Hello World {'/>'} 👋
-              </span>
+              <a
+                href="/resume.pdf"
+                download="Mohammad_Faiz_Khan_Resume.pdf"
+                className="group inline-flex items-center gap-2 text-primary text-sm sm:text-base md:text-lg font-mono bg-primary/10 px-4 py-2 rounded-lg hover:bg-primary/20 hover:shadow-glow-md hover:scale-105 transition-all duration-300"
+              >
+                <Download className="h-4 w-4 sm:h-5 sm:w-5 group-hover:animate-bounce" />
+                <span>Download Resume</span>
+                <span className="text-xs opacity-70">📄</span>
+              </a>
             </motion.div>
 
             {/* Name */}
@@ -205,7 +212,7 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <Card variant="elevated" className="overflow-hidden border-primary/20 shadow-glow-md hover:shadow-glow-lg transition-all duration-300 group">
+            <Card variant="elevated" className="overflow-hidden border-primary/20 shadow-glow-md hover:shadow-glow-xl hover:scale-105 hover:-rotate-1 transition-all duration-500 group">
               {/* Terminal Header */}
               <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-primary/10">
                 <div className="flex items-center gap-2">
@@ -257,18 +264,18 @@ export function Hero() {
                 >
                   <Card 
                     hover 
-                    className="p-6 text-center cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:border-primary/50 group-hover:shadow-glow-md"
+                    className="p-6 text-center cursor-pointer transition-all duration-300 group-hover:scale-110 group-hover:border-primary/60 group-hover:shadow-glow-lg group-hover:-translate-y-1"
                   >
-                    <div className={`h-12 w-12 rounded-full ${stat.color.replace('text-', 'bg-')}/20 flex items-center justify-center mx-auto mb-3 transition-all duration-300 group-hover:scale-110 group-hover:${stat.color.replace('text-', 'bg-')}/30`}>
-                      <stat.icon className={`h-6 w-6 ${stat.color} transition-transform group-hover:rotate-12`} />
+                    <div className={`h-12 w-12 rounded-full ${stat.color.replace('text-', 'bg-')}/20 flex items-center justify-center mx-auto mb-3 transition-all duration-300 group-hover:scale-125 group-hover:${stat.color.replace('text-', 'bg-')}/40 group-hover:rotate-12`}>
+                      <stat.icon className={`h-6 w-6 ${stat.color} transition-all duration-300 group-hover:scale-110 group-hover:rotate-[360deg]`} />
                     </div>
-                    <div className="text-2xl md:text-3xl font-bold mb-1 group-hover:text-primary transition-colors">
+                    <div className="text-2xl md:text-3xl font-bold mb-1 group-hover:text-primary transition-all duration-300 group-hover:scale-110">
                       {stat.value}
                     </div>
                     <div className="text-xs md:text-sm text-muted-foreground group-hover:text-foreground transition-colors font-medium">
                       {stat.label}
                     </div>
-                    <div className="text-[10px] text-muted-foreground/50 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="text-[10px] text-muted-foreground/50 mt-2 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-y-0 translate-y-2">
                       Click to view
                     </div>
                   </Card>

@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import emailjs from '@emailjs/browser'
 import toast, { Toaster } from 'react-hot-toast'
+import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, Send } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Button } from '@/components/ui/Button'
@@ -115,10 +116,21 @@ export function ContactSection() {
 
           <div className="mt-12 grid lg:grid-cols-2 gap-8">
             {/* Contact Form */}
-            <Card variant="elevated">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card variant="elevated">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 {/* Name */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.1 }}
+                >
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
                     Name
                   </label>
@@ -132,10 +144,15 @@ export function ContactSection() {
                   {errors.name && (
                     <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
                   )}
-                </div>
+                </motion.div>
 
                 {/* Email */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.2 }}
+                >
                   <label htmlFor="email" className="block text-sm font-medium mb-2">
                     Email
                   </label>
@@ -149,10 +166,15 @@ export function ContactSection() {
                   {errors.email && (
                     <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
                   )}
-                </div>
+                </motion.div>
 
                 {/* Subject */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.3 }}
+                >
                   <label htmlFor="subject" className="block text-sm font-medium mb-2">
                     Subject
                   </label>
@@ -166,10 +188,15 @@ export function ContactSection() {
                   {errors.subject && (
                     <p className="mt-1 text-sm text-red-400">{errors.subject.message}</p>
                   )}
-                </div>
+                </motion.div>
 
                 {/* Message */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.4 }}
+                >
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
                     Message
                   </label>
@@ -183,10 +210,16 @@ export function ContactSection() {
                   {errors.message && (
                     <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
                   )}
-                </div>
+                </motion.div>
 
                 {/* Submit Button */}
-                <Button
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <Button
                   type="submit"
                   disabled={isSubmitting}
                   isLoading={isSubmitting}
@@ -196,13 +229,28 @@ export function ContactSection() {
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
+                </motion.div>
               </form>
             </Card>
+            </motion.div>
 
             {/* Contact Info */}
-            <div className="space-y-6">
+            <motion.div 
+              className="space-y-6"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+            >
               {/* Info Card */}
-              <Card variant="elevated">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.1 }}
+                whileHover={{ scale: 1.02, y: -3 }}
+              >
+                <Card variant="elevated">
                 <h3 className="text-xl font-bold mb-4 text-foreground">Contact Information</h3>
                 <div className="space-y-4">
                   <a
@@ -246,23 +294,40 @@ export function ContactSection() {
                   )}
                 </div>
               </Card>
+              </motion.div>
 
               {/* Quick Message Card */}
-              <Card variant="outlined">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.2 }}
+                whileHover={{ scale: 1.02, y: -3 }}
+              >
+                <Card variant="outlined">
                 <h3 className="text-lg font-bold mb-2 text-foreground">Quick Response</h3>
                 <p className="text-sm text-muted-foreground">
                   I typically respond within 24-48 hours. For urgent matters, feel free to reach out directly via email or LinkedIn.
                 </p>
               </Card>
+              </motion.div>
 
               {/* Availability Card */}
-              <Card variant="outlined">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.3 }}
+                whileHover={{ scale: 1.02, y: -3 }}
+              >
+                <Card variant="outlined">
                 <h3 className="text-lg font-bold mb-2 text-foreground">Availability</h3>
                 <p className="text-sm text-muted-foreground">
                   Open to freelance projects, collaborations, and full-time opportunities. Let's discuss how we can work together!
                 </p>
               </Card>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
