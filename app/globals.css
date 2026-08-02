@@ -2,84 +2,289 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================================
+   Samurai theme tokens — see docs/UI_DESIGN.md
+   ----------------------------------------------------------------------------
+   Washi paper ground, sumi ink text, vermillion (朱) accents.
+
+   Two intensities, switched by the `data-ink` attribute on <html>:
+     (default)          restrained — ink-led, vermillion as a seal-red accent
+     data-ink="bold"    cinematic  — vermillion carries headings and emphasis
+
+   Only these custom properties differ between the two.
+   ========================================================================== */
+
 @layer base {
   :root {
-    --background: 8 8 11;
-    --foreground: 250 250 250;
-    --primary: 255 255 255;
-    --primary-dark: 228 228 231;
-    --card: 15 15 19;
-    --accent: 212 212 216;
+    /* Rough white paper. Near-white with only a trace of warmth — the texture
+       overlay does the work of making it read as paper, not the tint. */
+    --paper: 253 252 250;
+    --paper-raised: 255 255 254;
+    --paper-sunk: 246 244 240;
+
+    /* Sumi — soot black, never pure #000, which looks like a bug on paper. */
+    --sumi: 26 24 22;
+    --sumi-raised: 44 41 38;
+    --sumi-soft: 92 86 79;
+
+    /* Hairlines and dividers */
+    --mist: 168 160 150;
+
+    /* Accents */
+    --vermillion: 191 42 34;
+    --gold: 166 132 56;
+    --sakura: 233 168 185;
+
+    /* Intensity-driven */
+    --primary: var(--sumi);
+    --wash: 0.05;
+    --glow: 0.14;
+    --rule: 0.35;
+  }
+
+  :root[data-ink='bold'] {
+    /*
+      Deliberately the SAME vermillion as restrained. A lighter red was tried
+      here and measured 4.02:1 for the section-header chips — under AA — because
+      those sit on a vermillion-tinted background, not on bare paper. Bold now
+      differs by USAGE (vermillion carries the primary) and by wash/glow/rule
+      strength, which reads as more intense without costing contrast.
+    */
+    --primary: var(--vermillion);
+    --wash: 0.12;
+    --glow: 0.3;
+    --rule: 0.45;
   }
 
   * {
-    border-color: rgb(var(--accent) / 0.15);
+    border-color: rgb(var(--mist) / var(--rule));
   }
+
 
   html {
     scroll-behavior: smooth;
   }
 
-  body {
-    background: linear-gradient(135deg, rgb(8 8 11) 0%, rgb(15 15 19) 50%, rgb(8 8 11) 100%);
-    background-attachment: fixed;
-    color: rgb(250 250 250);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "rlig" 1, "calt" 1;
+  /*
+    Set by BrushCursor once it is actually running, never in the stylesheet
+    unconditionally — if the component fails to mount or is disabled for
+    reduced motion, the native cursor must still be there.
+    Text inputs keep their I-beam: losing the caret cue in a form is a real
+    usability cost, and the brush gives nothing back there.
+  */
+  .brush-cursor-active,
+  .brush-cursor-active a,
+  .brush-cursor-active button,
+  .brush-cursor-active [role='button'] {
+    cursor: none;
   }
 
-  /* Custom scrollbar */
+  .brush-cursor-active input,
+  .brush-cursor-active textarea,
+  .brush-cursor-active select {
+    cursor: auto;
+  }
+
+  body {
+    /*
+      Paper colour AND grain in one declaration.
+
+      The grain used to be a fixed, full-viewport ::before with
+      mix-blend-mode: multiply. That is a classic scroll-jank pattern — a blend
+      mode on a viewport-sized layer takes the browser off the fast compositor
+      path, so every scroll frame re-composites the whole screen through the
+      blend. The alpha is now baked into the PNG, so ordinary alpha compositing
+      produces the same look and the pseudo-element is gone entirely.
+
+      It also scrolls with the page rather than being pinned, which is what real
+      paper does.
+    */
+    background-color: rgb(var(--paper));
+    background-image: url('/paper-texture.png');
+    background-repeat: repeat;
+    background-size: 512px 512px;
+    color: rgb(var(--sumi));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+
   ::-webkit-scrollbar {
     width: 0.5rem;
   }
 
   ::-webkit-scrollbar-track {
-    background-color: rgb(15 15 19);
+    background-color: rgb(var(--paper-sunk));
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgb(161 161 170) 0%, rgb(115 115 128) 100%);
+    background: linear-gradient(
+      180deg,
+      rgb(var(--vermillion) / 0.85) 0%,
+      rgb(var(--sumi) / 0.55) 100%
+    );
     border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgb(212 212 216) 0%, rgb(161 161 170) 100%);
+    background: linear-gradient(180deg, rgb(var(--vermillion)) 0%, rgb(var(--sumi) / 0.8) 100%);
+  }
+
+  ::selection {
+    background: rgb(var(--vermillion) / 0.22);
+    color: rgb(var(--sumi));
+  }
+}
+
+/* ============================================================================
+   Motion budget — docs/19_ANIMATIONS.md requires reduced-motion support.
+   CSS backstop for declarative animation; JS motion checks the same query via
+   lib/hooks/useReducedMotion.ts.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }
 
 @layer utilities {
-  /* Glassmorphism effect */
-  .glass {
-    backdrop-filter: blur(20px) saturate(180%);
-    background-color: rgb(15 15 19 / 0.4);
-    border: 1px solid rgb(255 255 255 / 0.08);
+  /* --- Surfaces ------------------------------------------------------ */
+
+  /*
+    .glass / .glass-elevated are gone. backdrop-filter was on 29 elements and
+    was the single biggest rendering cost on the page — each one forces its own
+    compositing layer and re-blurs everything behind it on any repaint. Flat
+    paper surfaces replace them.
+  */
+  .paper-panel {
+    background-color: rgb(var(--paper-raised));
+    border: 1px solid rgb(var(--mist) / var(--rule));
+    box-shadow: 0 1px 2px rgb(var(--sumi) / 0.05);
   }
 
-  .glass-elevated {
-    backdrop-filter: blur(24px) saturate(180%);
-    background-color: rgb(26 26 30 / 0.6);
-    border: 1px solid rgb(212 212 216 / 0.15);
-    box-shadow: 0 8px 32px rgb(0 0 0 / 0.3), 0 0 80px rgb(255 255 255 / 0.03);
+  .paper-panel-raised {
+    background-color: rgb(var(--paper-raised));
+    border: 1px solid rgb(var(--mist) / var(--rule));
+    box-shadow: 0 2px 10px rgb(var(--sumi) / 0.08);
   }
 
-  /* Text gradients */
+  /* Washi panel — the default card surface */
+  .washi {
+    background-color: rgb(var(--paper-raised) / 0.9);
+    border: 1px solid rgb(var(--mist) / var(--rule));
+    box-shadow: 0 1px 2px rgb(var(--sumi) / 0.05);
+  }
+
+  .ink-wash {
+    background-image: radial-gradient(
+      ellipse at var(--ink-x, 50%) var(--ink-y, 0%),
+      rgb(var(--vermillion) / var(--wash)),
+      transparent 65%
+    );
+  }
+
+  /* --- Lines --------------------------------------------------------- */
+
+  .brush-rule {
+    height: 2px;
+    border: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--sumi) / 0.75) 22%,
+      rgb(var(--vermillion) / 0.85) 50%,
+      rgb(var(--sumi) / 0.75) 78%,
+      transparent
+    );
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .katana-edge {
+    position: relative;
+  }
+
+  .katana-edge::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1.5px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--sumi) / 0.8),
+      rgb(var(--vermillion)),
+      transparent
+    );
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .katana-edge:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* --- Type ---------------------------------------------------------- */
+
   .text-gradient {
-    background: linear-gradient(135deg, rgb(255 255 255) 0%, rgb(228 228 231) 50%, rgb(255 255 255) 100%);
+    background: linear-gradient(
+      120deg,
+      rgb(var(--sumi)) 0%,
+      rgb(var(--vermillion)) 55%,
+      rgb(var(--sumi)) 100%
+    );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
     background-size: 200% auto;
-    animation: shimmer 3s linear infinite;
+    animation: shimmer 8s linear infinite;
   }
 
-  /* Glow effects */
+  .text-ink {
+    color: rgb(var(--sumi) / 0.78);
+  }
+
+  /* Hanko — the red seal stamp used for section markers */
+  .hanko {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(var(--vermillion));
+    color: rgb(var(--paper));
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 3px rgb(var(--vermillion) / 0.35);
+  }
+
+  /* --- Glows --------------------------------------------------------- */
+
   .glow-primary {
-    box-shadow: 0 0 40px rgb(212 212 216 / 0.2), 0 0 80px rgb(161 161 170 / 0.1);
+    box-shadow:
+      0 6px 28px rgb(var(--sumi) / 0.1),
+      0 0 40px rgb(var(--vermillion) / var(--glow));
   }
 
-  /* Focus states */
+  .hover-glow:hover {
+    box-shadow:
+      0 8px 30px rgb(var(--sumi) / 0.14),
+      0 0 40px rgb(var(--vermillion) / calc(var(--glow) * 1.5));
+  }
+
+  /* --- Focus --------------------------------------------------------- */
+
   .focus-ring {
     outline: 2px solid transparent;
     outline-offset: 2px;
@@ -87,68 +292,86 @@
 
   .focus-ring:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px rgb(8 8 11), 0 0 0 4px rgb(212 212 216);
+    box-shadow:
+      0 0 0 2px rgb(var(--paper)),
+      0 0 0 4px rgb(var(--vermillion));
   }
 
-  /* Custom animations */
+  :focus-visible {
+    outline: 2px solid rgb(var(--vermillion));
+    outline-offset: 2px;
+  }
+
+  /* --- Animation helpers --------------------------------------------- */
+
   .animate-spin-slow {
     animation: spin 3s linear infinite;
   }
-
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
-
   .animate-pulse-slow {
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-
   .animate-shimmer {
     animation: shimmer 3s linear infinite;
   }
-
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
   }
-
   .animate-slide-up {
     animation: slideUp 0.6s ease-out forwards;
   }
-
   .animate-scale-in {
     animation: scaleIn 0.5s ease-out forwards;
   }
-
   .animate-glow {
     animation: glow 2s ease-in-out infinite;
   }
 
   @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
   }
 
   @keyframes shimmer {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes slideUp {
-    from { 
+    from {
       opacity: 0;
       transform: translateY(30px);
     }
-    to { 
+    to {
       opacity: 1;
       transform: translateY(0);
     }
@@ -166,16 +389,20 @@
   }
 
   @keyframes glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgb(212 212 216 / 0.2);
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgb(var(--vermillion) / calc(var(--glow) * 0.5));
     }
     50% {
-      box-shadow: 0 0 40px rgb(212 212 216 / 0.4), 0 0 60px rgb(161 161 170 / 0.3);
+      box-shadow:
+        0 0 34px rgb(var(--vermillion) / var(--glow)),
+        0 0 60px rgb(var(--gold) / calc(var(--glow) * 0.4));
     }
   }
 
   @keyframes woolBounce {
-    0%, 100% {
+    0%,
+    100% {
       transform: translate(0px, 0px) rotate(0deg);
     }
     25% {
@@ -189,26 +416,222 @@
     }
   }
 
-  /* Hover effects */
+  /* --- Section reveal ------------------------------------------------ */
+  /* Driven by InkReveal. The hidden class is added by JS only, and only to
+     elements off-screen at mount, so server HTML is always visible. */
+
+  .ink-reveal-hidden {
+    opacity: 0;
+    clip-path: inset(0% 0% 100% 0%);
+    transform: translateY(24px);
+  }
+
+  .ink-reveal-in {
+    animation: inkRevealIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes inkRevealIn {
+    from {
+      opacity: 0;
+      clip-path: inset(0% 0% 100% 0%);
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0% 0% 0% 0%);
+      transform: translateY(0);
+    }
+  }
+
+  /* --- Brush band ---------------------------------------------------- */
+  /*
+    The red painted band from the reference sheet — a rough vermillion stroke
+    with text knocked out of it. The ragged edge is a clip-path polygon with
+    deliberately uneven points; a plain rectangle reads as a highlighter.
+  */
+
+  .brush-band {
+    position: relative;
+    display: inline-block;
+    padding: 0.18em 0.72em 0.24em;
+    color: rgb(var(--paper));
+    isolation: isolate;
+  }
+
+  .brush-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgb(var(--vermillion));
+    transform: rotate(-0.7deg);
+    clip-path: polygon(
+      1% 14%, 9% 3%, 23% 10%, 39% 2%, 56% 9%, 72% 3%, 87% 10%, 98% 4%,
+      99% 24%, 96% 44%, 99% 64%, 95% 84%, 98% 96%,
+      85% 91%, 69% 98%, 53% 90%, 37% 97%, 21% 91%, 7% 98%,
+      2% 80%, 5% 60%, 1% 40%
+    );
+  }
+
+  /* Hanko — the small square seal used as a section marker */
+  .hanko-seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--vermillion));
+    color: rgb(var(--paper));
+    border-radius: 2px;
+    transform: rotate(-2deg);
+    box-shadow: 0 1px 2px rgb(var(--vermillion) / 0.4);
+  }
+
+  /* --- Hover and press ----------------------------------------------- */
+
+  /* A vermillion brush stroke sweeps in under the element on hover. */
+  .hover-brush {
+    position: relative;
+  }
+
+  .hover-brush::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 3px;
+    background: rgb(var(--vermillion));
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    clip-path: polygon(0 40%, 6% 0, 22% 60%, 41% 10%, 63% 70%, 80% 15%, 94% 65%, 100% 25%, 100% 100%, 0 100%);
+  }
+
+  .hover-brush:hover::after,
+  .hover-brush:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* Ink soaks in slightly when a surface is pressed. */
+  .press-ink {
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease;
+  }
+
+  .press-ink:active {
+    transform: scale(0.985) translateY(1px);
+    box-shadow: 0 1px 2px rgb(var(--sumi) / 0.12);
+  }
+
+  /* Click ripple, spawned by InkRipple. */
+  .ink-blot {
+    position: fixed;
+    pointer-events: none;
+    z-index: 55;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgb(var(--vermillion) / 0.32) 0%,
+      rgb(var(--vermillion) / 0.14) 45%,
+      transparent 70%
+    );
+    animation: inkBlot 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes inkBlot {
+    from {
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0.9;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(2.6);
+      opacity: 0;
+    }
+  }
+
+  /* --- Sumi-e motion ------------------------------------------------- */
+
+  /* Ensō drawing itself, as a brush would travel it. */
+  @keyframes sumiDraw {
+    from {
+      stroke-dashoffset: 460;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .sumi-draw {
+    animation: sumiDraw 1.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Ink soaking outward into the paper. */
+  /* No filter: blur() here. Animating a blur forces a re-raster every frame;
+     scale + opacity reads as ink soaking outward and stays on the compositor. */
+  @keyframes sumiBleed {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-sumi-bleed {
+    animation: sumiBleed 1.3s ease-out forwards;
+  }
+
+  /* Barely-there drift, for branches and hanging motifs. Long period and a
+     tiny angle on purpose — anything faster reads as a wobble, not a breeze. */
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-0.7deg) translateY(0);
+    }
+    50% {
+      transform: rotate(0.7deg) translateY(-5px);
+    }
+  }
+
+  /*
+    will-change promotes these to their own layer so the feTurbulence result is
+    rasterised ONCE and the animation only moves the finished layer. Without it
+    the browser re-runs the displacement filter every frame, which is by far the
+    most expensive thing on the page.
+  */
+  .animate-sway {
+    animation: sway 11s ease-in-out infinite;
+    transform-origin: top left;
+    will-change: transform;
+  }
+
+  .animate-sway-slow {
+    animation: sway 16s ease-in-out infinite;
+    transform-origin: top right;
+    will-change: transform;
+  }
+
+  /* --- Hover --------------------------------------------------------- */
+
   .hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .hover-lift:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgb(0 0 0 / 0.4);
+    box-shadow: 0 18px 36px rgb(var(--sumi) / 0.14);
   }
 
-  .hover-glow:hover {
-    box-shadow: 0 0 30px rgb(212 212 216 / 0.3), 0 0 60px rgb(161 161 170 / 0.2);
-  }
+  /* --- Layout -------------------------------------------------------- */
 
-  /* Consistent section spacing */
   .section-padding {
     @apply py-16 sm:py-20 md:py-24;
   }
 
-  /* Consistent container with responsive padding */
   .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }

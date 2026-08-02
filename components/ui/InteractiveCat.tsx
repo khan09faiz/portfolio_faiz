@@ -424,7 +424,7 @@ export function InteractiveCat() {
             }}
           >
             😺
-            <span className="ml-0.5 text-sm font-bold text-pink-400" style={{ textShadow: '0 0 10px rgba(244,114,182,0.8)' }}>
+            <span className="ml-0.5 text-sm font-bold text-pink-600" style={{ textShadow: '0 0 10px rgba(244,114,182,0.8)' }}>
               Meow!
             </span>
           </motion.div>

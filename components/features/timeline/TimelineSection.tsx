@@ -31,11 +31,11 @@ const getIcon = (type: string) => {
 const getTypeColor = (type: string) => {
   switch (type) {
     case 'work':
-      return 'text-blue-400 bg-blue-500/20'
+      return 'text-blue-700 bg-blue-500/20'
     case 'education':
-      return 'text-purple-400 bg-purple-500/20'
+      return 'text-purple-700 bg-purple-500/20'
     case 'achievement':
-      return 'text-yellow-400 bg-yellow-500/20'
+      return 'text-yellow-700 bg-yellow-500/20'
     default:
       return 'text-primary bg-primary/20'
   }
@@ -99,7 +99,7 @@ export function TimelineSection() {
           className="mt-12"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <Briefcase className="h-6 w-6 text-blue-400" />
+            <Briefcase className="h-6 w-6 text-blue-700" />
             Work Experience
           </h3>
           <div className="space-y-6">
@@ -175,7 +175,7 @@ export function TimelineSection() {
           className="mt-16"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <GraduationCap className="h-6 w-6 text-purple-400" />
+            <GraduationCap className="h-6 w-6 text-purple-700" />
             Education
           </h3>
           <div className="space-y-6">
@@ -251,7 +251,7 @@ export function TimelineSection() {
           className="mt-16"
         >
           <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <Award className="h-6 w-6 text-yellow-400" />
+            <Award className="h-6 w-6 text-yellow-700" />
             Certifications & Achievements
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -267,7 +267,7 @@ export function TimelineSection() {
                 <Card hover variant="elevated" className="h-full">
                   <div className="flex items-start gap-3 mb-3">
                     <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center">
-                      <CheckCircle2 className="h-5 w-5 text-yellow-400" />
+                      <CheckCircle2 className="h-5 w-5 text-yellow-700" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-bold text-foreground text-sm line-clamp-2 mb-1">
@@ -314,7 +314,7 @@ export function TimelineSection() {
             >
               <button
                 onClick={() => setShowAllCertificates(!showAllCertificates)}
-                className="group inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition-colors cursor-pointer"
+                className="group inline-flex items-center gap-2 text-yellow-700 hover:text-yellow-700 transition-colors cursor-pointer"
               >
                 <span className="font-medium">
                   {!showAllCertificates 

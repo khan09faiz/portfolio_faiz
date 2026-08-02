@@ -24,6 +24,13 @@ const eslintConfig = defineConfig([
       "no-console": ["warn", { allow: ["warn", "error"] }],
     },
   },
+  {
+    // CLI scripts report to stdout — that is their interface, not a stray debug log.
+    files: ["scripts/**/*.{ts,mts,js,mjs}"],
+    rules: {
+      "no-console": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

@@ -31,15 +31,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     // Base styles
+    // press-ink gives the small settle-into-paper feel on :active.
     const baseStyles =
-      'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
+      'press-ink inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
 
     // Variant styles
     const variantStyles = {
       primary:
         'bg-primary text-background hover:bg-primary/90 shadow-glow-sm hover:shadow-glow-lg active:scale-[0.97] hover:-translate-y-0.5',
       secondary:
-        'bg-card/50 text-foreground hover:bg-card border border-primary/20 hover:border-primary/40 shadow-glass hover:shadow-glow-sm active:scale-[0.97]',
+        'bg-card text-foreground hover:bg-card border border-primary/20 hover:border-primary/40  hover:shadow-glow-sm active:scale-[0.97]',
       ghost:
         'bg-transparent text-foreground hover:bg-primary/10 hover:text-primary active:scale-[0.97]',
       outline:

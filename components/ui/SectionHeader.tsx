@@ -1,11 +1,18 @@
 /**
- * SectionHeader Component
- * Terminal-style section header with title and description
+ * SectionHeader
+ * Section title painted into a vermillion brush band, after the red banner on
+ * the reference sheet, with a hanko seal carrying the path label.
+ *
+ * Deliberately NOT animated with Framer Motion. The previous version used
+ * `whileInView` with `once: false`, which server-renders opacity 0 and animates
+ * back out every time the header leaves the viewport — putting section titles
+ * behind JS for their basic visibility. That is the same failure mode that
+ * blanked the page when hydration broke. Everything here is present in the
+ * server HTML.
  */
 
 'use client'
 
-import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 interface SectionHeaderProps {
@@ -13,6 +20,7 @@ interface SectionHeaderProps {
   title: string
   description?: string | React.ReactNode
   className?: string
+  /** Retained for API compatibility with existing call sites. */
   isInView?: boolean
 }
 
@@ -21,53 +29,31 @@ export function SectionHeader({
   title,
   description,
   className,
-  isInView = true,
 }: SectionHeaderProps) {
   return (
-    <div className={cn('text-center mb-8 sm:mb-12', className)}>
-      {/* Terminal Path */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        viewport={{ once: false, margin: "-100px" }}
-        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-        className="flex items-center justify-center gap-2 mb-3 sm:mb-4"
-      >
-        <div className="flex gap-1">
-          <div className="w-2 h-2 rounded-full bg-red-500" />
-          <div className="w-2 h-2 rounded-full bg-yellow-500" />
-          <div className="w-2 h-2 rounded-full bg-green-500" />
-        </div>
-        <code className="text-xs sm:text-sm text-muted-foreground font-mono">
+    <div className={cn('text-center mb-10 sm:mb-14', className)}>
+      {/* Hanko seal with the path label */}
+      <div className="mb-5 flex items-center justify-center gap-2.5">
+        <span className="hanko-seal h-6 w-6 font-mono text-[11px] font-bold leading-none">
+          印
+        </span>
+        <code className="font-mono text-xs tracking-wide text-muted sm:text-sm">
           {terminalPath}
         </code>
-      </motion.div>
+      </div>
 
-      {/* Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        viewport={{ once: false, margin: "-100px" }}
-        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
-        className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4"
-      >
-        <span className="text-gradient">{title}</span>
-      </motion.h2>
+      {/* Title, knocked out of a painted band */}
+      <h2 className="mb-5 text-3xl font-bold sm:text-4xl lg:text-5xl">
+        <span className="brush-band">{title}</span>
+      </h2>
 
-      {/* Description */}
+      {/* Brush rule beneath */}
+      <div className="brush-rule mx-auto mb-5 w-28" />
+
       {description && (
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          viewport={{ once: false, margin: "-100px" }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
-          className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-        >
+        <p className="mx-auto max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
           {description}
-        </motion.p>
+        </p>
       )}
     </div>
   )

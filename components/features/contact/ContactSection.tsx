@@ -96,11 +96,16 @@ export function ContactSection() {
         position="top-right"
         toastOptions={{
           duration: 4000,
+          // Was a dark panel with a cyan border — left over from the old
+          // pre-samurai palette. Now a paper card with an ink rule and a
+          // vermillion edge, and no backdrop blur.
           style: {
-            background: 'rgba(17, 24, 39, 0.9)',
-            color: '#fff',
-            border: '1px solid rgba(0, 217, 255, 0.2)',
-            backdropFilter: 'blur(8px)',
+            background: 'rgb(var(--paper-raised))',
+            color: 'rgb(var(--sumi))',
+            border: '1px solid rgb(var(--mist) / 0.45)',
+            borderLeft: '3px solid rgb(var(--vermillion))',
+            borderRadius: '6px',
+            boxShadow: '0 4px 16px rgb(var(--sumi) / 0.12)',
           },
         }}
       />
@@ -138,11 +143,11 @@ export function ContactSection() {
                     {...register('name')}
                     type="text"
                     id="name"
-                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
+                    className="w-full px-4 py-3 rounded-lg bg-card border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
                     placeholder="Your name"
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.name.message}</p>
                   )}
                 </motion.div>
 
@@ -160,11 +165,11 @@ export function ContactSection() {
                     {...register('email')}
                     type="email"
                     id="email"
-                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
+                    className="w-full px-4 py-3 rounded-lg bg-card border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
                     placeholder="your.email@example.com"
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.email.message}</p>
                   )}
                 </motion.div>
 
@@ -182,11 +187,11 @@ export function ContactSection() {
                     {...register('subject')}
                     type="text"
                     id="subject"
-                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
+                    className="w-full px-4 py-3 rounded-lg bg-card border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground/50"
                     placeholder="What's this about?"
                   />
                   {errors.subject && (
-                    <p className="mt-1 text-sm text-red-400">{errors.subject.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.subject.message}</p>
                   )}
                 </motion.div>
 
@@ -204,11 +209,11 @@ export function ContactSection() {
                     {...register('message')}
                     id="message"
                     rows={6}
-                    className="w-full px-4 py-3 rounded-lg bg-card/50 border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 resize-none text-foreground placeholder:text-muted-foreground/50 leading-relaxed"
+                    className="w-full px-4 py-3 rounded-lg bg-card border-2 border-primary/20 focus:border-primary/60 focus:ring-4 focus:ring-primary/10 outline-none transition-all duration-200 resize-none text-foreground placeholder:text-muted-foreground/50 leading-relaxed"
                     placeholder="Your message..."
                   />
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.message.message}</p>
                   )}
                 </motion.div>
 

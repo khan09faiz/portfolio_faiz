@@ -67,15 +67,15 @@ export function CertificatesSection() {
           className="mb-12"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-              <GraduationCap className="h-6 w-6 text-green-500" />
+            <div className="h-12 w-12 rounded-full bg-sumi/10 flex items-center justify-center">
+              <GraduationCap className="h-6 w-6 text-sumi" />
             </div>
             <h3 className="text-3xl font-bold text-foreground">Education</h3>
           </div>
           
-          <Card className="p-6 md:p-8 bg-gradient-to-br from-green-500/5 to-emerald-500/5 border-green-500/20">
+          <Card className="p-6 md:p-8 bg-gradient-to-br from-sumi/5 to-sumi/5 border-sumi/20">
             <div className="flex items-start gap-4">
-              <div className="h-16 w-16 rounded-xl bg-green-500/10 flex items-center justify-center text-4xl flex-shrink-0">
+              <div className="h-16 w-16 rounded-xl bg-sumi/10 flex items-center justify-center text-4xl flex-shrink-0">
                 {education.logo}
               </div>
               <div className="flex-1">
@@ -89,7 +89,7 @@ export function CertificatesSection() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-muted-foreground">GPA:</span>
-                    <span className="font-semibold text-green-500">{education.gpa}/10.0</span>
+                    <span className="font-semibold text-sumi">{education.gpa}/10.0</span>
                   </div>
                 </div>
               </div>
@@ -99,8 +99,8 @@ export function CertificatesSection() {
 
         {/* Certifications */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="h-12 w-12 rounded-full bg-cyan-500/10 flex items-center justify-center">
-            <FileCheck className="h-6 w-6 text-cyan-500" />
+          <div className="h-12 w-12 rounded-full bg-crimson/10 flex items-center justify-center">
+            <FileCheck className="h-6 w-6 text-crimson" />
           </div>
           <h3 className="text-3xl font-bold text-foreground">Professional Certifications</h3>
         </div>
@@ -115,13 +115,13 @@ export function CertificatesSection() {
               viewport={{ once: false, margin: "-50px" }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              <Card className="p-6 h-full flex flex-col hover:border-cyan-500/30 transition-all group">
+              <Card className="p-6 h-full flex flex-col hover:border-crimson/30 transition-all group">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="h-12 w-12 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle2 className="h-6 w-6 text-cyan-500" />
+                  <div className="h-12 w-12 rounded-lg bg-crimson/10 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="h-6 w-6 text-crimson" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-lg mb-2 group-hover:text-cyan-500 transition-colors line-clamp-2">
+                    <h4 className="font-bold text-lg mb-2 group-hover:text-crimson transition-colors line-clamp-2">
                       {cert.title}
                     </h4>
                     <p className="text-sm font-semibold text-primary mb-1">{cert.organization}</p>
@@ -137,13 +137,13 @@ export function CertificatesSection() {
                     {cert.technologies.slice(0, 3).map((tech, i) => (
                       <span
                         key={i}
-                        className="px-2 py-1 text-xs rounded bg-cyan-500/10 border border-cyan-500/20 text-foreground"
+                        className="px-2 py-1 text-xs rounded bg-crimson/10 border border-crimson/20 text-foreground"
                       >
                         {tech}
                       </span>
                     ))}
                     {cert.technologies.length > 3 && (
-                      <span className="px-2 py-1 text-xs rounded bg-cyan-500/10 border border-cyan-500/20 text-foreground">
+                      <span className="px-2 py-1 text-xs rounded bg-crimson/10 border border-crimson/20 text-foreground">
                         +{cert.technologies.length - 3}
                       </span>
                     )}
@@ -162,7 +162,7 @@ export function CertificatesSection() {
           >
             <button
               onClick={() => setShowAll(!showAll)}
-              className="group inline-flex items-center gap-2 text-cyan-500 hover:text-cyan-400 transition-colors cursor-pointer"
+              className="group inline-flex items-center gap-2 text-crimson hover:text-crimson transition-colors cursor-pointer"
             >
               <span className="font-medium">
                 {!showAll 

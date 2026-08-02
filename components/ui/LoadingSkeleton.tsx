@@ -34,7 +34,7 @@ export const LoadingSkeleton = memo(function LoadingSkeleton({
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="bg-card/30 rounded-xl p-6 space-y-4 border border-primary/10"
+                className="bg-card rounded-xl p-6 space-y-4 border border-primary/10"
               >
                 <div className="h-6 bg-primary/10 rounded w-3/4" />
                 <div className="h-4 bg-primary/5 rounded w-full" />
@@ -67,7 +67,7 @@ export const LoadingSkeleton = memo(function LoadingSkeleton({
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="bg-card/30 rounded-xl p-6 space-y-4 border border-primary/10"
+                className="bg-card rounded-xl p-6 space-y-4 border border-primary/10"
               >
                 <div className="h-6 bg-primary/10 rounded w-2/3" />
                 <div className="h-2 bg-primary/10 rounded w-full" />
@@ -102,7 +102,7 @@ export const LoadingSkeleton = memo(function LoadingSkeleton({
                   <div className="w-12 h-12 rounded-full bg-primary/10" />
                   {i < 3 && <div className="w-0.5 flex-1 bg-primary/10 mt-2" />}
                 </div>
-                <div className="flex-1 bg-card/30 rounded-xl p-6 border border-primary/10 space-y-3">
+                <div className="flex-1 bg-card rounded-xl p-6 border border-primary/10 space-y-3">
                   <div className="h-6 bg-primary/10 rounded w-2/3" />
                   <div className="h-4 bg-primary/5 rounded w-1/2" />
                   <div className="space-y-2">
@@ -133,7 +133,7 @@ export const LoadingSkeleton = memo(function LoadingSkeleton({
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="bg-card/30 rounded-xl p-6 space-y-2 border border-primary/10"
+                className="bg-card rounded-xl p-6 space-y-2 border border-primary/10"
               >
                 <div className="h-8 bg-primary/10 rounded w-16 mx-auto" />
                 <div className="h-4 bg-primary/5 rounded w-20 mx-auto" />
@@ -142,7 +142,7 @@ export const LoadingSkeleton = memo(function LoadingSkeleton({
           </div>
 
           {/* Heatmap */}
-          <div className="bg-card/30 rounded-xl p-6 border border-primary/10">
+          <div className="bg-card rounded-xl p-6 border border-primary/10">
             <div className="h-6 bg-primary/10 rounded w-48 mb-4" />
             <div className="h-32 bg-primary/5 rounded w-full" />
           </div>
@@ -162,7 +162,7 @@ export const LoadingSkeleton = memo(function LoadingSkeleton({
           </div>
 
           {/* Form */}
-          <div className="bg-card/30 rounded-xl p-6 sm:p-8 border border-primary/10 space-y-6">
+          <div className="bg-card rounded-xl p-6 sm:p-8 border border-primary/10 space-y-6">
             <div className="space-y-2">
               <div className="h-4 bg-primary/10 rounded w-16" />
               <div className="h-12 bg-primary/5 rounded w-full" />
@@ -198,7 +198,7 @@ export const LoadingSkeleton = memo(function LoadingSkeleton({
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
-              className="bg-card/30 rounded-xl p-6 space-y-4 border border-primary/10"
+              className="bg-card rounded-xl p-6 space-y-4 border border-primary/10"
             >
               <div className="h-6 bg-primary/10 rounded w-3/4" />
               <div className="h-4 bg-primary/5 rounded w-full" />

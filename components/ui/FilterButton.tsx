@@ -30,7 +30,7 @@ export function FilterButton({
         'relative px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 shadow-sm',
         isActive
           ? 'bg-primary text-background shadow-glow-md hover:shadow-glow-lg'
-          : 'bg-card/40 text-muted-foreground hover:bg-card/60 hover:text-foreground border border-primary/10 hover:border-primary/30'
+          : 'bg-card text-muted-foreground hover:bg-card/60 hover:text-foreground border border-primary/10 hover:border-primary/30'
       )}
     >
       <span>{label}</span>
