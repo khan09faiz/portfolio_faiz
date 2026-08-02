@@ -7,11 +7,10 @@
 
 import { motion } from 'framer-motion'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { SkillCategory } from '@/lib/types'
 import { SkillsGlobe } from './SkillsGlobe'
-import skillsDataRaw from '@/src/data/skills.json'
+import { getSkills } from '@/lib/content'
 
-const skillsData = skillsDataRaw as SkillCategory[]
+const skillsData = getSkills()
 
 export function SkillsSection() {
   return (
