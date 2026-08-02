@@ -80,6 +80,26 @@
     scroll-behavior: smooth;
   }
 
+  /*
+    Set by BrushCursor once it is actually running, never in the stylesheet
+    unconditionally — if the component fails to mount or is disabled for
+    reduced motion, the native cursor must still be there.
+    Text inputs keep their I-beam: losing the caret cue in a form is a real
+    usability cost, and the brush gives nothing back there.
+  */
+  .brush-cursor-active,
+  .brush-cursor-active a,
+  .brush-cursor-active button,
+  .brush-cursor-active [role='button'] {
+    cursor: none;
+  }
+
+  .brush-cursor-active input,
+  .brush-cursor-active textarea,
+  .brush-cursor-active select {
+    cursor: auto;
+  }
+
   body {
     background-color: rgb(var(--paper));
     background-image:
@@ -416,6 +436,70 @@
     75% {
       transform: translate(12px, 5px) rotate(20deg);
     }
+  }
+
+  /* --- Sumi-e motion ------------------------------------------------- */
+
+  /* Ensō drawing itself, as a brush would travel it. */
+  @keyframes sumiDraw {
+    from {
+      stroke-dashoffset: 460;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .sumi-draw {
+    animation: sumiDraw 1.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Ink soaking outward into the paper. */
+  @keyframes sumiBleed {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+      filter: blur(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+  }
+
+  .animate-sumi-bleed {
+    animation: sumiBleed 1.3s ease-out forwards;
+  }
+
+  /* Barely-there drift, for branches and hanging motifs. Long period and a
+     tiny angle on purpose — anything faster reads as a wobble, not a breeze. */
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-0.7deg) translateY(0);
+    }
+    50% {
+      transform: rotate(0.7deg) translateY(-5px);
+    }
+  }
+
+  /*
+    will-change promotes these to their own layer so the feTurbulence result is
+    rasterised ONCE and the animation only moves the finished layer. Without it
+    the browser re-runs the displacement filter every frame, which is by far the
+    most expensive thing on the page.
+  */
+  .animate-sway {
+    animation: sway 11s ease-in-out infinite;
+    transform-origin: top left;
+    will-change: transform;
+  }
+
+  .animate-sway-slow {
+    animation: sway 16s ease-in-out infinite;
+    transform-origin: top right;
+    will-change: transform;
   }
 
   /* --- Hover --------------------------------------------------------- */
