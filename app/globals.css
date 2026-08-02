@@ -60,21 +60,6 @@
     border-color: rgb(var(--mist) / var(--rule));
   }
 
-  /*
-    Applied for a single frame while the intensity is switched at runtime.
-    Chromium latches a transition driven by an UNREGISTERED custom property at
-    its start value, so elements carrying `transition-all` keep their old colour
-    forever after a `data-ink` flip. Killing transitions across the swap avoids it.
-
-    Only the preview toggle hits this path — a normal page load sets the
-    attribute before first paint, so there is no transition to latch.
-  */
-  .ink-switching,
-  .ink-switching *,
-  .ink-switching *::before,
-  .ink-switching *::after {
-    transition: none !important;
-  }
 
   html {
     scroll-behavior: smooth;
