@@ -130,15 +130,15 @@ export const SOCIAL_LINKS = [
 // Animation Configuration
 // ============================================================================
 
-export const ANIMATION_CONFIG = {
-  particleCount: 100,
-  particleColor: '#00D9FF',
-  particleOpacity: 0.3,
-  particleSize: 2,
-  particleSpeed: 0.5,
-  connectionDistance: 150,
-  lineOpacity: 0.2,
-} as const
+// NOTE: ANIMATION_CONFIG (particle counts/colours) and THEME (a cyan #00D9FF /
+// navy palette) used to live here. Both were dead — nothing imported them — and
+// both contradicted the real palette in tailwind.config.ts, so anyone theming
+// from them would have used the wrong colours.
+//
+// Colour is now owned solely by the CSS custom properties in app/globals.css.
+// The canvas atmosphere and ink cursor read those tokens at runtime, which is
+// what lets the crimson intensity switch without a rebuild. Do not reintroduce
+// a parallel JS colour table.
 
 export const ANIMATION_DURATION = {
   fast: 0.2,
@@ -157,15 +157,3 @@ export const LAYOUT = {
   GRID_GAP: 'gap-4 sm:gap-5 lg:gap-6',
 } as const
 
-// ============================================================================
-// Theme Configuration
-// ============================================================================
-
-export const THEME = {
-  colors: {
-    primary: '#00D9FF',
-    background: '#0A0E27',
-    card: '#0F1629',
-    elevated: '#1A1F3A',
-  },
-} as const

@@ -1,26 +1,92 @@
 /**
- * AnimatedBackground Component
- * Floating geometric shapes with subtle animations
+ * AnimatedBackground
+ * Samurai atmosphere: drifting fog banks with falling sakura petals.
+ *
+ * Replaces the previous floating-geometry canvas. Same single fixed canvas and
+ * the same compositing, so this costs no extra layer.
+ *
+ * Motion budget (docs/19_ANIMATIONS.md):
+ *  - fog blobs are rendered ONCE into offscreen canvases and then only blitted,
+ *    so no per-frame gradient construction
+ *  - the loop is throttled to 30fps and stops entirely when the tab is hidden
+ *  - particle counts scale down on small viewports
+ *  - prefers-reduced-motion paints a single static frame and never starts a loop
  */
 
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 
-interface Shape {
+type Rgb = [number, number, number]
+
+interface FogBank {
+  sprite: HTMLCanvasElement
   x: number
   y: number
   vx: number
+  size: number
+}
+
+interface Petal {
+  x: number
+  y: number
   vy: number
+  drift: number
+  phase: number
   size: number
   rotation: number
-  rotationSpeed: number
-  type: 'circle' | 'triangle' | 'square' | 'hexagon'
-  opacity: number
-  color: string
+  spin: number
+  alpha: number
+}
+
+/** Reads a `--token` holding a space-separated RGB triplet. */
+function readToken(name: string, fallback: Rgb): Rgb {
+  if (typeof window === 'undefined') return fallback
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+  const parts = raw
+    .split(/[\s,]+/)
+    .map(Number)
+    .filter((n) => Number.isFinite(n))
+  return parts.length === 3 ? (parts as Rgb) : fallback
+}
+
+/** Pre-renders one soft radial blob so the animation loop only has to blit it. */
+function makeFogSprite(size: number, [r, g, b]: Rgb, alpha: number): HTMLCanvasElement {
+  const sprite = document.createElement('canvas')
+  sprite.width = size
+  sprite.height = size
+  const sctx = sprite.getContext('2d')
+  if (!sctx) return sprite
+
+  const half = size / 2
+  const gradient = sctx.createRadialGradient(half, half, 0, half, half, half)
+  gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha})`)
+  gradient.addColorStop(0.55, `rgba(${r}, ${g}, ${b}, ${alpha * 0.35})`)
+  gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
+  sctx.fillStyle = gradient
+  sctx.fillRect(0, 0, size, size)
+  return sprite
+}
+
+function drawPetal(ctx: CanvasRenderingContext2D, petal: Petal, [r, g, b]: Rgb) {
+  const { size } = petal
+  ctx.save()
+  ctx.translate(petal.x, petal.y)
+  ctx.rotate(petal.rotation)
+  ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${petal.alpha})`
+  ctx.beginPath()
+  // Teardrop petal: two curves meeting at the tip.
+  ctx.moveTo(0, -size)
+  ctx.quadraticCurveTo(size * 0.85, -size * 0.25, 0, size)
+  ctx.quadraticCurveTo(-size * 0.85, -size * 0.25, 0, -size)
+  ctx.closePath()
+  ctx.fill()
+  ctx.restore()
 }
 
 export function AnimatedBackground() {
+  const prefersReducedMotion = useReducedMotion()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -30,176 +96,168 @@ export function AnimatedBackground() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Set canvas size
-    const resizeCanvas = () => {
-      if (!canvas) return
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    let width = 0
+    let height = 0
+    let fog: FogBank[] = []
+    let petals: Petal[] = []
 
-    // Geometric shapes colors (subtle grays/whites)
-    const colors = [
-      'rgba(212, 212, 216, 0.15)',
-      'rgba(228, 228, 231, 0.12)',
-      'rgba(244, 244, 245, 0.1)',
-      'rgba(161, 161, 170, 0.18)',
-    ]
+    // Palette is read from the CSS tokens, so the scene follows the
+    // restrained/bold switch without this component knowing about it.
+    let crimson = readToken('--crimson', [155, 27, 48])
+    let sakuraColor = readToken('--sakura', [244, 194, 205])
+    let mist = readToken('--mist', [161, 161, 170])
 
-    const shapes: Shape[] = []
-    const shapeTypes: Shape['type'][] = ['circle', 'triangle', 'square', 'hexagon']
-    
-    // Create floating shapes - Minimal 2 for maximum performance
-    for (let i = 0; i < 2; i++) {
-      shapes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        size: Math.random() * 40 + 20,
+    const isSmall = () => window.innerWidth < 768
+
+    function buildScene() {
+      const fogCount = isSmall() ? 3 : 5
+      const petalCount = isSmall() ? 8 : 18
+
+      fog = Array.from({ length: fogCount }, (_, i) => {
+        // Alternate crimson-tinted and neutral mist banks.
+        const tint = i % 2 === 0 ? crimson : mist
+        const size = Math.round(Math.max(width, height) * (i % 2 === 0 ? 0.75 : 0.55))
+        return {
+          sprite: makeFogSprite(size, tint, i % 2 === 0 ? 0.1 : 0.07),
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.12,
+          size,
+        }
+      })
+
+      petals = Array.from({ length: petalCount }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vy: 0.25 + Math.random() * 0.5,
+        drift: 0.3 + Math.random() * 0.6,
+        phase: Math.random() * Math.PI * 2,
+        size: 3 + Math.random() * 4,
         rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.008,
-        type: shapeTypes[Math.floor(Math.random() * shapeTypes.length)],
-        opacity: Math.random() * 0.3 + 0.1,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      })
+        spin: (Math.random() - 0.5) * 0.02,
+        alpha: 0.25 + Math.random() * 0.35,
+      }))
     }
 
-    // Draw functions for different shapes
-    const drawCircle = (shape: Shape) => {
-      ctx.beginPath()
-      ctx.arc(shape.x, shape.y, shape.size, 0, Math.PI * 2)
-      ctx.strokeStyle = shape.color
-      ctx.lineWidth = 2
-      ctx.stroke()
+    function resize() {
+      width = window.innerWidth
+      height = window.innerHeight
+      canvas!.width = Math.floor(width * dpr)
+      canvas!.height = Math.floor(height * dpr)
+      canvas!.style.width = `${width}px`
+      canvas!.style.height = `${height}px`
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
+      buildScene()
     }
 
-    const drawTriangle = (shape: Shape) => {
-      ctx.save()
-      ctx.translate(shape.x, shape.y)
-      ctx.rotate(shape.rotation)
-      ctx.beginPath()
-      ctx.moveTo(0, -shape.size)
-      ctx.lineTo(shape.size * 0.866, shape.size * 0.5)
-      ctx.lineTo(-shape.size * 0.866, shape.size * 0.5)
-      ctx.closePath()
-      ctx.strokeStyle = shape.color
-      ctx.lineWidth = 2
-      ctx.stroke()
-      ctx.restore()
-    }
+    function paint(time: number) {
+      ctx!.clearRect(0, 0, width, height)
 
-    const drawSquare = (shape: Shape) => {
-      ctx.save()
-      ctx.translate(shape.x, shape.y)
-      ctx.rotate(shape.rotation)
-      ctx.strokeStyle = shape.color
-      ctx.lineWidth = 2
-      ctx.strokeRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size)
-      ctx.restore()
-    }
-
-    const drawHexagon = (shape: Shape) => {
-      ctx.save()
-      ctx.translate(shape.x, shape.y)
-      ctx.rotate(shape.rotation)
-      ctx.beginPath()
-      for (let i = 0; i < 6; i++) {
-        const angle = (Math.PI / 3) * i
-        const x = shape.size * Math.cos(angle)
-        const y = shape.size * Math.sin(angle)
-        if (i === 0) ctx.moveTo(x, y)
-        else ctx.lineTo(x, y)
+      for (const bank of fog) {
+        ctx!.drawImage(bank.sprite, bank.x - bank.size / 2, bank.y - bank.size / 2)
       }
-      ctx.closePath()
-      ctx.strokeStyle = shape.color
-      ctx.lineWidth = 2
-      ctx.stroke()
-      ctx.restore()
+
+      for (const petal of petals) {
+        drawPetal(ctx!, petal, sakuraColor)
+      }
+
+      // Silence the unused-arg lint in the static path.
+      void time
     }
 
-    // Animation loop with performance optimization
-    let animationId: number
-    let lastFrameTime = 0
-    const frameInterval = 1000 / 15 // Target 15 FPS for background (minimal)
-    
-    const animate = (currentTime: number) => {
-      // Throttle to 15 FPS for background
-      if (currentTime - lastFrameTime < frameInterval) {
-        animationId = requestAnimationFrame(animate)
-        return
+    function step(dt: number, time: number) {
+      for (const bank of fog) {
+        bank.x += bank.vx * dt
+        if (bank.x < -bank.size) bank.x = width + bank.size
+        if (bank.x > width + bank.size) bank.x = -bank.size
       }
-      lastFrameTime = currentTime
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      for (const petal of petals) {
+        petal.y += petal.vy * dt
+        // Sway: petals fall in a lazy sine rather than straight down.
+        petal.x += Math.sin(time * 0.0006 + petal.phase) * petal.drift * dt * 0.35
+        petal.rotation += petal.spin * dt
 
-      // Update and draw shapes
-      shapes.forEach((shape) => {
-        // Update position
-        shape.x += shape.vx
-        shape.y += shape.vy
-        shape.rotation += shape.rotationSpeed
-
-        // Wrap around for smoother experience
-        if (shape.x < -shape.size) shape.x = canvas.width + shape.size
-        if (shape.x > canvas.width + shape.size) shape.x = -shape.size
-        if (shape.y < -shape.size) shape.y = canvas.height + shape.size
-        if (shape.y > canvas.height + shape.size) shape.y = -shape.size
-
-        // Draw based on type
-        switch (shape.type) {
-          case 'circle':
-            drawCircle(shape)
-            break
-          case 'triangle':
-            drawTriangle(shape)
-            break
-          case 'square':
-            drawSquare(shape)
-            break
-          case 'hexagon':
-            drawHexagon(shape)
-            break
+        if (petal.y > height + 12) {
+          petal.y = -12
+          petal.x = Math.random() * width
         }
-      })
-
-      // Simplified connecting lines - only draw if shapes are very close
-      ctx.strokeStyle = 'rgba(212, 212, 216, 0.04)'
-      ctx.lineWidth = 1
-      const maxDistance = 200
-      for (let i = 0; i < shapes.length - 1; i++) {
-        for (let j = i + 1; j < shapes.length; j++) {
-          const dx = shapes[i].x - shapes[j].x
-          const dy = shapes[i].y - shapes[j].y
-          
-          // Quick distance check before drawing
-          const distSq = dx * dx + dy * dy
-          if (distSq < maxDistance * maxDistance) {
-            ctx.beginPath()
-            ctx.moveTo(shapes[i].x, shapes[i].y)
-            ctx.lineTo(shapes[j].x, shapes[j].y)
-            ctx.stroke()
-          }
-        }
+        if (petal.x > width + 12) petal.x = -12
+        if (petal.x < -12) petal.x = width + 12
       }
-
-      animationId = requestAnimationFrame(animate)
     }
 
-    animate(0)
+    resize()
+    window.addEventListener('resize', resize)
+
+    // Re-read tokens when the crimson intensity is switched.
+    const observer = new MutationObserver(() => {
+      crimson = readToken('--crimson', crimson)
+      sakuraColor = readToken('--sakura', sakuraColor)
+      mist = readToken('--mist', mist)
+      buildScene()
+    })
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-ink'],
+    })
+
+    // Reduced motion: one static frame, no loop, no listeners beyond resize.
+    if (prefersReducedMotion) {
+      paint(0)
+      return () => {
+        window.removeEventListener('resize', resize)
+        observer.disconnect()
+      }
+    }
+
+    let frame = 0
+    let lastTime = 0
+    let lastStep = 0
+    const frameInterval = 1000 / 30
+
+    const loop = (time: number) => {
+      frame = requestAnimationFrame(loop)
+      if (time - lastTime < frameInterval) return
+
+      // Delta in ~16ms units, clamped so a backgrounded tab cannot produce a
+      // single enormous jump when it resumes.
+      const dt = lastStep ? Math.min((time - lastStep) / 16.67, 3) : 1
+      lastStep = time
+      lastTime = time
+
+      step(dt, time)
+      paint(time)
+    }
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(frame)
+        frame = 0
+      } else if (!frame) {
+        lastStep = 0
+        frame = requestAnimationFrame(loop)
+      }
+    }
+
+    document.addEventListener('visibilitychange', onVisibility)
+    frame = requestAnimationFrame(loop)
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas)
-      cancelAnimationFrame(animationId)
+      cancelAnimationFrame(frame)
+      window.removeEventListener('resize', resize)
+      document.removeEventListener('visibilitychange', onVisibility)
+      observer.disconnect()
     }
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ mixBlendMode: 'screen', willChange: 'contents' }}
+      style={{ willChange: 'contents' }}
     />
   )
 }

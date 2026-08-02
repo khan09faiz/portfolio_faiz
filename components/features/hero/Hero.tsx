@@ -22,6 +22,7 @@ import {
   Download
 } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { SwordSlash } from '@/components/ui/SwordSlash'
 import Link from 'next/link'
 
 // Code snippet for typing animation
@@ -127,9 +128,13 @@ export function Hero() {
   return (
     <section className="min-h-screen relative overflow-hidden flex items-center">
       {/* Background gradient effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-b from-crimson/5 via-transparent to-transparent" />
+      <div className="absolute top-20 left-10 w-72 h-72 bg-crimson/10 rounded-full blur-3xl" />
+      {/* was bg-purple-500/10 — off-palette for the samurai theme */}
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/10 rounded-full blur-3xl" />
+
+      {/* Katana streak across the hero, once on load */}
+      <SwordSlash delay={350} />
 
       <div className="container relative z-10 py-12 sm:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
