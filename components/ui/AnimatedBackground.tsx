@@ -104,9 +104,9 @@ export function AnimatedBackground() {
 
     // Palette is read from the CSS tokens, so the scene follows the
     // restrained/bold switch without this component knowing about it.
-    let crimson = readToken('--crimson', [155, 27, 48])
-    let sakuraColor = readToken('--sakura', [244, 194, 205])
-    let mist = readToken('--mist', [161, 161, 170])
+    let vermillion = readToken('--vermillion', [191, 42, 34])
+    let sakuraColor = readToken('--sakura', [233, 168, 185])
+    let sumi = readToken('--sumi', [26, 24, 22])
 
     const isSmall = () => window.innerWidth < 768
 
@@ -115,11 +115,14 @@ export function AnimatedBackground() {
       const petalCount = isSmall() ? 8 : 18
 
       fog = Array.from({ length: fogCount }, (_, i) => {
-        // Alternate crimson-tinted and neutral mist banks.
-        const tint = i % 2 === 0 ? crimson : mist
-        const size = Math.round(Math.max(width, height) * (i % 2 === 0 ? 0.75 : 0.55))
+        // Alternating banks: sumi ink haze and a faint vermillion tint. Alphas
+        // are low because dark fog on pale paper carries much further than the
+        // same value did on the old dark ground.
+        const tinted = i % 2 === 0
+        const tint = tinted ? vermillion : sumi
+        const size = Math.round(Math.max(width, height) * (tinted ? 0.7 : 0.55))
         return {
-          sprite: makeFogSprite(size, tint, i % 2 === 0 ? 0.1 : 0.07),
+          sprite: makeFogSprite(size, tint, tinted ? 0.06 : 0.045),
           x: Math.random() * width,
           y: Math.random() * height,
           vx: (Math.random() - 0.5) * 0.12,
@@ -193,9 +196,9 @@ export function AnimatedBackground() {
 
     // Re-read tokens when the crimson intensity is switched.
     const observer = new MutationObserver(() => {
-      crimson = readToken('--crimson', crimson)
+      vermillion = readToken('--vermillion', vermillion)
       sakuraColor = readToken('--sakura', sakuraColor)
-      mist = readToken('--mist', mist)
+      sumi = readToken('--sumi', sumi)
       buildScene()
     })
     observer.observe(document.documentElement, {

@@ -37,7 +37,7 @@ export function SectionHeader({
         <div className="flex gap-1">
           <div className="w-2 h-2 rounded-full bg-red-500" />
           <div className="w-2 h-2 rounded-full bg-yellow-500" />
-          <div className="w-2 h-2 rounded-full bg-green-500" />
+          <div className="w-2 h-2 rounded-full bg-sumi" />
         </div>
         <code className="text-xs sm:text-sm text-muted-foreground font-mono">
           {terminalPath}

@@ -283,23 +283,23 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-3"
+            className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-md border border-accent/40 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-3"
           >
-            <div className="p-1.5 rounded-lg bg-gray-800 border border-gray-700">
+            <div className="p-1.5 rounded-lg bg-paper-sunk border border-accent/40">
               <TechIcon
                 name={selectedSkill.skill}
                 className="h-6 w-6 sm:h-7 sm:w-7"
               />
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-white">
+              <p className="text-sm sm:text-base font-bold text-sumi">
                 {selectedSkill.skill}
               </p>
-              <p className="text-xs text-zinc-300">{selectedSkill.category}</p>
+              <p className="text-xs text-sumi">{selectedSkill.category}</p>
             </div>
             <button
               onClick={() => setSelectedSkill(null)}
-              className="ml-2 text-zinc-400 hover:text-white transition-colors text-lg leading-none"
+              className="ml-2 text-muted hover:text-crimson transition-colors text-lg leading-none"
             >
               ✕
             </button>
@@ -308,8 +308,8 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
       </AnimatePresence>
 
       {/* Legend - md+ only */}
-      <div className="hidden md:block absolute top-3 right-3 bg-gray-900/85 border border-gray-700 rounded-xl p-3 shadow-xl">
-        <h4 className="text-xs font-bold text-white mb-2">Categories</h4>
+      <div className="hidden md:block absolute top-3 right-3 bg-card/90 border border-accent/40 rounded-xl p-3 shadow-xl">
+        <h4 className="text-xs font-bold text-sumi mb-2">Categories</h4>
         <div className="space-y-1.5">
           {skillsData.map((category) => (
             <div key={category.category} className="flex items-center gap-2">
@@ -317,19 +317,19 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
                 className="h-2.5 w-2.5 rounded-full"
                 style={{ backgroundColor: category.color }}
               />
-              <span className="text-[11px] text-zinc-200">
+              <span className="text-[11px] text-sumi">
                 {category.category}
               </span>
-              <span className="text-[11px] text-zinc-500 ml-auto font-mono">
+              <span className="text-[11px] text-muted ml-auto font-mono">
                 {category.skills.length}
               </span>
             </div>
           ))}
         </div>
-        <div className="mt-2 pt-2 border-t border-gray-700">
-          <p className="text-[11px] text-zinc-300">
+        <div className="mt-2 pt-2 border-t border-accent/40">
+          <p className="text-[11px] text-sumi">
             Total:{' '}
-            <span className="font-bold text-white">{markers.length}</span>{' '}
+            <span className="font-bold text-sumi">{markers.length}</span>{' '}
             skills
           </p>
         </div>

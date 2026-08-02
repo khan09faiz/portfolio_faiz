@@ -14,12 +14,6 @@ export default function Home() {
     <>
       <ScrollIndicator />
       <main className="min-h-screen pt-16 relative overflow-hidden">
-        {/* Ink pooling behind the content. Sits above the canvas atmosphere but
-            below everything readable. */}
-        <div className="fixed inset-0 pointer-events-none opacity-40">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-crimson/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-40 left-20 w-96 h-96 bg-gold/[0.06] rounded-full blur-3xl" />
-        </div>
 
         <Hero />
 

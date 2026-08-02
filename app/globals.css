@@ -5,46 +5,55 @@
 /* ============================================================================
    Samurai theme tokens — see docs/UI_DESIGN.md
    ----------------------------------------------------------------------------
-   Two intensities, switched by the `data-ink` attribute on <html>:
-     (default)          restrained — moonlight primary, crimson used sparingly
-     data-ink="bold"    cinematic  — crimson becomes the primary, gold secondary
+   Washi paper ground, sumi ink text, vermillion (朱) accents.
 
-   Only these custom properties differ between the two. Every component reads
-   them through Tailwind tokens, so nothing else needs to know which is active.
+   Two intensities, switched by the `data-ink` attribute on <html>:
+     (default)          restrained — ink-led, vermillion as a seal-red accent
+     data-ink="bold"    cinematic  — vermillion carries headings and emphasis
+
+   Only these custom properties differ between the two.
    ========================================================================== */
 
 @layer base {
   :root {
-    /* Sumi ink — the base greys. Shared by both intensities. */
-    --ink-900: 8 8 11;
-    --ink-800: 15 15 19;
-    --ink-700: 26 26 30;
+    /* Washi — warm, slightly yellowed paper rather than pure white. Pure #fff
+       reads as "unstyled web page"; the warmth is what makes it paper. */
+    --paper: 250 247 240;
+    --paper-raised: 255 253 249;
+    --paper-sunk: 242 237 228;
 
-    /* Moonlight and mist */
-    --moonlight: 245 245 240;
-    --mist: 161 161 170;
-    --mist-light: 212 212 216;
-    --mist-dark: 82 82 91;
+    /* Sumi — soot black, never pure #000, which looks like a bug on paper. */
+    --sumi: 26 24 22;
+    --sumi-raised: 44 41 38;
+    --sumi-soft: 92 86 79;
+
+    /* Hairlines and dividers */
+    --mist: 168 160 150;
 
     /* Accents */
-    --crimson: 155 27 48;
-    --gold: 201 162 39;
-    --sakura: 244 194 205;
+    --vermillion: 191 42 34;
+    --gold: 166 132 56;
+    --sakura: 233 168 185;
 
-    /* Intensity-driven. Overridden by [data-ink="bold"] below. */
-    --primary: var(--moonlight);
-    --wash: 0.05; /* strength of background ink washes */
-    --glow: 0.18; /* strength of accent glows */
-    --rule: 0.15; /* strength of hairline borders */
+    /* Intensity-driven */
+    --primary: var(--sumi);
+    --wash: 0.05;
+    --glow: 0.14;
+    --rule: 0.35;
   }
 
   :root[data-ink='bold'] {
-    --crimson: 196 30 58;
-    --gold: 212 175 55;
-    --primary: var(--crimson);
-    --wash: 0.16;
-    --glow: 0.42;
-    --rule: 0.3;
+    /*
+      Deliberately the SAME vermillion as restrained. A lighter red was tried
+      here and measured 4.02:1 for the section-header chips — under AA — because
+      those sit on a vermillion-tinted background, not on bare paper. Bold now
+      differs by USAGE (vermillion carries the primary) and by wash/glow/rule
+      strength, which reads as more intense without costing contrast.
+    */
+    --primary: var(--vermillion);
+    --wash: 0.12;
+    --glow: 0.3;
+    --rule: 0.45;
   }
 
   * {
@@ -52,15 +61,13 @@
   }
 
   /*
-    Applied for a single frame while the crimson intensity is switched at
-    runtime. Chromium latches a transition that is driven by an UNREGISTERED
-    custom property at its start value, so elements carrying `transition-all`
-    keep their old colour forever after a `data-ink` flip. Killing transitions
-    across the swap sidesteps it.
+    Applied for a single frame while the intensity is switched at runtime.
+    Chromium latches a transition driven by an UNREGISTERED custom property at
+    its start value, so elements carrying `transition-all` keep their old colour
+    forever after a `data-ink` flip. Killing transitions across the swap avoids it.
 
-    Only the preview toggle hits this path — on a normal page load the attribute
-    is set by the inline script in layout.tsx before first paint, so no
-    transition exists to latch.
+    Only the preview toggle hits this path — a normal page load sets the
+    attribute before first paint, so there is no transition to latch.
   */
   .ink-switching,
   .ink-switching *,
@@ -74,80 +81,71 @@
   }
 
   body {
-    /* Sumi-e: ink pooling at the edges, paper showing through the middle. */
-    background-color: rgb(var(--ink-900));
+    background-color: rgb(var(--paper));
     background-image:
+      /* Hinomaru — a pale sun bleeding into the paper, top right. */
       radial-gradient(
-        ellipse 80% 50% at 50% -10%,
-        rgb(var(--crimson) / var(--wash)),
+        circle 34rem at 82% -6rem,
+        rgb(var(--vermillion) / calc(var(--wash) * 1.6)),
         transparent 70%
       ),
-      radial-gradient(
-        ellipse 60% 40% at 100% 100%,
-        rgb(var(--gold) / calc(var(--wash) * 0.6)),
-        transparent 70%
-      ),
-      linear-gradient(
-        135deg,
-        rgb(var(--ink-900)) 0%,
-        rgb(var(--ink-800)) 50%,
-        rgb(var(--ink-900)) 100%
-      );
+      /* Ink pooling into the bottom left corner. */
+        radial-gradient(
+          ellipse 70% 45% at -10% 108%,
+          rgb(var(--sumi) / calc(var(--wash) * 0.9)),
+          transparent 72%
+        );
     background-attachment: fixed;
-    color: rgb(var(--moonlight));
+    color: rgb(var(--sumi));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 
-  /* Washi paper grain. Fixed overlay, non-interactive, very low opacity —
-     enough to break up flat gradients without reading as noise. */
+  /* Washi fibre grain. Very low opacity — enough to read as paper, not noise. */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: 0.055;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23w)'/%3E%3C/svg%3E");
     background-repeat: repeat;
+    mix-blend-mode: multiply;
   }
 
-  /* Custom scrollbar — ink on paper */
   ::-webkit-scrollbar {
     width: 0.5rem;
   }
 
   ::-webkit-scrollbar-track {
-    background-color: rgb(var(--ink-800));
+    background-color: rgb(var(--paper-sunk));
   }
 
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(
       180deg,
-      rgb(var(--crimson) / 0.8) 0%,
-      rgb(var(--crimson) / 0.4) 100%
+      rgb(var(--vermillion) / 0.85) 0%,
+      rgb(var(--sumi) / 0.55) 100%
     );
     border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgb(var(--crimson)) 0%, rgb(var(--gold) / 0.6) 100%);
+    background: linear-gradient(180deg, rgb(var(--vermillion)) 0%, rgb(var(--sumi) / 0.8) 100%);
   }
 
   ::selection {
-    background: rgb(var(--crimson) / 0.35);
-    color: rgb(var(--moonlight));
+    background: rgb(var(--vermillion) / 0.22);
+    color: rgb(var(--sumi));
   }
 }
 
 /* ============================================================================
-   Motion budget
-   ----------------------------------------------------------------------------
-   docs/19_ANIMATIONS.md requires reduced-motion support. This is the global
-   backstop: it neutralises CSS animation and transitions wholesale. JS-driven
-   motion (canvas atmosphere, ink cursor, Framer Motion) checks the same media
-   query independently — see lib/hooks/useReducedMotion.ts.
+   Motion budget — docs/19_ANIMATIONS.md requires reduced-motion support.
+   CSS backstop for declarative animation; JS motion checks the same query via
+   lib/hooks/useReducedMotion.ts.
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -168,52 +166,50 @@
 @layer utilities {
   /* --- Surfaces ------------------------------------------------------ */
 
-  /* Glassmorphism, retained for existing components */
   .glass {
-    backdrop-filter: blur(20px) saturate(180%);
-    background-color: rgb(var(--ink-800) / 0.4);
-    border: 1px solid rgb(var(--moonlight) / 0.08);
+    backdrop-filter: blur(16px) saturate(140%);
+    background-color: rgb(var(--paper-raised) / 0.72);
+    border: 1px solid rgb(var(--mist) / var(--rule));
   }
 
   .glass-elevated {
-    backdrop-filter: blur(24px) saturate(180%);
-    background-color: rgb(var(--ink-700) / 0.6);
+    backdrop-filter: blur(20px) saturate(140%);
+    background-color: rgb(var(--paper-raised) / 0.86);
     border: 1px solid rgb(var(--mist) / var(--rule));
     box-shadow:
-      0 8px 32px rgb(0 0 0 / 0.3),
-      0 0 80px rgb(var(--crimson) / calc(var(--glow) * 0.15));
+      0 6px 24px rgb(var(--sumi) / 0.08),
+      0 0 60px rgb(var(--vermillion) / calc(var(--glow) * 0.12));
   }
 
-  /* Washi panel — warm paper tint over ink */
+  /* Washi panel — the default card surface */
   .washi {
-    background-color: rgb(var(--ink-800) / 0.55);
+    background-color: rgb(var(--paper-raised) / 0.9);
     border: 1px solid rgb(var(--mist) / var(--rule));
-    box-shadow: inset 0 1px 0 rgb(var(--moonlight) / 0.04);
+    box-shadow: 0 1px 2px rgb(var(--sumi) / 0.05);
   }
 
-  /* Sumi-e ink wash, for section backdrops */
   .ink-wash {
     background-image: radial-gradient(
       ellipse at var(--ink-x, 50%) var(--ink-y, 0%),
-      rgb(var(--crimson) / var(--wash)),
+      rgb(var(--vermillion) / var(--wash)),
       transparent 65%
     );
   }
 
   /* --- Lines --------------------------------------------------------- */
 
-  /* Brush stroke rule: thick in the middle, tapering to nothing */
   .brush-rule {
-    height: 1px;
+    height: 2px;
     border: 0;
     background: linear-gradient(
       90deg,
       transparent,
-      rgb(var(--crimson) / 0.7) 20%,
-      rgb(var(--gold) / 0.5) 50%,
-      rgb(var(--crimson) / 0.7) 80%,
+      rgb(var(--sumi) / 0.75) 22%,
+      rgb(var(--vermillion) / 0.85) 50%,
+      rgb(var(--sumi) / 0.75) 78%,
       transparent
     );
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   }
 
   .katana-edge {
@@ -225,13 +221,13 @@
     position: absolute;
     left: 0;
     bottom: -2px;
-    height: 1px;
+    height: 1.5px;
     width: 100%;
     background: linear-gradient(
       90deg,
       transparent,
-      rgb(var(--moonlight) / 0.85),
-      rgb(var(--crimson) / 0.8),
+      rgb(var(--sumi) / 0.8),
+      rgb(var(--vermillion)),
       transparent
     );
     transform: scaleX(0);
@@ -247,41 +243,49 @@
 
   .text-gradient {
     background: linear-gradient(
-      135deg,
-      rgb(var(--moonlight)) 0%,
-      rgb(var(--crimson)) 45%,
-      rgb(var(--gold)) 70%,
-      rgb(var(--moonlight)) 100%
+      120deg,
+      rgb(var(--sumi)) 0%,
+      rgb(var(--vermillion)) 55%,
+      rgb(var(--sumi)) 100%
     );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
     background-size: 200% auto;
-    animation: shimmer 6s linear infinite;
+    animation: shimmer 8s linear infinite;
   }
 
   .text-ink {
-    color: rgb(var(--moonlight) / 0.72);
+    color: rgb(var(--sumi) / 0.78);
+  }
+
+  /* Hanko — the red seal stamp used for section markers */
+  .hanko {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(var(--vermillion));
+    color: rgb(var(--paper));
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 3px rgb(var(--vermillion) / 0.35);
   }
 
   /* --- Glows --------------------------------------------------------- */
 
   .glow-primary {
     box-shadow:
-      0 0 40px rgb(var(--crimson) / var(--glow)),
-      0 0 80px rgb(var(--gold) / calc(var(--glow) * 0.4));
+      0 6px 28px rgb(var(--sumi) / 0.1),
+      0 0 40px rgb(var(--vermillion) / var(--glow));
   }
 
   .hover-glow:hover {
     box-shadow:
-      0 0 30px rgb(var(--crimson) / calc(var(--glow) * 1.4)),
-      0 0 60px rgb(var(--gold) / calc(var(--glow) * 0.6));
+      0 8px 30px rgb(var(--sumi) / 0.14),
+      0 0 40px rgb(var(--vermillion) / calc(var(--glow) * 1.5));
   }
 
   /* --- Focus --------------------------------------------------------- */
-  /* Crimson focus ring. Contrast against the ink background is well above the
-     3:1 WCAG minimum for non-text UI in both intensities. */
 
   .focus-ring {
     outline: 2px solid transparent;
@@ -291,12 +295,12 @@
   .focus-ring:focus-visible {
     outline: none;
     box-shadow:
-      0 0 0 2px rgb(var(--ink-900)),
-      0 0 0 4px rgb(var(--crimson));
+      0 0 0 2px rgb(var(--paper)),
+      0 0 0 4px rgb(var(--vermillion));
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--crimson));
+    outline: 2px solid rgb(var(--vermillion));
     outline-offset: 2px;
   }
 
@@ -389,12 +393,12 @@
   @keyframes glow {
     0%,
     100% {
-      box-shadow: 0 0 20px rgb(var(--crimson) / calc(var(--glow) * 0.6));
+      box-shadow: 0 0 20px rgb(var(--vermillion) / calc(var(--glow) * 0.5));
     }
     50% {
       box-shadow:
-        0 0 40px rgb(var(--crimson) / var(--glow)),
-        0 0 60px rgb(var(--gold) / calc(var(--glow) * 0.5));
+        0 0 34px rgb(var(--vermillion) / var(--glow)),
+        0 0 60px rgb(var(--gold) / calc(var(--glow) * 0.4));
     }
   }
 
@@ -424,7 +428,7 @@
 
   .hover-lift:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgb(0 0 0 / 0.4);
+    box-shadow: 0 18px 36px rgb(var(--sumi) / 0.14);
   }
 
   /* --- Layout -------------------------------------------------------- */

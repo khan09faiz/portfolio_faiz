@@ -170,7 +170,7 @@ export function GitHubSection() {
                 whileHover={{ rotate: 360, scale: 1.2 }}
                 transition={{ duration: 0.6 }}
               >
-                <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-zinc-200" />
+                <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-sumi" />
               </motion.div>
               <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.totalRepos}</div>
               <div className="text-xs sm:text-sm text-muted-foreground">Repositories</div>
@@ -217,11 +217,11 @@ export function GitHubSection() {
           >
             <Card className="p-4 sm:p-6 text-center hover:border-primary/30 transition-all">
               <motion.div 
-                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-2 sm:mb-3"
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-sumi/20 flex items-center justify-center mx-auto mb-2 sm:mb-3"
                 whileHover={{ rotate: 360, scale: 1.2 }}
                 transition={{ duration: 0.6 }}
               >
-              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
+              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-sumi" />
               </motion.div>
               <div className="text-2xl sm:text-3xl font-bold mb-1">{stats.contributions}</div>
               <div className="text-xs sm:text-sm text-muted-foreground">Contributions</div>
@@ -303,8 +303,8 @@ export function GitHubSection() {
           className="mb-12 sm:mb-16"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-sumi/10 flex items-center justify-center">
+              <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-sumi" />
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground">My Repositories</h3>
           </div>
@@ -322,8 +322,8 @@ export function GitHubSection() {
                   onClick={() => setSelectedLanguage(lang)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     selectedLanguage === lang
-                      ? 'bg-green-500 text-white'
-                      : 'bg-card hover:bg-card/80 text-foreground hover:text-green-500 border border-green-500/20 hover:border-green-500/40'
+                      ? 'bg-sumi text-white'
+                      : 'bg-card hover:bg-card/80 text-foreground hover:text-sumi border border-sumi/20 hover:border-sumi/40'
                   }`}
                 >
                   {lang} <span className="opacity-70">({count})</span>
@@ -348,23 +348,23 @@ export function GitHubSection() {
                 viewport={{ once: false, margin: "-50px" }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
-                <Card className="p-5 h-full flex flex-col hover:border-green-500/30 hover:shadow-glow-md transition-all group">
+                <Card className="p-5 h-full flex flex-col hover:border-sumi/30 hover:shadow-glow-md transition-all group">
                   <div className="flex items-start gap-2 mb-2">
-                    <div className="h-9 w-9 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                      <Github className="h-4 w-4 text-green-500" />
+                    <div className="h-9 w-9 rounded-lg bg-sumi/10 flex items-center justify-center flex-shrink-0">
+                      <Github className="h-4 w-4 text-sumi" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-bold text-base truncate group-hover:text-green-500 transition-colors">
+                        <h4 className="font-bold text-base truncate group-hover:text-sumi transition-colors">
                           {SITE_CONFIG.githubUsername}
                         </h4>
                         {repo.homepage && (
-                          <span className="px-2 py-1 rounded text-xs font-semibold bg-green-500/20 text-green-500 flex-shrink-0">
+                          <span className="px-2 py-1 rounded text-xs font-semibold bg-sumi/20 text-sumi flex-shrink-0">
                             LIVE
                           </span>
                         )}
                       </div>
-                      <p className="text-green-500 font-semibold">{repo.name}</p>
+                      <p className="text-sumi font-semibold">{repo.name}</p>
                     </div>
                   </div>
 
@@ -401,7 +401,7 @@ export function GitHubSection() {
                       href={repo.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 px-3 py-2 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
+                      className="flex-1 px-3 py-2 bg-card hover:bg-sumi/10 border border-sumi/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
                     >
                       <Github className="h-4 w-4" />
                       Code
@@ -411,7 +411,7 @@ export function GitHubSection() {
                         href={repo.homepage}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-500/90 text-white rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
+                        className="flex-1 px-3 py-2 bg-sumi hover:bg-sumi/90 text-white rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
                       >
                         <ExternalLink className="h-4 w-4" />
                         Live
@@ -420,7 +420,7 @@ export function GitHubSection() {
                   </div>
 
                   {repo.language && (
-                    <div className="mt-3 pt-3 border-t border-green-500/10 text-xs text-muted-foreground italic">
+                    <div className="mt-3 pt-3 border-t border-sumi/10 text-xs text-muted-foreground italic">
                       {'// '}Built with {repo.language}
                     </div>
                   )}
@@ -437,7 +437,7 @@ export function GitHubSection() {
             >
               <button
                 onClick={() => setShowAllRepos(!showAllRepos)}
-                className="group inline-flex items-center gap-2 text-green-500 hover:text-green-400 transition-colors cursor-pointer"
+                className="group inline-flex items-center gap-2 text-sumi hover:text-sumi transition-colors cursor-pointer"
               >
                 <span className="font-medium">
                   {!showAllRepos 
@@ -475,8 +475,8 @@ export function GitHubSection() {
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-green-500/10 flex items-center justify-center">
-                <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-sumi/10 flex items-center justify-center">
+                <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-sumi" />
               </div>
               <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Open Source Contributions</h3>
             </div>
@@ -498,8 +498,8 @@ export function GitHubSection() {
                     onClick={() => setSelectedContribLang(lang)}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                       selectedContribLang === lang
-                        ? 'bg-green-500 text-white'
-                        : 'bg-card hover:bg-card/80 text-foreground hover:text-green-500 border border-green-500/20 hover:border-green-500/40'
+                        ? 'bg-sumi text-white'
+                        : 'bg-card hover:bg-card/80 text-foreground hover:text-sumi border border-sumi/20 hover:border-sumi/40'
                     }`}
                   >
                     {lang} <span className="opacity-70">({count})</span>
@@ -519,16 +519,16 @@ export function GitHubSection() {
                   viewport={{ once: false, margin: "-50px" }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
                 >
-                  <Card className="p-5 h-full flex flex-col hover:border-green-500/30 transition-all group">
+                  <Card className="p-5 h-full flex flex-col hover:border-sumi/30 transition-all group">
                     <div className="flex items-start gap-2 mb-2">
-                      <div className="h-9 w-9 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                        <Github className="h-4 w-4 text-green-500" />
+                      <div className="h-9 w-9 rounded-lg bg-sumi/10 flex items-center justify-center flex-shrink-0">
+                        <Github className="h-4 w-4 text-sumi" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-base truncate group-hover:text-green-500 transition-colors">
+                        <h4 className="font-bold text-base truncate group-hover:text-sumi transition-colors">
                           {repo.url.split('/')[3]}
                         </h4>
-                        <p className="text-green-500 font-semibold truncate">{repo.name}</p>
+                        <p className="text-sumi font-semibold truncate">{repo.name}</p>
                       </div>
                     </div>
 
@@ -559,7 +559,7 @@ export function GitHubSection() {
                       href={repo.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-auto px-3 py-2 bg-card hover:bg-green-500/10 border border-green-500/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
+                      className="mt-auto px-3 py-2 bg-card hover:bg-sumi/10 border border-sumi/20 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-1.5"
                     >
                       <ExternalLink className="h-4 w-4" />
                       View Repository
@@ -577,7 +577,7 @@ export function GitHubSection() {
               >
                 <button
                   onClick={() => setShowAllContrib(!showAllContrib)}
-                  className="group inline-flex items-center gap-2 text-green-500 hover:text-green-400 transition-colors cursor-pointer"
+                  className="group inline-flex items-center gap-2 text-sumi hover:text-sumi transition-colors cursor-pointer"
                 >
                   <span className="font-medium">
                     {!showAllContrib 

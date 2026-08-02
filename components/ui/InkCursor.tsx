@@ -61,10 +61,10 @@ export function InkCursor() {
 
     const readInk = () => {
       const raw = getComputedStyle(document.documentElement)
-        .getPropertyValue('--crimson')
+        .getPropertyValue('--sumi')
         .trim()
       const parts = raw.split(/[\s,]+/).map(Number).filter(Number.isFinite)
-      return parts.length === 3 ? parts : [155, 27, 48]
+      return parts.length === 3 ? parts : [26, 24, 22]
     }
 
     let ink = readInk()
