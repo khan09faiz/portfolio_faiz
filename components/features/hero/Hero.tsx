@@ -23,7 +23,7 @@ import {
 } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
 import { SwordSlash } from '@/components/ui/SwordSlash'
-import { SamuraiCrest } from '@/components/ui/SamuraiCrest'
+import { Samurai } from '@/components/ui/sumie/SumieArt'
 import Link from 'next/link'
 
 // Code snippet for typing animation
@@ -132,7 +132,7 @@ export function Hero() {
           and is clipped by the section, so it reads as a printed watermark
           rather than a floating logo. */}
       <div className="pointer-events-none absolute inset-y-0 right-0 z-0 flex items-center justify-end overflow-hidden">
-        <SamuraiCrest
+        <Samurai
           className="h-[min(80vh,40rem)] w-auto translate-x-[22%] opacity-[0.13] lg:translate-x-[8%] lg:opacity-[0.16]"
         />
       </div>

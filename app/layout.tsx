@@ -6,6 +6,7 @@ import { StructuredData } from '@/components/seo'
 import { Analytics } from '@vercel/analytics/react'
 import { AnimatedBackground } from '@/components/ui/AnimatedBackground'
 import { BrushCursor } from '@/components/ui/BrushCursor'
+import { InkRipple } from '@/components/ui/InkRipple'
 import { InkIntensityToggle } from '@/components/ui/InkIntensityToggle'
 import { SITE_CONFIG } from '@/lib/constants'
 
@@ -109,6 +110,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans">
         <AnimatedBackground />
         <BrushCursor />
+        <InkRipple />
         <Header />
         {children}
         <InkIntensityToggle />

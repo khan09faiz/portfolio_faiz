@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Github, Linkedin, Mail } from 'lucide-react'
 import { SITE_CONFIG, NAV_ITEMS } from '@/lib/constants'
+// hover-brush paints a vermillion stroke under nav links on hover/focus.
 import { Button } from '@/components/ui/Button'
 
 export function Header() {
@@ -156,7 +157,7 @@ export function Header() {
                       e.preventDefault()
                       scrollToSection(item.href)
                     }}
-                    className={`relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                    className={`hover-brush relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                       isActive
                         ? 'text-primary'
                         : 'text-muted-foreground hover:text-foreground hover:bg-primary/5'
