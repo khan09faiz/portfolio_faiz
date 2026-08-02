@@ -6,4 +6,10 @@
  * that Zod never reaches a client bundle through this entry point.
  */
 
-export { getProjects, getSkills, getTimeline, getCertificates } from './provider'
+export {
+  getProjects,
+  getSkills,
+  getTimeline,
+  getCertificates,
+  getHomeContent,
+} from './provider'
