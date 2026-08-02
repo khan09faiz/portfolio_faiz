@@ -23,11 +23,23 @@ export function InteractiveCat() {
   const [isPlaying, setIsPlaying] = useState(true)
   const animationFrameRef = useRef<number | null>(null)
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null)
-  const lastMouseMoveRef = useRef<number>(Date.now())
+  // Seeded on mount rather than at render: Date.now() during render is impure
+  // and makes the value unstable across re-renders (react-hooks/purity).
+  const lastMouseMoveRef = useRef<number>(0)
 
-  // Initialize corner position on mount
+  // Initialize corner position on mount.
+  //
+  // KNOWN SUPPRESSION, not a clean pattern. The cat's resting spot depends on
+  // window.innerHeight, which does not exist during SSR, so the seed has to happen
+  // after mount. The idiomatic fix is useSyncExternalStore for cornerY plus deriving
+  // targetPosition from it — but the rAF loop below keys its effect on
+  // targetPosition's object identity, so deriving it restarts the animation every
+  // render unless memoised. That is a rewrite of a working animation component and
+  // is tracked separately rather than done in a hygiene pass.
   useEffect(() => {
+    lastMouseMoveRef.current = Date.now()
     const initialY = window.innerHeight - 80
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCornerY(initialY)
     setPosition({ x: CORNER_X, y: initialY })
     setTargetPosition({ x: CORNER_X, y: initialY })

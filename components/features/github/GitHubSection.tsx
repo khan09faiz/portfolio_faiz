@@ -12,37 +12,9 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { SITE_CONFIG } from '@/lib/constants'
 
-interface Repository {
-  name: string
-  description: string
-  stars: number
-  forks: number
-  language: string
-  color: string
-  url: string
-  updatedAt: string
-  homepage?: string
-  isOwner: boolean
-}
-
-interface GitHubStats {
-  totalRepos: number
-  totalStars: number
-  totalForks: number
-  followers: number
-  following: number
-  contributions: number
-  currentStreak: number
-  longestStreak: number
-  languageCount: number
-  topLanguages: Array<{
-    name: string
-    percentage: number
-    color: string
-  }>
-  myRepos: Repository[]
-  contributedRepos: Repository[]
-}
+// Shapes live in lib/types.ts so this component and app/api/github/route.ts
+// cannot drift apart — they previously each declared their own copy.
+import type { GitHubStats } from '@/lib/types'
 
 const fallbackData: GitHubStats = {
   totalRepos: 10,
@@ -449,7 +421,7 @@ export function GitHubSection() {
 
                   {repo.language && (
                     <div className="mt-3 pt-3 border-t border-green-500/10 text-xs text-muted-foreground italic">
-                      // Built with {repo.language}
+                      {'// '}Built with {repo.language}
                     </div>
                   )}
                 </Card>

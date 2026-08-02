@@ -59,18 +59,23 @@ export interface TimelineItem {
 // GitHub API Types
 // ============================================================================
 
-export interface GitHubUser {
+// --- Wire types: these mirror the GraphQL query in app/api/github/route.ts ---
+// Only fields the query actually selects appear here. Adding a field to the
+// query means adding it here too.
+
+export interface Language {
   name: string
-  bio: string
-  avatarUrl: string
-  followers: { totalCount: number }
-  following: { totalCount: number }
+  color: string | null
+}
+
+export interface LanguageEdge {
+  size: number
+  node: Language
 }
 
 export interface ContributionDay {
   contributionCount: number
   date: string
-  color: string
 }
 
 export interface ContributionWeek {
@@ -84,59 +89,92 @@ export interface ContributionCalendar {
 
 export interface ContributionsCollection {
   totalCommitContributions: number
-  totalPullRequestContributions: number
-  totalIssueContributions: number
-  totalRepositoryContributions: number
   contributionCalendar: ContributionCalendar
 }
 
-export interface Language {
-  name: string
-  color: string
-}
-
-export interface LanguageEdge {
-  size: number
-  node: Language
-}
-
-export interface Repository {
+/** A repository node from the `repositories` connection. */
+export interface OwnedRepositoryNode {
   name: string
   description: string | null
   url: string
+  homepageUrl: string | null
   stargazerCount: number
   forkCount: number
-  primaryLanguage: Language | null
-  languages: {
-    edges: LanguageEdge[]
-  }
-  isArchived: boolean
-  isEmpty: boolean
-  createdAt: string
   updatedAt: string
-  homepageUrl?: string
+  primaryLanguage: Language | null
+  languages: { edges: LanguageEdge[] } | null
 }
 
-export interface GitHubData {
-  user: GitHubUser & {
-    contributionsCollection: ContributionsCollection
-    repositories: {
-      totalCount: number
-      nodes: Repository[]
-    }
+/** A repository node from the `repositoriesContributedTo` connection. */
+export interface ContributedRepositoryNode {
+  name: string
+  description: string | null
+  url: string
+  homepageUrl: string | null
+  stargazerCount: number
+  forkCount: number
+  updatedAt: string
+  owner: { login: string }
+  primaryLanguage: Language | null
+}
+
+export interface GitHubGraphQLUser {
+  name: string
+  bio: string
+  avatarUrl: string
+  followers: { totalCount: number }
+  following: { totalCount: number }
+  contributionsCollection: ContributionsCollection
+  repositories: {
+    totalCount: number
+    nodes: OwnedRepositoryNode[]
   }
-  rateLimit: {
-    remaining: number
-    resetAt: string
-    limit: number
+  repositoriesContributedTo: {
+    totalCount: number
+    nodes: ContributedRepositoryNode[]
   }
 }
+
+export interface GitHubGraphQLResponse {
+  data?: { user: GitHubGraphQLUser | null }
+  errors?: Array<{ message: string }>
+}
+
+// --- Response types: the flattened shape /api/github returns to the client ---
 
 export interface LanguageStats {
   name: string
   color: string
   percentage: number
-  bytes: number
+}
+
+/** A repository as exposed by /api/github — flattened for direct rendering. */
+export interface RepoSummary {
+  name: string
+  description: string
+  stars: number
+  forks: number
+  language: string
+  color: string
+  url: string
+  updatedAt: string
+  homepage?: string | null
+  isOwner: boolean
+}
+
+export interface GitHubStats {
+  totalRepos: number
+  totalStars: number
+  totalForks: number
+  followers: number
+  following: number
+  contributions: number
+  currentStreak: number
+  longestStreak: number
+  languageCount: number
+  topLanguages: LanguageStats[]
+  myRepos: RepoSummary[]
+  contributedRepos: RepoSummary[]
 }
 
 // ============================================================================

@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header'
 import { StructuredData } from '@/components/seo'
 import { Analytics } from '@vercel/analytics/react'
 import { AnimatedBackground } from '@/components/ui/AnimatedBackground'
+import { SITE_CONFIG } from '@/lib/constants'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -19,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mohammadfaizkhan.dev'),
+  metadataBase: new URL(SITE_CONFIG.siteUrl),
   title: {
     default: 'Mohammad Faiz Khan - AI/ML Engineer & Full-Stack Developer',
     template: '%s | Mohammad Faiz Khan',
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://mohammadfaizkhan.dev',
+    url: SITE_CONFIG.siteUrl,
     siteName: 'Mohammad Faiz Khan Portfolio',
     title: 'Mohammad Faiz Khan - AI/ML Engineer',
     description: 'Building intelligent systems with hybrid AI models, computer vision, and reinforcement learning.',

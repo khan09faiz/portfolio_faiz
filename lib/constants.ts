@@ -12,8 +12,11 @@ export const SITE_CONFIG = {
   name: 'Mohammad Faiz Khan',
   title: 'AI Engineer | Systems Developer | Intelligent Automation',
   description: 'AI Engineer specializing in Computer Vision, Time Series Forecasting, and Reinforcement Learning. Building intelligent systems that solve real-world problems with Python, TensorFlow, PyTorch, and modern web technologies.',
-  siteUrl: 'https://khan09faiz.dev', // Update with your actual domain
-  ogImage: '/og-home.jpg',
+  // Single source of truth for the canonical origin. layout.tsx, sitemap.ts,
+  // robots.ts and lib/seo/structured-data.ts all derive from this — when a
+  // custom domain is pointed at Vercel, change it here and nowhere else.
+  siteUrl: 'https://portfolio-faiz-nu.vercel.app',
+  ogImage: '/og-image.png',
   contact: {
     email: 'khan09faiz@gmail.com',
     phone: '+91-9289633563',

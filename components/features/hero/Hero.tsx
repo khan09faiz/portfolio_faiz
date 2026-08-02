@@ -192,7 +192,7 @@ export function Hero() {
               transition={{ duration: 0.3 }}
               className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
-              Hey! I'm Faiz, a builder who thinks in algorithms and dreams in code. By day, I'm exploring ML and reinforcement learning. By night, debugging or diving into stock markets 📈. I love tech, competition, and figuring out how things work. Football is my daily reset. Travel sparks my best ideas.
+              Hey! I&apos;m Faiz, a builder who thinks in algorithms and dreams in code. By day, I&apos;m exploring ML and reinforcement learning. By night, debugging or diving into stock markets 📈. I love tech, competition, and figuring out how things work. Football is my daily reset. Travel sparks my best ideas.
             </motion.p>
 
             {/* Hala Madrid - Center aligned */}

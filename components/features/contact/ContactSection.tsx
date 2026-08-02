@@ -323,7 +323,7 @@ export function ContactSection() {
                 <Card variant="outlined">
                 <h3 className="text-lg font-bold mb-2 text-foreground">Availability</h3>
                 <p className="text-sm text-muted-foreground">
-                  Open to freelance projects, collaborations, and full-time opportunities. Let's discuss how we can work together!
+                  Open to freelance projects, collaborations, and full-time opportunities. Let&apos;s discuss how we can work together!
                 </p>
               </Card>
               </motion.div>

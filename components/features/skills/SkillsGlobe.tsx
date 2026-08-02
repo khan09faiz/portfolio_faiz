@@ -209,7 +209,7 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
             </p>
             <div className="text-left bg-card/50 rounded-lg p-4 mb-6 text-xs sm:text-sm font-mono space-y-2">
               <p>1. Go to <span className="text-primary">chrome://settings/system</span></p>
-              <p>2. Enable "Use hardware acceleration"</p>
+              <p>2. Enable &quot;Use hardware acceleration&quot;</p>
               <p>3. Restart Chrome</p>
             </div>
             
