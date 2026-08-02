@@ -272,7 +272,7 @@ export function GitHubSection() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="mb-8 sm:mb-12"
         >
-          <Card className="p-6 sm:p-8 text-center bg-card/50 backdrop-blur-sm border-primary/20">
+          <Card className="p-6 sm:p-8 text-center bg-card border-primary/20">
             <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
               <Monitor className="h-8 w-8 text-primary" />
             </div>

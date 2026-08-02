@@ -13,20 +13,18 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', hover = false, children, ...props }, ref) => {
-    // Variant styles
+    // Flat paper surfaces — no glass, no backdrop blur. Depth comes from a
+    // hairline rule and a very soft ink shadow, the way a card sitting on a
+    // sheet of paper actually reads.
     const variantStyles = {
-      default:
-        'bg-card/30 backdrop-blur-md border border-primary/10 shadow-glass',
-      elevated:
-        'bg-card/40 backdrop-blur-lg border border-primary/20 shadow-glass shadow-glow-sm',
-      flat: 'bg-card/20 backdrop-blur-sm',
-      outlined:
-        'bg-transparent border-2 border-primary/30 backdrop-blur-sm',
+      default: 'bg-card border border-accent/40 shadow-[0_1px_2px_rgb(var(--sumi)/0.05)]',
+      elevated: 'bg-card border border-accent/50 shadow-[0_2px_8px_rgb(var(--sumi)/0.08)]',
+      flat: 'bg-card border border-accent/25',
+      outlined: 'bg-transparent border-2 border-sumi/25',
     }
 
-    // Hover effect
     const hoverStyles = hover
-      ? 'transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-md hover:border-primary/30'
+      ? 'transition-all duration-300 hover:-translate-y-0.5 hover:border-crimson/45 hover:shadow-[0_6px_18px_rgb(var(--sumi)/0.10)]'
       : ''
 
     return (

@@ -106,7 +106,7 @@ export function Header() {
         transition={{ duration: 0.3 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-background/90 backdrop-blur-xl border-b border-primary/20 shadow-xl shadow-black/10'
+            ? 'bg-background border-b border-crimson/25 shadow-[0_1px_10px_rgb(var(--sumi)/0.07)]'
             : 'bg-transparent'
         }`}
       >
@@ -120,7 +120,7 @@ export function Header() {
                 className="relative group"
                 aria-label="View profile"
               >
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30 group-hover:border-primary group-hover:shadow-glow-md group-hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-crimson/40 group-hover:border-crimson group-hover:scale-105 transition-all duration-300 cursor-pointer">
                   <Image
                     src="/profile.jpeg"
                     alt={SITE_CONFIG.name}
@@ -137,7 +137,7 @@ export function Header() {
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                 }}
-                className="font-bold text-lg text-foreground hidden sm:block hover:text-primary transition-colors"
+                className="hover-brush font-bold text-lg text-foreground hidden sm:block hover:text-crimson transition-colors"
               >
                 Faiz
               </button>
@@ -167,7 +167,7 @@ export function Header() {
                     {isActive && (
                       <motion.div
                         layoutId="activeSection"
-                        className="absolute inset-0 bg-primary/15 border-2 border-primary/30 rounded-lg -z-10 shadow-glow-sm"
+                        className="absolute inset-0 bg-crimson/12 border border-crimson/45 rounded-lg -z-10"
                         transition={{ type: 'spring', stiffness: 400, damping: 35 }}
                       />
                     )}
@@ -182,7 +182,7 @@ export function Header() {
                 href={SITE_CONFIG.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/15 hover:scale-110 transition-all duration-300 border border-transparent hover:border-primary/20"
+                className="press-ink p-2.5 rounded-lg text-muted-foreground hover:text-crimson hover:bg-crimson/10 hover:-translate-y-0.5 transition-all duration-300 border border-transparent hover:border-crimson/35"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
@@ -191,7 +191,7 @@ export function Header() {
                 href={SITE_CONFIG.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/15 hover:scale-110 transition-all duration-300 border border-transparent hover:border-primary/20"
+                className="press-ink p-2.5 rounded-lg text-muted-foreground hover:text-crimson hover:bg-crimson/10 hover:-translate-y-0.5 transition-all duration-300 border border-transparent hover:border-crimson/35"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
@@ -200,7 +200,7 @@ export function Header() {
                 href={`https://mail.google.com/mail/?view=cm&fs=1&to=${SITE_CONFIG.contact.email}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/15 hover:scale-110 transition-all duration-300 border border-transparent hover:border-primary/20"
+                className="press-ink p-2.5 rounded-lg text-muted-foreground hover:text-crimson hover:bg-crimson/10 hover:-translate-y-0.5 transition-all duration-300 border border-transparent hover:border-crimson/35"
                 aria-label="Email"
               >
                 <Mail className="h-5 w-5" />
@@ -210,7 +210,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 transition-colors"
+              className="md:hidden p-2 rounded-lg bg-card border border-primary/10 hover:border-primary/30 transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? (
@@ -233,7 +233,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-background/80 z-40 md:hidden"
             />
 
             {/* Menu Panel */}
@@ -242,7 +242,7 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-16 right-0 bottom-0 w-64 bg-card/95 backdrop-blur-lg border-l border-primary/20 z-40 md:hidden overflow-y-auto"
+              className="fixed top-16 right-0 bottom-0 w-64 bg-card border-l border-primary/20 z-40 md:hidden overflow-y-auto"
             >
               <div className="p-6 space-y-6">
                 {/* Navigation Links */}
@@ -267,7 +267,7 @@ export function Header() {
                           className={`block px-4 py-3 rounded-lg text-base font-medium transition-all ${
                             isActive
                               ? 'bg-primary/10 border border-primary/20 text-primary'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-card/50'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-card'
                           }`}
                         >
                           {item.label}
@@ -291,7 +291,7 @@ export function Header() {
                         href={SITE_CONFIG.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 px-4 py-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
+                        className="flex-1 px-4 py-2 rounded-lg bg-card border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
                       >
                         GitHub
                       </a>
@@ -301,7 +301,7 @@ export function Header() {
                         href={SITE_CONFIG.links.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 px-4 py-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
+                        className="flex-1 px-4 py-2 rounded-lg bg-card border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
                       >
                         LinkedIn
                       </a>
@@ -311,7 +311,7 @@ export function Header() {
                     href={`https://mail.google.com/mail/?view=cm&fs=1&to=${SITE_CONFIG.contact.email}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 block px-4 py-2 rounded-lg bg-card/50 border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
+                    className="mt-3 block px-4 py-2 rounded-lg bg-card border border-primary/10 hover:border-primary/30 text-center text-sm text-muted-foreground hover:text-primary transition-all"
                   >
                     Email Me
                   </a>
@@ -332,7 +332,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowProfileModal(false)}
-              className="fixed inset-0 bg-background/95 backdrop-blur-md z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-background/95 z-50 flex items-center justify-center p-4"
             >
               {/* Modal Content */}
               <motion.div

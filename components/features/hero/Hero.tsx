@@ -134,6 +134,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-y-0 right-0 z-0 flex items-center justify-end overflow-hidden">
         <Samurai
           className="h-[min(80vh,40rem)] w-auto translate-x-[22%] opacity-[0.13] lg:translate-x-[8%] lg:opacity-[0.16]"
+          roughness={2}
         />
       </div>
 

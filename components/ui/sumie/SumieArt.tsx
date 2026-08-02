@@ -33,7 +33,7 @@ function BrushFilter({ id, scale }: { id: string; scale: number }) {
   if (scale <= 0) return null
   return (
     <filter id={id} x="-15%" y="-15%" width="130%" height="130%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="7" result="n" />
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="7" result="n" />
       <feDisplacementMap
         in="SourceGraphic"
         in2="n"

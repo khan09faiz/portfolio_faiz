@@ -207,7 +207,7 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
             <p className="text-sm text-muted-foreground mb-6">
               WebGL is not enabled in your browser. Please enable hardware acceleration in Chrome settings:
             </p>
-            <div className="text-left bg-card/50 rounded-lg p-4 mb-6 text-xs sm:text-sm font-mono space-y-2">
+            <div className="text-left bg-card rounded-lg p-4 mb-6 text-xs sm:text-sm font-mono space-y-2">
               <p>1. Go to <span className="text-primary">chrome://settings/system</span></p>
               <p>2. Enable &quot;Use hardware acceleration&quot;</p>
               <p>3. Restart Chrome</p>
@@ -283,7 +283,7 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur-md border border-accent/40 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-3"
+            className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-card border border-accent/40 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-3"
           >
             <div className="p-1.5 rounded-lg bg-paper-sunk border border-accent/40">
               <TechIcon
@@ -308,7 +308,7 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
       </AnimatePresence>
 
       {/* Legend - md+ only */}
-      <div className="hidden md:block absolute top-3 right-3 bg-card/90 border border-accent/40 rounded-xl p-3 shadow-xl">
+      <div className="hidden md:block absolute top-3 right-3 bg-card border border-accent/40 rounded-xl p-3 shadow-xl">
         <h4 className="text-xs font-bold text-sumi mb-2">Categories</h4>
         <div className="space-y-1.5">
           {skillsData.map((category) => (
