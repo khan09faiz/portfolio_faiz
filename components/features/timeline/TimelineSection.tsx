@@ -11,10 +11,9 @@ import { Briefcase, GraduationCap, Calendar, Award, CheckCircle2, ChevronDown, C
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import TechIcon from '@/components/ui/TechIcon'
 import { Card } from '@/components/ui/Card'
-import { TimelineItem } from '@/lib/types'
-import timelineDataRaw from '@/src/data/timeline.json'
+import { getTimeline } from '@/lib/content'
 
-const timelineData = timelineDataRaw as TimelineItem[]
+const timelineData = getTimeline()
 
 const getIcon = (type: string) => {
   switch (type) {

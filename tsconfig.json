@@ -7,6 +7,10 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    // Required by scripts/validate-content.ts, which runs under Node's type
+    // stripping and so must import with an explicit .ts extension.
+    // Safe with "noEmit": true — permissive only, no existing import changes.
+    "allowImportingTsExtensions": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
