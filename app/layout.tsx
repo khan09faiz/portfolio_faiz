@@ -5,7 +5,7 @@ import { Header } from '@/components/layout/Header'
 import { StructuredData } from '@/components/seo'
 import { Analytics } from '@vercel/analytics/react'
 import { AnimatedBackground } from '@/components/ui/AnimatedBackground'
-import { InkCursor } from '@/components/ui/InkCursor'
+import { BrushCursor } from '@/components/ui/BrushCursor'
 import { InkIntensityToggle } from '@/components/ui/InkIntensityToggle'
 import { SITE_CONFIG } from '@/lib/constants'
 
@@ -108,7 +108,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-background font-sans">
         <AnimatedBackground />
-        <InkCursor />
+        <BrushCursor />
         <Header />
         {children}
         <InkIntensityToggle />
