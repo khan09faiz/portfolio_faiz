@@ -69,7 +69,7 @@ export function InkIntensityToggle() {
 
   return (
     <div
-      className="fixed bottom-4 left-4 z-[70] flex items-center gap-1 rounded-full border border-accent/50 bg-card/90 p-1 shadow-lg backdrop-blur-md"
+      className="fixed bottom-4 left-4 z-[70] flex items-center gap-1 rounded-full border border-accent/50 bg-card p-1 shadow-lg"
       role="group"
       aria-label="Preview: crimson intensity"
     >

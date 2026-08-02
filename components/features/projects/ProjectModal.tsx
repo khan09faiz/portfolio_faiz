@@ -57,7 +57,7 @@ export function ProjectModal({
             exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
             transition={{ duration: 0.3 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/80 z-50"
           />
 
           {/* Modal Container with Outside Navigation */}
@@ -89,7 +89,7 @@ export function ProjectModal({
                 damping: 30,
                 mass: 0.8
               }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-card/40 backdrop-blur-md border border-primary/20 rounded-xl shadow-glow-lg"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-card border border-primary/20 rounded-xl shadow-glow-lg"
             >
               {/* Close Button - Clean Design */}
               <motion.button
@@ -201,7 +201,7 @@ export function ProjectModal({
                       {project.impact.map((metric, index) => (
                         <div
                           key={index}
-                          className="bg-card/30 rounded-lg p-4 border border-primary/10"
+                          className="bg-card rounded-lg p-4 border border-primary/10"
                         >
                           <div className="text-2xl font-bold text-primary mb-1">
                             {metric.value}

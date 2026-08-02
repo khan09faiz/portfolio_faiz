@@ -40,7 +40,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       primary:
         'bg-primary text-background hover:bg-primary/90 shadow-glow-sm hover:shadow-glow-lg active:scale-[0.97] hover:-translate-y-0.5',
       secondary:
-        'bg-card/50 text-foreground hover:bg-card border border-primary/20 hover:border-primary/40 shadow-glass hover:shadow-glow-sm active:scale-[0.97]',
+        'bg-card text-foreground hover:bg-card border border-primary/20 hover:border-primary/40  hover:shadow-glow-sm active:scale-[0.97]',
       ghost:
         'bg-transparent text-foreground hover:bg-primary/10 hover:text-primary active:scale-[0.97]',
       outline:
