@@ -1,17 +1,19 @@
 /**
  * Content Provider
  *
- * The single read path for portfolio content. Section components must go
- * through these accessors rather than importing src/data/*.json directly, so
- * that swapping the backing store for a headless CMS touches this file alone.
+ * The single read path for portfolio content. Section components must not
+ * import src/data/*.json directly — swapping the backing store for a headless
+ * CMS should touch this file alone.
  *
- * Phase 1 keeps the existing JSON files as the backing store — this layer is
- * pure indirection and changes no rendered output.
+ * ASYNC BY CONTRACT. The accessors are async even though the current backing
+ * store is a synchronous JSON import, because every realistic replacement — a
+ * database, a CMS HTTP API, a cached fetch — is asynchronous. Callers that
+ * already `await` today keep working unchanged when that swap happens; making
+ * them synchronous now would mean rewriting every call site later.
  *
- * Accessors are synchronous on purpose. Every consumer is currently a client
- * component; going async here would force a server-component conversion or a
- * React Query provider, which belongs to a later phase. When a real datastore
- * lands, these become async and the components migrate with it.
+ * These are called from SERVER components (see app/page.tsx), so the content
+ * never enters the client bundle as code and a future datastore credential
+ * never reaches the browser.
  */
 
 import type { Project, SkillCategory, TimelineItem } from '@/lib/types'
@@ -25,27 +27,42 @@ const skills = skillsRaw as SkillCategory[]
 const timeline = timelineRaw as TimelineItem[]
 
 /** All projects, in file order. Callers apply their own filtering and sorting. */
-export function getProjects(): Project[] {
+export async function getProjects(): Promise<Project[]> {
   return projects
 }
 
 /** All skill categories, in file order. */
-export function getSkills(): SkillCategory[] {
+export async function getSkills(): Promise<SkillCategory[]> {
   return skills
 }
 
 /** Every timeline entry — work, education and achievements combined. */
-export function getTimeline(): TimelineItem[] {
+export async function getTimeline(): Promise<TimelineItem[]> {
   return timeline
 }
 
 /**
  * Achievement-type timeline entries, most recent first.
- * Centralises the "an achievement is a certificate" rule that was previously
+ * Centralises the "an achievement is a certificate" rule rather than leaving it
  * inlined in CertificatesSection.
  */
-export function getCertificates(): TimelineItem[] {
+export async function getCertificates(): Promise<TimelineItem[]> {
   return timeline
     .filter((item) => item.type === 'achievement')
     .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+}
+
+/**
+ * Everything the home page needs, in one call.
+ *
+ * A single entry point means the page makes one round trip to whatever backs
+ * this later, instead of four sequential ones. Promise.all keeps them parallel.
+ */
+export async function getHomeContent() {
+  const [projects, skills, timeline] = await Promise.all([
+    getProjects(),
+    getSkills(),
+    getTimeline(),
+  ])
+  return { projects, skills, timeline }
 }

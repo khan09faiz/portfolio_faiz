@@ -11,9 +11,7 @@ import { Briefcase, GraduationCap, Calendar, Award, CheckCircle2, ChevronDown, C
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import TechIcon from '@/components/ui/TechIcon'
 import { Card } from '@/components/ui/Card'
-import { getTimeline } from '@/lib/content'
-
-const timelineData = getTimeline()
+import type { TimelineItem } from '@/lib/types'
 
 const getIcon = (type: string) => {
   switch (type) {
@@ -60,7 +58,12 @@ const formatDate = (yearMonth: string) => {
   return name ? `${name} ${year}` : yearMonth
 }
 
-export function TimelineSection() {
+interface TimelineSectionProps {
+  /** Fetched on the server in app/page.tsx. */
+  timeline: TimelineItem[]
+}
+
+export function TimelineSection({ timeline: timelineData }: TimelineSectionProps) {
   const [showAllCertificates, setShowAllCertificates] = useState(false)
 
   // Separate items by type

@@ -13,18 +13,22 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { FilterButton, FilterButtonGroup } from '@/components/ui/FilterButton'
 import { ProjectCard } from './ProjectCard'
 import { ProjectModal } from './ProjectModal'
-import { getProjects } from '@/lib/content'
 
-const projectsData = getProjects()
 const categories = ['All', 'AI/ML', 'Frontend', 'Backend', 'Full-Stack']
 
-export function ProjectsSection() {
+interface ProjectsSectionProps {
+  /** Fetched on the server in app/page.tsx — this component no longer reads
+      lib/content itself, so the backing store stays server-side. */
+  projects: Project[]
+}
+
+export function ProjectsSection({ projects }: ProjectsSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   // Filter projects
-  const filteredProjects = projectsData.filter((project) => {
+  const filteredProjects = projects.filter((project) => {
     if (selectedCategory === 'All') return true
     return project.category === selectedCategory
   })
@@ -39,9 +43,9 @@ export function ProjectsSection() {
   // Get category counts
   const categoryCounts = categories.reduce((acc, category) => {
     if (category === 'All') {
-      acc[category] = projectsData.length
+      acc[category] = projects.length
     } else {
-      acc[category] = projectsData.filter((p) => p.category === category).length
+      acc[category] = projects.filter((p) => p.category === category).length
     }
     return acc
   }, {} as Record<string, number>)
