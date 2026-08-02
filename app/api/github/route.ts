@@ -1,7 +1,19 @@
 import { NextResponse } from 'next/server'
+import type {
+  ContributionDay,
+  ContributedRepositoryNode,
+  GitHubGraphQLResponse,
+  LanguageStats,
+  OwnedRepositoryNode,
+  RepoSummary,
+  GitHubStats,
+} from '@/lib/types'
+
+/** Fallback swatch for repos and languages GitHub reports no colour for. */
+const DEFAULT_LANGUAGE_COLOR = '#8257e5'
 
 // Calculate contribution streak from contribution calendar
-function calculateStreaks(contributionDays: Array<{ contributionCount: number; date: string }>) {
+function calculateStreaks(contributionDays: ContributionDay[]) {
   let currentStreak = 0
   let longestStreak = 0
   let tempStreak = 0
@@ -152,19 +164,23 @@ export async function GET() {
       throw new Error(`GitHub API responded with status: ${response.status}`)
     }
 
-    const data = await response.json()
+    const data: GitHubGraphQLResponse = await response.json()
 
     if (data.errors) {
       console.error('GitHub API errors:', data.errors)
       throw new Error('GitHub API returned errors')
     }
 
-    const userData = data.data.user
+    const userData = data.data?.user
+
+    if (!userData) {
+      throw new Error(`GitHub user "${GITHUB_USERNAME}" not found`)
+    }
 
     // Calculate streaks from contribution calendar
     const contributionDays = userData.contributionsCollection.contributionCalendar.weeks
-      .flatMap((week: any) => week.contributionDays)
-    
+      .flatMap((week) => week.contributionDays)
+
     const { currentStreak, longestStreak } = calculateStreaks(contributionDays)
 
     // Calculate language statistics
@@ -172,16 +188,17 @@ export async function GET() {
     let totalStars = 0
     let totalForks = 0
 
-    userData.repositories.nodes.forEach((repo: any) => {
+    userData.repositories.nodes.forEach((repo) => {
       totalStars += repo.stargazerCount
       totalForks += repo.forkCount
 
       if (repo.languages?.edges) {
-        repo.languages.edges.forEach((edge: any) => {
-          const existing = languageMap.get(edge.node.name) || { bytes: 0, color: edge.node.color }
+        repo.languages.edges.forEach((edge) => {
+          const color = edge.node.color ?? DEFAULT_LANGUAGE_COLOR
+          const existing = languageMap.get(edge.node.name) || { bytes: 0, color }
           languageMap.set(edge.node.name, {
             bytes: existing.bytes + edge.size,
-            color: edge.node.color,
+            color,
           })
         })
       }
@@ -189,7 +206,7 @@ export async function GET() {
 
     const totalBytes = Array.from(languageMap.values()).reduce((sum, { bytes }) => sum + bytes, 0)
     
-    const topLanguages = Array.from(languageMap.entries())
+    const topLanguages: LanguageStats[] = Array.from(languageMap.entries())
       .map(([name, { bytes, color }]) => ({
         name,
         color,
@@ -200,13 +217,13 @@ export async function GET() {
       .slice(0, 8)
 
     // Get my repositories
-    const myRepos = userData.repositories.nodes.map((repo: any) => ({
+    const myRepos: RepoSummary[] = userData.repositories.nodes.map((repo: OwnedRepositoryNode) => ({
       name: repo.name,
       description: repo.description || '',
       stars: repo.stargazerCount,
       forks: repo.forkCount,
       language: repo.primaryLanguage?.name || 'Unknown',
-      color: repo.primaryLanguage?.color || '#8257e5',
+      color: repo.primaryLanguage?.color || DEFAULT_LANGUAGE_COLOR,
       url: repo.url,
       updatedAt: repo.updatedAt,
       homepage: repo.homepageUrl,
@@ -214,22 +231,22 @@ export async function GET() {
     }))
 
     // Get contributed repositories (excluding own repos)
-    const contributedRepos = userData.repositoriesContributedTo.nodes
-      .filter((repo: any) => repo.owner.login !== GITHUB_USERNAME)
-      .map((repo: any) => ({
+    const contributedRepos: RepoSummary[] = userData.repositoriesContributedTo.nodes
+      .filter((repo: ContributedRepositoryNode) => repo.owner.login !== GITHUB_USERNAME)
+      .map((repo: ContributedRepositoryNode) => ({
         name: repo.name,
         description: repo.description || '',
         stars: repo.stargazerCount,
         forks: repo.forkCount,
         language: repo.primaryLanguage?.name || 'Unknown',
-        color: repo.primaryLanguage?.color || '#8257e5',
+        color: repo.primaryLanguage?.color || DEFAULT_LANGUAGE_COLOR,
         url: repo.url,
         updatedAt: repo.updatedAt,
         homepage: repo.homepageUrl,
         isOwner: false,
       }))
 
-    const stats = {
+    const stats: GitHubStats = {
       totalRepos: userData.repositories.totalCount,
       totalStars,
       totalForks,

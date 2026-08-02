@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Briefcase, GraduationCap, Calendar, Award, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
@@ -42,18 +42,27 @@ const getTypeColor = (type: string) => {
   }
 }
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+] as const
+
+/**
+ * Formats a YYYY-MM string as "Jun 2025".
+ *
+ * Parsed from the string rather than via `new Date()` on purpose: `new Date('2025-06')`
+ * resolves to UTC midnight, and rendering that through toLocaleDateString in a
+ * negative-offset timezone rolls back to the previous month — which produced a
+ * server/client hydration mismatch for any visitor west of UTC.
+ */
+const formatDate = (yearMonth: string) => {
+  const [year, month] = yearMonth.split('-')
+  const name = MONTHS[Number(month) - 1]
+  return name ? `${name} ${year}` : yearMonth
 }
 
 export function TimelineSection() {
   const [showAllCertificates, setShowAllCertificates] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
 
   // Separate items by type
   const workExperience = timelineData

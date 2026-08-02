@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FileCheck, GraduationCap, ExternalLink, ChevronDown, ChevronUp, CheckCircle2, Calendar } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
@@ -15,9 +15,21 @@ import timelineDataRaw from '@/src/data/timeline.json'
 
 const timelineData = timelineDataRaw as TimelineItem[]
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+] as const
+
+/**
+ * Formats a YYYY-MM string as "Jun 2025".
+ * Parsed from the string rather than via `new Date()` — see the note in
+ * TimelineSection: the Date route rolls back a month west of UTC and caused a
+ * server/client hydration mismatch.
+ */
+const formatDate = (yearMonth: string) => {
+  const [year, month] = yearMonth.split('-')
+  const name = MONTHS[Number(month) - 1]
+  return name ? `${name} ${year}` : yearMonth
 }
 
 const education = {
@@ -31,11 +43,6 @@ const education = {
 
 export function CertificatesSection() {
   const [showAll, setShowAll] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
 
   // Get certificates from timeline data
   const certificates = timelineData
