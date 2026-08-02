@@ -10,10 +10,7 @@ import { motion } from 'framer-motion'
 import { FileCheck, GraduationCap, ExternalLink, ChevronDown, ChevronUp, CheckCircle2, Calendar } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { TimelineItem } from '@/lib/types'
-import timelineDataRaw from '@/src/data/timeline.json'
-
-const timelineData = timelineDataRaw as TimelineItem[]
+import { getCertificates } from '@/lib/content'
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
@@ -38,9 +35,7 @@ export function CertificatesSection() {
   }, [])
 
   // Get certificates from timeline data
-  const certificates = timelineData
-    .filter((item) => item.type === 'achievement')
-    .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+  const certificates = getCertificates()
 
   const displayedCertificates = showAll ? certificates : certificates.slice(0, 3)
   const hasMore = certificates.length > 3
