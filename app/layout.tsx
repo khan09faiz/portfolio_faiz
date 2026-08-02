@@ -5,6 +5,8 @@ import { Header } from '@/components/layout/Header'
 import { StructuredData } from '@/components/seo'
 import { Analytics } from '@vercel/analytics/react'
 import { AnimatedBackground } from '@/components/ui/AnimatedBackground'
+import { InkCursor } from '@/components/ui/InkCursor'
+import { InkIntensityToggle } from '@/components/ui/InkIntensityToggle'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const inter = Inter({
@@ -91,11 +93,25 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <StructuredData />
+        {/*
+          Applies the crimson intensity before first paint so the palette never
+          flashes from restrained to bold during hydration. Reads ?ink= first so
+          a preview link can pin a variant, otherwise falls back to the stored
+          choice. No attribute at all means restrained.
+          PREVIEW-ONLY — remove alongside <InkIntensityToggle /> before merge.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var q=new URLSearchParams(location.search).get('ink');var v=q||localStorage.getItem('ink-intensity');if(v==='bold'){document.documentElement.setAttribute('data-ink','bold')}if(q){localStorage.setItem('ink-intensity',q)}}catch(e){}})()`,
+          }}
+        />
       </head>
       <body className="min-h-screen bg-background font-sans">
         <AnimatedBackground />
+        <InkCursor />
         <Header />
         {children}
+        <InkIntensityToggle />
         <Analytics />
       </body>
     </html>
