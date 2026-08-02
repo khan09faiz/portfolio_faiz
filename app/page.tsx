@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Hero } from '@/components/features/hero/Hero'
 import { ProjectsSection } from '@/components/features/projects'
 import { SkillsSection } from '@/components/features/skills'
@@ -8,17 +7,25 @@ import { TimelineSection } from '@/components/features/timeline'
 import { GitHubSection } from '@/components/features/github'
 import { ContactSection } from '@/components/features/contact'
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator'
+import { InkReveal } from '@/components/ui/InkReveal'
+import { SectionOrnament } from '@/components/ui/sumie/SectionOrnament'
+import type { ReactNode } from 'react'
 
-const sectionVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.3,
-      ease: [0.4, 0, 0.2, 1] as const
-    }
-  }
+/**
+ * Each section gets its own sumi-e motif in the margin, so the theme carries
+ * the whole way down the page instead of stopping below the hero. `relative`
+ * + `overflow-hidden` keeps an ornament clipped to its own section rather than
+ * bleeding into the neighbouring one.
+ */
+function Section({ children, ornament }: { children: ReactNode; ornament: ReactNode }) {
+  return (
+    <InkReveal>
+      <div className="relative overflow-hidden">
+        {ornament}
+        <div className="relative z-10">{children}</div>
+      </div>
+    </InkReveal>
+  )
 }
 
 export default function Home() {
@@ -26,58 +33,41 @@ export default function Home() {
     <>
       <ScrollIndicator />
       <main className="min-h-screen pt-16 relative overflow-hidden">
-        {/* Simplified background elements for performance */}
-        <div className="fixed inset-0 pointer-events-none opacity-30">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-40 left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-        </div>
-
         <Hero />
-        
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={sectionVariants}
+
+        <Section
+          ornament={<SectionOrnament motif="bamboo" position="top-left" size="w-24 lg:w-32" opacity={10} sway />}
         >
           <ProjectsSection />
-        </motion.div>
+        </Section>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={sectionVariants}
+        <Section
+          ornament={
+            <SectionOrnament motif="enso" position="top-right" size="w-72 lg:w-96" opacity={7} draw />
+          }
         >
           <SkillsSection />
-        </motion.div>
+        </Section>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={sectionVariants}
+        <Section
+          ornament={
+            <SectionOrnament motif="sakura" position="top-right" size="w-72 lg:w-[26rem]" opacity={12} sway />
+          }
         >
           <TimelineSection />
-        </motion.div>
+        </Section>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={sectionVariants}
+        <Section
+          ornament={<SectionOrnament motif="torii" position="bottom-left" size="w-56 lg:w-72" opacity={8} />}
         >
           <GitHubSection />
-        </motion.div>
+        </Section>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={sectionVariants}
+        <Section
+          ornament={<SectionOrnament motif="crane" position="top-right" size="w-56 lg:w-72" opacity={10} sway />}
         >
           <ContactSection />
-        </motion.div>
+        </Section>
       </main>
     </>
   )

@@ -101,26 +101,33 @@ function GlobeScene({
 
   return (
     <>
-      {/* Globe */}
+      {/*
+        Paper globe with ink meridians.
+
+        This was a near-black sphere (#18181B at 0.9) carrying a wireframe at
+        0.12 opacity — on the old dark theme that read fine, but on washi paper
+        it was a heavy black blob and the wireframe was invisible against it.
+
+        Now: a slightly sunk paper tone, dark enough to separate from the page
+        behind it and to occlude markers on the far side, with the meridians
+        doing the drawing in sumi. Reads as a brush-drawn globe rather than a
+        solid ball.
+      */}
       <Sphere ref={globeRef} args={[2.5, segments, segments]}>
-        <meshBasicMaterial
-          color="#18181B"
-          transparent
-          opacity={0.9}
-        />
+        <meshBasicMaterial color="#EFEAE0" transparent opacity={0.97} />
       </Sphere>
 
-      {/* Wireframe overlay - desktop only */}
-      {!isMobile && (
-        <Sphere args={[2.52, 12, 12]}>
-          <meshBasicMaterial
-            color="#3f3f46"
-            wireframe
-            transparent
-            opacity={0.12}
-          />
-        </Sphere>
-      )}
+      {/* Ink meridians. Sits just proud of the surface so it is never z-fought
+          by the sphere it wraps. */}
+      <Sphere args={[2.53, isMobile ? 10 : 16, isMobile ? 10 : 16]}>
+        <meshBasicMaterial color="#1A1816" wireframe transparent opacity={0.22} />
+      </Sphere>
+
+      {/* A vermillion equator, for a single point of colour */}
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.53, 0.012, 8, 96]} />
+        <meshBasicMaterial color="#BF2A22" transparent opacity={0.5} />
+      </mesh>
 
       {/* All markers in a single group */}
       <group ref={markersGroupRef}>
@@ -207,7 +214,7 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
             <p className="text-sm text-muted-foreground mb-6">
               WebGL is not enabled in your browser. Please enable hardware acceleration in Chrome settings:
             </p>
-            <div className="text-left bg-card/50 rounded-lg p-4 mb-6 text-xs sm:text-sm font-mono space-y-2">
+            <div className="text-left bg-card rounded-lg p-4 mb-6 text-xs sm:text-sm font-mono space-y-2">
               <p>1. Go to <span className="text-primary">chrome://settings/system</span></p>
               <p>2. Enable &quot;Use hardware acceleration&quot;</p>
               <p>3. Restart Chrome</p>
@@ -283,23 +290,23 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-3"
+            className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-card border border-accent/40 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-3"
           >
-            <div className="p-1.5 rounded-lg bg-gray-800 border border-gray-700">
+            <div className="p-1.5 rounded-lg bg-paper-sunk border border-accent/40">
               <TechIcon
                 name={selectedSkill.skill}
                 className="h-6 w-6 sm:h-7 sm:w-7"
               />
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-white">
+              <p className="text-sm sm:text-base font-bold text-sumi">
                 {selectedSkill.skill}
               </p>
-              <p className="text-xs text-zinc-300">{selectedSkill.category}</p>
+              <p className="text-xs text-sumi">{selectedSkill.category}</p>
             </div>
             <button
               onClick={() => setSelectedSkill(null)}
-              className="ml-2 text-zinc-400 hover:text-white transition-colors text-lg leading-none"
+              className="ml-2 text-muted hover:text-crimson transition-colors text-lg leading-none"
             >
               ✕
             </button>
@@ -308,8 +315,8 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
       </AnimatePresence>
 
       {/* Legend - md+ only */}
-      <div className="hidden md:block absolute top-3 right-3 bg-gray-900/85 border border-gray-700 rounded-xl p-3 shadow-xl">
-        <h4 className="text-xs font-bold text-white mb-2">Categories</h4>
+      <div className="hidden md:block absolute top-3 right-3 bg-card border border-accent/40 rounded-xl p-3 shadow-xl">
+        <h4 className="text-xs font-bold text-sumi mb-2">Categories</h4>
         <div className="space-y-1.5">
           {skillsData.map((category) => (
             <div key={category.category} className="flex items-center gap-2">
@@ -317,19 +324,19 @@ export function SkillsGlobe({ skillsData }: SkillsGlobeProps) {
                 className="h-2.5 w-2.5 rounded-full"
                 style={{ backgroundColor: category.color }}
               />
-              <span className="text-[11px] text-zinc-200">
+              <span className="text-[11px] text-sumi">
                 {category.category}
               </span>
-              <span className="text-[11px] text-zinc-500 ml-auto font-mono">
+              <span className="text-[11px] text-muted ml-auto font-mono">
                 {category.skills.length}
               </span>
             </div>
           ))}
         </div>
-        <div className="mt-2 pt-2 border-t border-gray-700">
-          <p className="text-[11px] text-zinc-300">
+        <div className="mt-2 pt-2 border-t border-accent/40">
+          <p className="text-[11px] text-sumi">
             Total:{' '}
-            <span className="font-bold text-white">{markers.length}</span>{' '}
+            <span className="font-bold text-sumi">{markers.length}</span>{' '}
             skills
           </p>
         </div>

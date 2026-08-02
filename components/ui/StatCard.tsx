@@ -35,7 +35,7 @@ export function StatCard({
       transition={{ duration: 0.3 }}
       className={cn(
         'relative group',
-        'bg-card/30 backdrop-blur-md',
+        'bg-card',
         'border border-primary/10',
         'rounded-xl p-4',
         'hover:border-primary/30 hover:shadow-glow-sm',

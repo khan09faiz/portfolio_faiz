@@ -5,6 +5,8 @@ import { Header } from '@/components/layout/Header'
 import { StructuredData } from '@/components/seo'
 import { Analytics } from '@vercel/analytics/react'
 import { AnimatedBackground } from '@/components/ui/AnimatedBackground'
+import { BrushCursor } from '@/components/ui/BrushCursor'
+import { InkRipple } from '@/components/ui/InkRipple'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const inter = Inter({
@@ -94,6 +96,8 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-background font-sans">
         <AnimatedBackground />
+        <BrushCursor />
+        <InkRipple />
         <Header />
         {children}
         <Analytics />

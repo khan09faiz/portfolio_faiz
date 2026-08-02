@@ -22,6 +22,8 @@ import {
   Download
 } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
+import { SwordSlash } from '@/components/ui/SwordSlash'
+import { Samurai } from '@/components/ui/sumie/SumieArt'
 import Link from 'next/link'
 
 // Code snippet for typing animation
@@ -77,8 +79,8 @@ const stats = [
     icon: FileCheck, 
     value: '5+', 
     label: 'Certificates', 
-    color: 'text-cyan-500', 
-    fill: 'fill-cyan-500/20',
+    color: 'text-crimson', 
+    fill: 'fill-crimson/20',
     href: '#timeline',
     description: 'Professional certifications'
   },
@@ -86,8 +88,8 @@ const stats = [
     icon: GraduationCap, 
     value: 'B.Tech', 
     label: 'Degree', 
-    color: 'text-green-500', 
-    fill: 'fill-green-500/20',
+    color: 'text-sumi', 
+    fill: 'fill-sumi/20',
     href: '#timeline',
     description: 'Education background'
   },
@@ -126,10 +128,18 @@ export function Hero() {
 
   return (
     <section className="min-h-screen relative overflow-hidden flex items-center">
-      {/* Background gradient effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      {/* Samurai crest, set into the paper on the right. Sits behind everything
+          and is clipped by the section, so it reads as a printed watermark
+          rather than a floating logo. */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-0 flex items-center justify-end overflow-hidden">
+        <Samurai
+          className="h-[min(80vh,40rem)] w-auto translate-x-[22%] opacity-[0.13] lg:translate-x-[8%] lg:opacity-[0.16]"
+          roughness={2}
+        />
+      </div>
+
+      {/* Katana streak across the hero, once on load */}
+      <SwordSlash delay={350} />
 
       <div className="container relative z-10 py-12 sm:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -219,7 +229,7 @@ export function Hero() {
                   <div className="flex gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-500 cursor-pointer hover:bg-red-400 transition-colors" />
                     <div className="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer hover:bg-yellow-400 transition-colors" />
-                    <div className="w-3 h-3 rounded-full bg-green-500 cursor-pointer hover:bg-green-400 transition-colors" />
+                    <div className="w-3 h-3 rounded-full bg-sumi cursor-pointer hover:bg-sumi transition-colors" />
                   </div>
                   <span className="text-xs text-muted-foreground font-mono ml-2">
                     ~/developer.ts

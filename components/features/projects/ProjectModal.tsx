@@ -6,6 +6,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { createPortal } from 'react-dom'
 import { X, Github, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Project } from '@/lib/types'
 import { Button } from '@/components/ui/Button'
@@ -46,18 +47,36 @@ export function ProjectModal({
 
   if (!project) return null
 
-  return (
+  /*
+    Rendered through a portal into <body>.
+
+    This modal lives inside ProjectsSection, which sits inside the section
+    reveal wrapper. That wrapper carries `transform` and `clip-path`, and BOTH
+    make a `position: fixed` descendant resolve against the wrapper instead of
+    the viewport — so `fixed inset-0` was sizing itself to the projects section,
+    not the screen. The section's `overflow-hidden` then clipped it, and later
+    sections painted over the top (the "Technical Skills" band showing through).
+
+    A modal must not depend on where in the tree it happens to be declared, so
+    it goes straight to <body>. `document` is only touched on the client; during
+    SSR isOpen is false and this renders nothing either way.
+  */
+  const content = (
     <AnimatePresence>
       {isOpen && (
         <>
           {/* Backdrop */}
+          {/* Plain ink scrim. Animating backdropFilter meant the browser
+              re-blurred the entire page behind the modal on every frame of the
+              transition — an opaque-enough wash reads the same and costs
+              nothing. */}
           <motion.div
-            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            animate={{ opacity: 1, backdropFilter: 'blur(12px)' }}
-            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-sumi/45 z-50"
           />
 
           {/* Modal Container with Outside Navigation */}
@@ -89,14 +108,14 @@ export function ProjectModal({
                 damping: 30,
                 mass: 0.8
               }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-card/40 backdrop-blur-md border border-primary/20 rounded-xl shadow-glow-lg"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-card border border-primary/20 rounded-xl shadow-glow-lg"
             >
               {/* Close Button - Clean Design */}
               <motion.button
                 onClick={onClose}
                 whileHover={{ scale: 1.2, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
-                className="sticky top-4 float-right mr-4 mt-4 p-2 text-primary hover:text-red-400 transition-colors z-20"
+                className="sticky top-4 float-right mr-4 mt-4 p-2 text-primary hover:text-crimson transition-colors z-20"
                 aria-label="Close modal"
               >
                 <X className="h-6 w-6 drop-shadow-glow" />
@@ -110,12 +129,12 @@ export function ProjectModal({
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         project.category === 'AI/ML'
-                          ? 'bg-blue-500/20 text-blue-400'
+                          ? 'bg-crimson/12 text-crimson'
                           : project.category === 'Frontend'
-                          ? 'bg-purple-500/20 text-purple-400'
+                          ? 'bg-sumi/10 text-sumi'
                           : project.category === 'Backend'
-                          ? 'bg-green-500/20 text-green-400'
-                          : 'bg-orange-500/20 text-orange-400'
+                          ? 'bg-gold/18 text-gold'
+                          : 'bg-[rgb(39,74,120)]/12 text-[rgb(39,74,120)]'
                       }`}
                     >
                       {project.category}
@@ -201,7 +220,7 @@ export function ProjectModal({
                       {project.impact.map((metric, index) => (
                         <div
                           key={index}
-                          className="bg-card/30 rounded-lg p-4 border border-primary/10"
+                          className="bg-card rounded-lg p-4 border border-primary/10"
                         >
                           <div className="text-2xl font-bold text-primary mb-1">
                             {metric.value}
@@ -266,4 +285,7 @@ export function ProjectModal({
       )}
     </AnimatePresence>
   )
+
+  if (typeof document === 'undefined') return content
+  return createPortal(content, document.body)
 }
