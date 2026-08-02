@@ -2,7 +2,7 @@
   {
     "category": "AI/ML Development",
     "proficiency": 92,
-    "color": "#3b82f6",
+    "color": "#BF2A22",
     "skills": [
       "TensorFlow",
       "PyTorch",
@@ -13,7 +13,7 @@
   {
     "category": "Frontend Development",
     "proficiency": 85,
-    "color": "#8b5cf6",
+    "color": "#2E2A26",
     "skills": [
       "React",
       "Next.js",
@@ -24,7 +24,7 @@
   {
     "category": "Backend Development",
     "proficiency": 88,
-    "color": "#10b981",
+    "color": "#A68438",
     "skills": [
       "Python",
       "Django",
@@ -36,7 +36,7 @@
   {
     "category": "Database & Storage",
     "proficiency": 85,
-    "color": "#f59e0b",
+    "color": "#274A78",
     "skills": [
       "PostgreSQL",
       "MySQL",
@@ -47,7 +47,7 @@
   {
     "category": "Cloud & DevOps",
     "proficiency": 82,
-    "color": "#ef4444",
+    "color": "#5C7A3A",
     "skills": [
       "Azure",
       "AWS",
@@ -58,7 +58,7 @@
   {
     "category": "Data Science & Analytics",
     "proficiency": 87,
-    "color": "#06b6d4",
+    "color": "#6B4A72",
     "skills": [
       "Pandas",
       "NumPy",

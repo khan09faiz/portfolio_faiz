@@ -101,26 +101,33 @@ function GlobeScene({
 
   return (
     <>
-      {/* Globe */}
+      {/*
+        Paper globe with ink meridians.
+
+        This was a near-black sphere (#18181B at 0.9) carrying a wireframe at
+        0.12 opacity — on the old dark theme that read fine, but on washi paper
+        it was a heavy black blob and the wireframe was invisible against it.
+
+        Now: a slightly sunk paper tone, dark enough to separate from the page
+        behind it and to occlude markers on the far side, with the meridians
+        doing the drawing in sumi. Reads as a brush-drawn globe rather than a
+        solid ball.
+      */}
       <Sphere ref={globeRef} args={[2.5, segments, segments]}>
-        <meshBasicMaterial
-          color="#18181B"
-          transparent
-          opacity={0.9}
-        />
+        <meshBasicMaterial color="#EFEAE0" transparent opacity={0.97} />
       </Sphere>
 
-      {/* Wireframe overlay - desktop only */}
-      {!isMobile && (
-        <Sphere args={[2.52, 12, 12]}>
-          <meshBasicMaterial
-            color="#3f3f46"
-            wireframe
-            transparent
-            opacity={0.12}
-          />
-        </Sphere>
-      )}
+      {/* Ink meridians. Sits just proud of the surface so it is never z-fought
+          by the sphere it wraps. */}
+      <Sphere args={[2.53, isMobile ? 10 : 16, isMobile ? 10 : 16]}>
+        <meshBasicMaterial color="#1A1816" wireframe transparent opacity={0.22} />
+      </Sphere>
+
+      {/* A vermillion equator, for a single point of colour */}
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.53, 0.012, 8, 96]} />
+        <meshBasicMaterial color="#BF2A22" transparent opacity={0.5} />
+      </mesh>
 
       {/* All markers in a single group */}
       <group ref={markersGroupRef}>
