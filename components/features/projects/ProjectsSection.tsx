@@ -13,9 +13,9 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { FilterButton, FilterButtonGroup } from '@/components/ui/FilterButton'
 import { ProjectCard } from './ProjectCard'
 import { ProjectModal } from './ProjectModal'
-import projectsDataRaw from '@/src/data/projects.json'
+import { getProjects } from '@/lib/content'
 
-const projectsData = projectsDataRaw as Project[]
+const projectsData = getProjects()
 const categories = ['All', 'AI/ML', 'Frontend', 'Backend', 'Full-Stack']
 
 export function ProjectsSection() {
