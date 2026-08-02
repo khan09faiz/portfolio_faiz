@@ -53,6 +53,25 @@ export function InkReveal({ children, className }: InkRevealProps) {
       el.classList.add('ink-reveal-in')
       observer.disconnect()
       window.clearTimeout(failsafe)
+
+      /*
+        Strip the animation class once it finishes.
+
+        `ink-reveal-in` animates transform and clip-path, and with
+        animation-fill-mode: forwards BOTH stay applied forever. Each of them
+        makes this element a containing block for `position: fixed`
+        descendants, which broke every modal rendered inside a section —
+        `fixed inset-0` sized itself to the section instead of the viewport and
+        then got clipped by the section's overflow.
+
+        Once the reveal has played there is nothing to keep, so it is removed
+        and the element goes back to being an ordinary, side-effect-free box.
+      */
+      el.addEventListener(
+        'animationend',
+        () => el.classList.remove('ink-reveal-in'),
+        { once: true }
+      )
     }
 
     const observer = new IntersectionObserver(
