@@ -6,6 +6,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { createPortal } from 'react-dom'
 import { X, Github, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Project } from '@/lib/types'
 import { Button } from '@/components/ui/Button'
@@ -46,7 +47,21 @@ export function ProjectModal({
 
   if (!project) return null
 
-  return (
+  /*
+    Rendered through a portal into <body>.
+
+    This modal lives inside ProjectsSection, which sits inside the section
+    reveal wrapper. That wrapper carries `transform` and `clip-path`, and BOTH
+    make a `position: fixed` descendant resolve against the wrapper instead of
+    the viewport — so `fixed inset-0` was sizing itself to the projects section,
+    not the screen. The section's `overflow-hidden` then clipped it, and later
+    sections painted over the top (the "Technical Skills" band showing through).
+
+    A modal must not depend on where in the tree it happens to be declared, so
+    it goes straight to <body>. `document` is only touched on the client; during
+    SSR isOpen is false and this renders nothing either way.
+  */
+  const content = (
     <AnimatePresence>
       {isOpen && (
         <>
@@ -114,12 +129,12 @@ export function ProjectModal({
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         project.category === 'AI/ML'
-                          ? 'bg-blue-500/20 text-blue-700'
+                          ? 'bg-crimson/12 text-crimson'
                           : project.category === 'Frontend'
-                          ? 'bg-purple-500/20 text-purple-700'
+                          ? 'bg-sumi/10 text-sumi'
                           : project.category === 'Backend'
-                          ? 'bg-sumi/20 text-sumi'
-                          : 'bg-orange-500/20 text-orange-700'
+                          ? 'bg-gold/18 text-gold'
+                          : 'bg-[rgb(39,74,120)]/12 text-[rgb(39,74,120)]'
                       }`}
                     >
                       {project.category}
@@ -270,4 +285,7 @@ export function ProjectModal({
       )}
     </AnimatePresence>
   )
+
+  if (typeof document === 'undefined') return content
+  return createPortal(content, document.body)
 }
