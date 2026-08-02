@@ -20,9 +20,7 @@
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { getSkills } from '@/lib/content'
-
-const skillsData = getSkills()
+import type { SkillCategory } from '@/lib/types'
 
 const SkillsGlobe = dynamic(
   () => import('./SkillsGlobe').then((m) => ({ default: m.SkillsGlobe })),
@@ -42,7 +40,12 @@ function GlobePlaceholder() {
   )
 }
 
-export function SkillsSection() {
+interface SkillsSectionProps {
+  /** Fetched on the server in app/page.tsx. */
+  skills: SkillCategory[]
+}
+
+export function SkillsSection({ skills }: SkillsSectionProps) {
   const holderRef = useRef<HTMLDivElement>(null)
   const [shouldMount, setShouldMount] = useState(false)
 
@@ -93,7 +96,7 @@ export function SkillsSection() {
           className="mt-8 sm:mt-10 md:mt-12"
           style={{ touchAction: 'pan-y' }}
         >
-          {shouldMount ? <SkillsGlobe skillsData={skillsData} /> : <GlobePlaceholder />}
+          {shouldMount ? <SkillsGlobe skillsData={skills} /> : <GlobePlaceholder />}
         </div>
       </div>
     </section>

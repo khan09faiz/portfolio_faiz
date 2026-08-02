@@ -10,7 +10,7 @@ import { motion } from 'framer-motion'
 import { FileCheck, GraduationCap, ExternalLink, ChevronDown, ChevronUp, CheckCircle2, Calendar } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { getCertificates } from '@/lib/content'
+import type { TimelineItem } from '@/lib/types'
 
 const MONTHS = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -38,11 +38,20 @@ const education = {
   logo: '🎓',
 }
 
-export function CertificatesSection() {
-  const [showAll, setShowAll] = useState(false)
+interface CertificatesSectionProps {
+  /**
+   * Achievement-type timeline entries, most recent first — use
+   * getCertificates() from lib/content on the server to build this.
+   *
+   * NOTE: this component is still not rendered anywhere (see the audit in
+   * progress/CURRENT_STATE.md). It is converted to props alongside the others
+   * so it does not become the one place still reaching into lib/content.
+   */
+  certificates: TimelineItem[]
+}
 
-  // Get certificates from timeline data
-  const certificates = getCertificates()
+export function CertificatesSection({ certificates }: CertificatesSectionProps) {
+  const [showAll, setShowAll] = useState(false)
 
   const displayedCertificates = showAll ? certificates : certificates.slice(0, 3)
   const hasMore = certificates.length > 3
