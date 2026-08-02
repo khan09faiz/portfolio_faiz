@@ -96,7 +96,7 @@ export function ProjectModal({
                 onClick={onClose}
                 whileHover={{ scale: 1.2, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
-                className="sticky top-4 float-right mr-4 mt-4 p-2 text-primary hover:text-red-400 transition-colors z-20"
+                className="sticky top-4 float-right mr-4 mt-4 p-2 text-primary hover:text-crimson transition-colors z-20"
                 aria-label="Close modal"
               >
                 <X className="h-6 w-6 drop-shadow-glow" />
@@ -110,12 +110,12 @@ export function ProjectModal({
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         project.category === 'AI/ML'
-                          ? 'bg-blue-500/20 text-blue-400'
+                          ? 'bg-blue-500/20 text-blue-700'
                           : project.category === 'Frontend'
-                          ? 'bg-purple-500/20 text-purple-400'
+                          ? 'bg-purple-500/20 text-purple-700'
                           : project.category === 'Backend'
-                          ? 'bg-green-500/20 text-green-400'
-                          : 'bg-orange-500/20 text-orange-400'
+                          ? 'bg-sumi/20 text-sumi'
+                          : 'bg-orange-500/20 text-orange-700'
                       }`}
                     >
                       {project.category}

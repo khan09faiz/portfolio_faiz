@@ -45,12 +45,12 @@ export function ProjectCard({ project, onClick, index = 0 }: ProjectCardProps) {
             <span
               className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-2 ${
                 project.category === 'AI/ML'
-                  ? 'bg-blue-500/20 text-blue-400'
+                  ? 'bg-blue-500/20 text-blue-700'
                   : project.category === 'Frontend'
-                  ? 'bg-purple-500/20 text-purple-400'
+                  ? 'bg-purple-500/20 text-purple-700'
                   : project.category === 'Backend'
-                  ? 'bg-green-500/20 text-green-400'
-                  : 'bg-orange-500/20 text-orange-400'
+                  ? 'bg-sumi/20 text-sumi'
+                  : 'bg-orange-500/20 text-orange-700'
               }`}
             >
               {project.category}

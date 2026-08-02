@@ -142,7 +142,7 @@ export function ContactSection() {
                     placeholder="Your name"
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.name.message}</p>
                   )}
                 </motion.div>
 
@@ -164,7 +164,7 @@ export function ContactSection() {
                     placeholder="your.email@example.com"
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.email.message}</p>
                   )}
                 </motion.div>
 
@@ -186,7 +186,7 @@ export function ContactSection() {
                     placeholder="What's this about?"
                   />
                   {errors.subject && (
-                    <p className="mt-1 text-sm text-red-400">{errors.subject.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.subject.message}</p>
                   )}
                 </motion.div>
 
@@ -208,7 +208,7 @@ export function ContactSection() {
                     placeholder="Your message..."
                   />
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
+                    <p className="mt-1 text-sm text-crimson">{errors.message.message}</p>
                   )}
                 </motion.div>
 

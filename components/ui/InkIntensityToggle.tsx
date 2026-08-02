@@ -69,11 +69,11 @@ export function InkIntensityToggle() {
 
   return (
     <div
-      className="fixed bottom-4 left-4 z-[70] flex items-center gap-1 rounded-full border border-crimson/30 bg-ink-800/80 p-1 backdrop-blur-md"
+      className="fixed bottom-4 left-4 z-[70] flex items-center gap-1 rounded-full border border-accent/50 bg-card/90 p-1 shadow-lg backdrop-blur-md"
       role="group"
       aria-label="Preview: crimson intensity"
     >
-      <span className="px-2 font-mono text-[10px] uppercase tracking-wider text-muted">ink</span>
+      <span className="px-2 font-mono text-[10px] uppercase tracking-wider text-sumi-soft">ink</span>
       {(['restrained', 'bold'] as const).map((option) => (
         <button
           key={option}
@@ -82,8 +82,8 @@ export function InkIntensityToggle() {
           aria-pressed={intensity === option}
           className={`rounded-full px-3 py-1 text-xs transition-colors ${
             intensity === option
-              ? 'bg-crimson text-moonlight'
-              : 'text-muted hover:text-moonlight'
+              ? 'bg-crimson text-paper'
+              : 'text-sumi-soft hover:text-sumi'
           }`}
         >
           {option}
