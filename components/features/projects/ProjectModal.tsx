@@ -51,13 +51,17 @@ export function ProjectModal({
       {isOpen && (
         <>
           {/* Backdrop */}
+          {/* Plain ink scrim. Animating backdropFilter meant the browser
+              re-blurred the entire page behind the modal on every frame of the
+              transition — an opaque-enough wash reads the same and costs
+              nothing. */}
           <motion.div
-            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            animate={{ opacity: 1, backdropFilter: 'blur(12px)' }}
-            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 z-50"
+            className="fixed inset-0 bg-sumi/45 z-50"
           />
 
           {/* Modal Container with Outside Navigation */}

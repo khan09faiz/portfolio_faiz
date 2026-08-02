@@ -101,37 +101,29 @@
   }
 
   body {
-    /* Plain paper. The tinted washes that used to live here pulled the page
-       pink and grey; the texture below carries the character instead. */
+    /*
+      Paper colour AND grain in one declaration.
+
+      The grain used to be a fixed, full-viewport ::before with
+      mix-blend-mode: multiply. That is a classic scroll-jank pattern — a blend
+      mode on a viewport-sized layer takes the browser off the fast compositor
+      path, so every scroll frame re-composites the whole screen through the
+      blend. The alpha is now baked into the PNG, so ordinary alpha compositing
+      produces the same look and the pseudo-element is gone entirely.
+
+      It also scrolls with the page rather than being pinned, which is what real
+      paper does.
+    */
     background-color: rgb(var(--paper));
+    background-image: url('/paper-texture.png');
+    background-repeat: repeat;
+    background-size: 512px 512px;
     color: rgb(var(--sumi));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 
-  /*
-    Rough paper tooth — a seamless 512px tile baked at build time.
-
-    This used to be two inline SVG feTurbulence layers. The browser re-runs an
-    SVG filter whenever the area it covers repaints, and these covered the whole
-    viewport, so every paint paid for two full-screen turbulence passes. The
-    tile is generated from the identical filters (stitchTiles makes it seamless)
-    and is now just a bitmap the compositor can reuse. Regenerate with the
-    script noted in the commit if the look needs changing.
-  */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.5;
-    mix-blend-mode: multiply;
-    background-image: url('/paper-texture.png');
-    background-repeat: repeat;
-    background-size: 512px 512px;
-  }
 
   ::-webkit-scrollbar {
     width: 0.5rem;
@@ -589,16 +581,16 @@
   }
 
   /* Ink soaking outward into the paper. */
+  /* No filter: blur() here. Animating a blur forces a re-raster every frame;
+     scale + opacity reads as ink soaking outward and stays on the compositor. */
   @keyframes sumiBleed {
     from {
       opacity: 0;
       transform: scale(0.94);
-      filter: blur(8px);
     }
     to {
       opacity: 1;
       transform: scale(1);
-      filter: blur(0);
     }
   }
 

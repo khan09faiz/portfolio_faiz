@@ -96,11 +96,16 @@ export function ContactSection() {
         position="top-right"
         toastOptions={{
           duration: 4000,
+          // Was a dark panel with a cyan border — left over from the old
+          // pre-samurai palette. Now a paper card with an ink rule and a
+          // vermillion edge, and no backdrop blur.
           style: {
-            background: 'rgba(17, 24, 39, 0.9)',
-            color: '#fff',
-            border: '1px solid rgba(0, 217, 255, 0.2)',
-            backdropFilter: 'blur(8px)',
+            background: 'rgb(var(--paper-raised))',
+            color: 'rgb(var(--sumi))',
+            border: '1px solid rgb(var(--mist) / 0.45)',
+            borderLeft: '3px solid rgb(var(--vermillion))',
+            borderRadius: '6px',
+            boxShadow: '0 4px 16px rgb(var(--sumi) / 0.12)',
           },
         }}
       />

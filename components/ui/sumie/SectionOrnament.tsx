@@ -59,7 +59,21 @@ export function SectionOrnament({
     <div
       aria-hidden="true"
       className={`pointer-events-none absolute z-0 hidden select-none md:block ${CORNERS[position]}`}
-      style={{ opacity: opacity / 100 }}
+      style={{
+        opacity: opacity / 100,
+        /*
+          Each motif carries an feTurbulence filter. Without its own layer the
+          browser re-runs that filter every time the area repaints — including
+          on scroll. The swaying motifs already got this via `will-change` in
+          their animation class; the static ones (ensō, torii) did not, so they
+          were re-rasterising on every scroll frame.
+
+          `contain: paint` also tells the browser nothing inside can paint
+          outside these bounds, so it can skip them entirely once off-screen.
+        */
+        willChange: 'transform',
+        contain: 'paint',
+      }}
     >
       {motif === 'enso' && <Enso className={common} draw={draw} />}
       {motif === 'sakura' && <SakuraBranch className={common} />}
