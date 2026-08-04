@@ -12,4 +12,5 @@ export {
   getTimeline,
   getCertificates,
   getHomeContent,
+  getContentSource,
 } from './provider'
