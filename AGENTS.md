@@ -4,7 +4,16 @@ Portable project brief for AI coding agents (Claude Code, Antigravity, Cursor,
 or any tool that reads repo context). Everything an agent needs to work on this
 codebase without re-deriving it.
 
-**Read this first. Then `progress/CURRENT_STATE.md` if the spec repo is present.**
+**Read this first, then:**
+
+| | |
+|---|---|
+| [`docs/ROADMAP.md`](./docs/ROADMAP.md) | The whole build — every phase, sequenced, with acceptance criteria |
+| [`progress/CURRENT_STATE.md`](./progress/CURRENT_STATE.md) | What is actually built, and every known issue |
+| [`tasks/CURRENT_TASK.md`](./tasks/CURRENT_TASK.md) | The task in flight |
+| [`docs/vision/`](./docs/vision/) | The specification itself |
+
+All of it now lives in this repo, so it travels with the code.
 
 ---
 
